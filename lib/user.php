@@ -16,7 +16,7 @@
 		private $ranks_cache = array();
 		private $session_started = false;
 
-		function user() {
+		function __construct() {
 			global $db;
 
 			if (!empty($_REQUEST[session_name()])) {
