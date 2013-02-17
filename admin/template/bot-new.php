@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <?php if (template::getVar('ERROR') == '1'): ?>
 	<div class="info">Du musst einen Bot-Namen und Bot-Agent eingeben.</div>
@@ -26,4 +26,4 @@
 	</div>
 </form>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

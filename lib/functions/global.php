@@ -208,6 +208,8 @@
 	}
 
 	function getPage($var = 'page') {
+		if (!isset($_GET[$var])) return 1;
+		
 		$page = (int)$_GET[$var];
 
 		if ($page > 0) {

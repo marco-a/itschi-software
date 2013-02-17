@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <style>
 	.number {
@@ -92,4 +92,4 @@
 	</table>
 </form>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

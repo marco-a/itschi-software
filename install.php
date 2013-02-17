@@ -1,17 +1,16 @@
 <?php
 	/**
 	*
-	* @package Itschi
+	* @package com.Itschi.base.install
 	* @since 2007/05/25
 	*
 	*/
 
 	if (is_file('config.php')) {
-		require_once('config.php');
+		require_once 'config.php';
 
 		if (!empty($prefix)) {
 			header('Location: index.php');
-
 			exit;
 		}
 	} else {
@@ -19,7 +18,6 @@
 
 		if ($fd !== false) {
 			fwrite($fd, '');
-
 			fclose($fd);
 		}
 	}
@@ -596,14 +594,17 @@
 								<td width="25%">CHMOD 0777</td>
 								<td class="textStatus<?php echo ($chmod ? 'OK' : 'NotOK'); ?>">ist <?php echo ($chmod ? 'gesetzt' : 'nicht gesetzt');?></td>
 							</tr>
+
 							<tr>
 								<td width="25%">config.php</td>
 								<td class="textStatus<?php echo ($config_writable ? 'OK' : 'NotOK'); ?>">ist <?php echo ($config_writable ? 'beschreibbar' : 'nicht beschreibbar');?></td>
 							</tr>
+
 							<tr>
 								<td width="25%">PHP Version (<?php echo $php_v;?>)</td>
 								<td class="textStatus<?php echo ($php_version ? 'OK' : 'NotOK'); ?>">ist <?php echo ($php_version ? 'ausreichend' : 'nicht ausreichend');?></td>
 							</tr>
+							
 							<tr>
 								<td width="25%">imagecreatefromgif()</td>
 								<td class="textStatus<?php echo ($imagecreatefromgif ? 'OK' : 'NotOK'); ?>">ist <?php echo ($imagecreatefromgif ? 'vorhanden' : 'nicht vorhanden');?></td>

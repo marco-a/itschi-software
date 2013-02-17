@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <?php if (template::getVar('ERROR')): ?>
 	<div class="info">
@@ -134,4 +134,4 @@
 	</div>
 </form>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>
