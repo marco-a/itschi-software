@@ -138,7 +138,7 @@ input[type=submit], a.button {
 
 		background: #ba304e;
 	}
-	
+
 	input[type=submit]:active, a.button:active {
 		background: #3e5362;
 		box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.15), 0px 1px 0px #fff;
@@ -244,12 +244,12 @@ input[type=checkbox] {
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
-				
+
 		header .logo {
 			color: #9b9b9b;
 			margin-bottom: 20px;
 		}
-		
+
 			.logo h2 {
 				font-weight: 500;
 				color: #272727;
@@ -281,15 +281,15 @@ input[type=checkbox] {
 	}
 
 		nav {
-			
+
 		}
-		
+
 			nav ul {
 				list-style-type: none;
 				padding: 0;
 				margin: 0;
 			}
-			
+
 				nav ul li a {
 					padding-left: 20px;
 					padding-right: 20px;
@@ -302,18 +302,19 @@ input[type=checkbox] {
 					/* nav ul li:first-child a {
 						border-top-left-radius: 5px;
 					} */
-				
+
 				nav ul li a:not(.noLink):hover {
 					background: #fff;
 					border-bottom: 2px solid #82323e;
+					height: 39px;
 					color: #82323e;
 				}
-				
+
 				nav ul li a:active {
 					color: #fff;
 					background: rgba(0, 0, 0, 0.5);
 				}
-				
+
 				nav ul li a.active {
 					color: #3e586a;
 					background: #fff;
@@ -332,7 +333,7 @@ input[type=checkbox] {
 	color: #9b9b9b;
 	text-shadow: 0px 1px 0px #fff;
 }
-	
+
 	footer {
 		border-top: 1px solid #e0e0e0;
 		width: 1000px;
