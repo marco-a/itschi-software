@@ -14,4 +14,4 @@ Der aktuelle Code dient nur zur Vorschau. Es sind mit sehr hoher Wahrscheinlichk
 4. Benutzen.
 
 ## Bugs melden
-Bitte alle auftretenden Bugs im Issues-Bereich auf github melden!
+Bitte alle auftretenden Bugs im [Issues-Bereich](https://github.com/bluefirex/itschi-software/issues) auf github melden!
