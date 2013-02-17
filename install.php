@@ -284,7 +284,7 @@
 			  `installed` int(1) DEFAULT '0',
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-		";)
+		");
 
 		mysql_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "poll_options` (
