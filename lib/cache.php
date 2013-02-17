@@ -113,9 +113,15 @@
 				break;
 			}
 
-			$file = fopen("{$root}lib/cache/{$file}.php", 'w');
-			$bytes = fwrite($file, '<?php $row = unserialize(\'' . str_replace('\'','\\\'', serialize($data)) . '\'); ?>');
-			fclose($file);
+			$path = sprintf('%slib/cache/%s.php', $root, $file);
+
+			if (is_writable($path)) {
+				$file = fopen($path, 'w');
+				$bytes = fwrite($file, '<?php $row = unserialize(\'' . str_replace('\'','\\\'', serialize($data)) . '\'); ?>');
+				fclose($file);
+			} else {
+				@unlink($path);
+			}
 
 			return $data;
 		}
