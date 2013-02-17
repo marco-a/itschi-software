@@ -6,7 +6,7 @@ Das ist die offizielle Repo der Itschi-Forensoftware.
 Der aktuelle Code dient nur zur Vorschau. Es sind mit sehr hoher Wahrscheinlichkeit schwere Bugs vorhanden oder es fehlen Dinge.
 
 ## Installation
-**Wichtig**: Du musst mindestens PHP5.3 installiert haben, um Itschi nutzen zu können.
+**Wichtig**: Du musst mindestens PHP 5.3 installiert haben, um Itschi nutzen zu können.
 
 1. Klone dieses git und schiebe die Dateien auf deinen Server.
 2. Führe install.php aus.
