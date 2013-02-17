@@ -42,7 +42,7 @@
 		}
 
 		public function strSubstr($str, $start, $length = NULL) {
-			if ($length == NULL) $length = $this->str_length($str);
+			if ($length == NULL) $length = $this->strLength($str);
 
 			return mb_substr($str, $start, $length, CHARSET);
 		}
