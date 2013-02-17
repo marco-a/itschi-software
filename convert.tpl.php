@@ -1,4 +1,9 @@
 <?php
+	/*
+		This file is for manually converting .tpl-files to .php.
+		It gets gemoved in the final release.
+	*/
+
 	$file = 'styles/standard/' . htmlspecialchars($_GET['f']);
 
 	if (!empty($_GET['f']) && file_exists($file)) {
