@@ -22,11 +22,11 @@
 		<div class="fLeft" style="width: 40%">
 			<h1>Installierte Plugins</h1>
 		</div>
-		
+
 		<div class="fRight" style="padding-top: 7px;">
-			
+
 		</div>
-		
+
 		<div class="clear"></div>
 	</div>
 
@@ -90,11 +90,11 @@
 		<div class="fLeft" style="width: 40%;">
 			<h1>Verf&uuml;gbare Plugins</h1>
 		</div>
-		
+
 		<div class="fRight" style="padding-top: 7px;">
-			
+
 		</div>
-		
+
 		<div class="clear"></div>
 	</div>
 

@@ -95,7 +95,7 @@
 						$pL .= '<li>Diese Tabellen lesen und beschreiben: <ul>';
 
 						foreach($p['SQL']['accessTables'] as $t) {
-							if ($t != 'config' && $t != 'plugins' && $t != 'users') $pL .= '<li>'.$prefix.$t.'</li>';
+							if ($t != 'config' && $t != 'plugins' && $t != 'users') $pL .= '<li>'.$prefix.htmlspecialchars($t).'</li>';
 						}
 
 						$pL .= '
@@ -118,7 +118,7 @@
 				';
 
 				foreach($p['HTTP'] as $s) {
-					$pL .= '<li>'.$s.'</li>';
+					$pL .= '<li>'.htmlspecialchars($s).'</li>';
 				}
 
 				$pL .= '
@@ -170,8 +170,8 @@
 
 		// assign
 		template::assignBlock(($row->installed) ? 'plugins' : 'available', array(
-			'NAME'			=>	$title,
-			'PACKAGE'		=>	$package,
+			'NAME'			=>	htmlspecialchars($title),
+			'PACKAGE'		=>	htmlspecialchars($package),
 			'COMPATIBLE'	=>	$compatible,
 			'VERSION'		=>	$version,
 			'PERMISSIONS'	=>	$pL,
