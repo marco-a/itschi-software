@@ -39,7 +39,7 @@
 	$chmod = substr(sprintf('%o', fileperms(dirname(__FILE__))), -4);
 	$chmod = ($chmod == '0777');
 	$config_writable = is_writable('config.php');
-	$php_v = sprintf("%.1lf", phpversion()); // SPRINTF FTW :3
+	$php_v = sprintf('%.1lf', phpversion()); // SPRINTF FTW :3
 	$php_version = ($php_v >= 5.3);
 	$imagecreatefromgif = function_exists('imagecreatefromgif');
 
