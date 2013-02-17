@@ -14,7 +14,7 @@
 			exit;
 		}
 	} else {
-		$fd = fopen('config.php', 'w+');
+		$fd = @fopen('config.php', 'w+');
 
 		if ($fd !== false) {
 			fwrite($fd, '');
@@ -604,7 +604,7 @@
 								<td width="25%">PHP Version (<?php echo $php_v;?>)</td>
 								<td class="textStatus<?php echo ($php_version ? 'OK' : 'NotOK'); ?>">ist <?php echo ($php_version ? 'ausreichend' : 'nicht ausreichend');?></td>
 							</tr>
-							
+
 							<tr>
 								<td width="25%">imagecreatefromgif()</td>
 								<td class="textStatus<?php echo ($imagecreatefromgif ? 'OK' : 'NotOK'); ?>">ist <?php echo ($imagecreatefromgif ? 'vorhanden' : 'nicht vorhanden');?></td>
