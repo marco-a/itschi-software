@@ -15,7 +15,7 @@
 	<ul>
 		<li><a href="./mail.php" <?php if (template::getVar('DIR') == 1): ?>class="active"<?php endif; ?>>Posteingang</a></li>
 		<li><a href="./mail.php?dir=2" <?php if (template::getVar('DIR') != 1): ?>class="active"<?php endif; ?>>Gesendet</a></li>
-		
+
 		<li style="float: right;"><a href="./mail.php?dir=<?=template::getVar('DIR'); ?>&mode=new">Neue Mail</a></li>
 	</ul>
 
@@ -35,7 +35,7 @@
 		?>
 
 		<tr>
-			<td class="inhalt center" width="50"><img src="styles/itschi/images/<?php if (!$mails['READ']): ?>new<?php endif; ?>topic.gif" border="0" /></td>
+			<td class="inhalt center" width="50"><img src="styles/<?= template::getStyleDirName(); ?>/images/icons/topics/<?php if (!$mails['READ']): ?>infonew<?php endif; ?>topic.png" border="0" /></td>
 			<td class="inhalt"><b><a class="forum" href="mail.php?dir=<?=template::getVar('DIR'); ?>&mode=view&id=<?=$mails['ID']; ?>"><?=$mails['TITLE']; ?></a></b><br /><?php if (template::getVar('DIR') == '1'): ?>von<?php else: ?>an<?php endif; ?> <?php if ($mails['USERNAME']): ?><a class="<?=$mails['USER_LEGEND']; ?>" href="user.php?id=<?=$mails['USER_ID']; ?>"><?=$mails['USERNAME']; ?></a><?php else: ?><span>Unbekannt</span><?php endif; ?> - <small><span><?=$mails['TIME']; ?> Uhr</span></small></td>
 			<td class="inhalt"><input type="checkbox" class="checkbox" name="<?=$mails['ID']; ?>" value="true"></td>
 		</tr>
@@ -61,7 +61,7 @@
 		<tr>
 			<td>
 				<?=template::getVar('MAILS_NUM'); ?> Nachricht<?php if (template::getVar('MAILS_NUM') != 1): ?>en<?php endif; ?>
-				
+
 				<?php if (template::getVar('PAGES_NUM') > '1'): ?>
 					|
 					Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> |

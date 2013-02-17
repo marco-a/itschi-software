@@ -36,7 +36,7 @@
 						</td>
 						<td width="76%" class="top" style="padding:4px 7px;border-bottom:1px solid #cccccc;">
 
-						<div style="border-bottom:1px dotted #cccccc;padding:3px;margin-bottom:7px;"><a href="viewtopic.php?id=<?=$posts['TOPIC_ID']; ?>&p=<?=$posts['ID']; ?>#<?=$posts['ID']; ?>"><img src="styles/itschi/images/neubeitrag.gif" border="0" /></a><small><span> - <?=$posts['TIME']; ?> Uhr</span></small></div>
+						<div style="border-bottom:1px dotted #cccccc;padding:3px;margin-bottom:7px;"><a href="viewtopic.php?id=<?=$posts['TOPIC_ID']; ?>&p=<?=$posts['ID']; ?>#<?=$posts['ID']; ?>"><img src="styles/<?= template::getStyleDirName(); ?>/images/icons/topics/newtopic.png" border="0" /></a><small><span> - <?=$posts['TIME']; ?> Uhr</span></small></div>
 						<a class="forum" href="viewtopic.php?id=<?=$posts['TOPIC_ID']; ?>"><?=$posts['TOPIC_TITLE']; ?></a>
 						<br /><div style="padding:5px 0;"><?=$posts['TEXT']; ?></div>
 						<a href="viewtopic.php?id=<?=$posts['TOPIC_ID']; ?>&p=<?=$posts['ID']; ?>#<?=$posts['ID']; ?>">mehr</a>

@@ -7,9 +7,21 @@
 	*/
 
 	if (is_file('config.php')) {
-		header('Location: index.php');
+		require_once('config.php');
 
-		exit;
+		if (!empty($prefix)) {
+			header('Location: index.php');
+
+			exit;
+		}
+	} else {
+		$fd = fopen('config.php', 'w+');
+
+		if ($fd !== false) {
+			fwrite($fd, '');
+
+			fclose($fd);
+		}
 	}
 
 	$submit = (isset($_POST['submit'])) ? true : false;

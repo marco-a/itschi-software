@@ -14,7 +14,8 @@
 		private static $debug = false;
 
 		public static $style = array(
-			'dir'	=>	'standard'
+			'dir'	=>	'standard',
+			'dirName'	=>	'standard',
 		);
 
 		public static function init() {
@@ -27,7 +28,8 @@
 				'title'		=>	$row->title,
 				'author'	=>	$row->author,
 				'version'	=>	$row->version,
-				'dir'		=>	$root . 'styles/' . $row->directory . '/'
+				'dir'		=>	$root . 'styles/' . $row->directory . '/',
+				'dirName'	=>	$row->directory,
 			);
 
 			if (file_exists(self::$style['dir'] . 'functions.php')) {
@@ -82,6 +84,10 @@
 
 		public static function getPage() {
 			return self::getVar('PAGE');
+		}
+
+		public static function getStyleDirName() {
+			return self::$style['dirName'];
 		}
 
 		public static function getMenu() {
