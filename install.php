@@ -528,6 +528,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8" />
 		<title>Itschi &rsaquo; Installation</title>
 		<link rel="stylesheet" href="styles/standard/style.css" />
 		<link rel="stylesheet" href="styles/installer.css" />
