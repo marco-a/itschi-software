@@ -10,14 +10,15 @@
 
 	class mysql {
 		var $debug = false;
+		private $connect = NULL;
 
-		function mysql($host, $username, $pw, $database) {
+		function __construct($host, $username, $pw, $database) {
 	//		$this->debug = (isset($_GET['explain'])) ? true : false;
 
-			$connect = @mysql_connect($host, $username, $pw) or die('Verbindung zur Datenbank fehlgeschlagen');
-			@mysql_select_db($database, $connect) or die('Datenbank konnte nicht ausgew&auml;hlt werden');
+			$this->connect = @mysql_connect($host, $username, $pw) or die('Verbindung zur Datenbank fehlgeschlagen');
+			@mysql_select_db($database, $this->connect) or die('Datenbank konnte nicht ausgew&auml;hlt werden');
 
-			mysql_query("SET NAMES 'utf8'");
+			mysql_unbuffered_query("SET NAMES 'utf8'", $this->connect);
 		}
 
 		function error($sql)
@@ -38,7 +39,7 @@
 		}
 
 		function query($sql) {
-			if (($result = @mysql_query($sql)) === false)
+			if (($result = @mysql_query($sql, $this->connect)) === false)
 			{
 				$this->error($sql);
 			}
@@ -54,7 +55,7 @@
 		}
 
 		function unbuffered_query($sql) {
-			if (($result = @mysql_query($sql)) === false) {
+			if (($result = @mysql_query($sql, $this->connect)) === false) {
 				$this->error($sql);
 			}
 
@@ -94,7 +95,7 @@
 		}
 
 		function insert_id() {
-			return mysql_insert_id();
+			return mysql_insert_id($this->connect);
 		}
 
 		function free_result($res) {
@@ -102,11 +103,11 @@
 		}
 
 		function chars($var) {
-			return mysql_real_escape_string($var);
+			return mysql_real_escape_string($var, $this->connect);
 		}
 
 		function affected_rows() {
-			return mysql_affected_rows();
+			return mysql_affected_rows($this->connect);
 		}
 	}
 ?>
