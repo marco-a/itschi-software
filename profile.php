@@ -190,6 +190,7 @@
 			}
 
 			template::assign(array(
+				'USERNAME'		=>	htmlspecialchars($user->row['username']),
 				'WEBSITE'		=>	htmlspecialchars($user->row['user_website']),
 				'ICQ'			=>	htmlspecialchars($user->row['user_icq']),
 				'SKYPE'			=>	htmlspecialchars($user->row['user_skype']),
