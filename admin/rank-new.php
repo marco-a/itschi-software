@@ -64,8 +64,14 @@
 	$extensions = array('png', 'jpg', 'jpeg', 'gif', 'bmp');
 
 	if ($handle = @opendir('../images/ranks/')) {
-		while ($file = @readdir($handle)) {
-			if ($file != '.' && $file != '..' && !is_dir('../images/ranks/' . $file) && in_array(strtolower(end(explode('.', $file))), $extensions)) {
+		while (($file = @readdir($handle)) !== false) {
+			$ext = explode('.', $file);
+
+			if (count($ext) == 1) continue;
+
+			$ext = end($ext);
+
+			if ($file != '.' && $file != '..' && !is_dir('../images/ranks/' . $file) && in_array(strtolower($ext), $extensions)) {
 				template::assignBlock('icons', array(
 					'ICON'	=>	$file
 				));
