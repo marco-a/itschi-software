@@ -95,25 +95,22 @@
 	<tr>
 		<td>
 			Legende: <font color="#26677f">Administrator</font>, <font color="#3eb289">Moderator</font>, <font color="#aaaaaa">Bot</font>
-			<br /><br />Mitglieder: 
-
-			<?php foreach(template::$blocks['online'] as $online): ?>
-				<?=$online['SEPARATOR']; ?>
-
-				<?php if ($online['IS_BOT']): ?>
-					<span style="color:#aaa">
-						<?=$online['BOT_NAME']; ?>
-					</span>
-				<?php else: ?>
-					<a class="<?=$online['LEGEND']; ?>" href="user.php?id=<?=$online['ID']; ?>"><?=$online['USERNAME']; ?></a>
-				<?php endif; ?>
-			<?php endforeach; ?>
+			<br /><br />Mitglieder:
 
 			<?php
-				if (count(template::$blocks['online']) == 0) {
-					echo '-- Niemand';
-				}
-			?>
+			if (count(template::$blocks['online']) == 0) {
+				echo '-- Niemand';
+			} else {
+				foreach(template::$blocks['online'] as $online): ?>
+					<?=$online['SEPARATOR']; ?>
+
+					<?php if ($online['IS_BOT']): ?>
+						<span style="color:#aaa"><?=$online['BOT_NAME']; ?></span>
+						<?php else: ?>
+						<a class="<?=$online['LEGEND']; ?>" href="user.php?id=<?=$online['ID']; ?>"><?=$online['USERNAME']; ?></a>
+						<?php endif; ?>
+					<?php endforeach;
+			} ?>
 		</td>
 	</tr>
 </table>
