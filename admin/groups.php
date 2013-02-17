@@ -1,12 +1,12 @@
 <?php
 	/**
-	 *	@package	com.Itschi.ACP.index
+	 *	@package	com.Itschi.ACP.groups
 	 */
 
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
