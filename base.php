@@ -32,6 +32,11 @@
 
 	header('Content-Type: text/html; charset=utf-8');
 
+	if (!file_exists('config.php')) {
+		header('Location: install.php');
+		exit;
+	}
+
 	$root = dirname(__FILE__) . '/';
 
 	require $root.'config.php';
