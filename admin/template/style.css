@@ -269,6 +269,7 @@ input[type=checkbox] {
 
 	#content .content {
 		width: 740px;
+		min-height: 450px;
 		float: right;
 		padding: 30px;
 		padding-top: 0;
