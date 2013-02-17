@@ -39,6 +39,8 @@
 	$chmod = substr(sprintf('%o', fileperms(dirname(__FILE__))), -4);
 	$chmod = ($chmod == '0777');
 	$config_writable = is_writable('config.php');
+	$php_v = sprintf("%.1lf", phpversion()); // SPRINTF FTW :3
+	$php_version = ($php_v >= 5.3);
 	$imagecreatefromgif = function_exists('imagecreatefromgif');
 
 	if ($submit) {
@@ -597,6 +599,10 @@
 							<tr>
 								<td width="25%">config.php</td>
 								<td class="textStatus<?php echo ($config_writable ? 'OK' : 'NotOK'); ?>">ist <?php echo ($config_writable ? 'beschreibbar' : 'nicht beschreibbar');?></td>
+							</tr>
+							<tr>
+								<td width="25%">PHP Version (<?php echo $php_v;?>)</td>
+								<td class="textStatus<?php echo ($php_version ? 'OK' : 'NotOK'); ?>">ist <?php echo ($php_version ? 'ausreichend' : 'nicht ausreichend');?></td>
 							</tr>
 							<tr>
 								<td width="25%">imagecreatefromgif()</td>
