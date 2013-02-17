@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <div class="h2box">
 	<h1 class="fLeft" style="width: 30%;">Bots <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
@@ -37,4 +37,4 @@
 	?>
 </table>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <div class="h2box">
 	<h1>Mitglieder <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
@@ -57,4 +57,4 @@
 	<?php if (template::getVar('PAGES_NUM') > '1'): ?> | Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> | <?=template::getVar('PAGES'); ?><?php endif; ?>
 </div>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

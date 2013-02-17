@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 <script type="text/javascript">
 	$(function() {
 		$('select[name=is_category]').change(function() {
@@ -81,4 +81,4 @@
 	</div>
 </form>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

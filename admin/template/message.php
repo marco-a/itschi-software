@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <div style="height:250px;">
 	<br />
@@ -10,4 +10,4 @@
 	<?php if (template::getVar('LINK2')): ?> <a href="<?=template::getVar('LINK2'); ?>" class="button greyB"><?=template::getVar('LINK2_TEXT'); ?></a><?php endif; ?>
 </div>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <form action="rank-new.php?id=<?=template::getVar('ID'); ?>" method="post">
 	<div class="h2box noBottom">
@@ -59,4 +59,4 @@
 	</div>
 </form>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>

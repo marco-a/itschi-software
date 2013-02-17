@@ -1,4 +1,4 @@
-<?php template::display('header', true); ?>
+<?php template::display('header'); ?>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -151,4 +151,4 @@
 	?>
 </div>
 
-<?php template::display('footer', true); ?>
+<?php template::display('footer'); ?>
