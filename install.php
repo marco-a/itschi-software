@@ -17,6 +17,7 @@
 	$email = (isset($_POST['email'])) ? $_POST['email'] : '';
 	$password =	(isset($_POST['password'])) ? $_POST['password'] : '';
 	$password2 = (isset($_POST['password2'])) ? $_POST['password2'] : '';
+	$error = 0;
 
 	if ($submit) {
 		$error = install();
@@ -24,6 +25,8 @@
 
 	function install() {
 		global $username, $email, $password, $password2, $db_host, $db_username, $db_pw, $db_database, $prefix;
+
+		$error = 0;
 
 		$connect = @mysql_connect($db_host, $db_username, $db_pw) or ($error = 1);
 		@mysql_select_db($db_database, $connect) or ($error = 1);
@@ -65,9 +68,14 @@
 		@chmod('images/avatar/', 0755);
 		@chmod('lib/cache/', 0755);
 
+		if (!is_writable('config.php')) {
+			return 9;
+		}
+
 		$file = fopen('config.php', 'w');
 		$bytes = fwrite($file, "<?php\r\n\r\n\$hostname = '" . $db_host . "';\r\n\$username = '" . $db_username . "';\r\n\$password = '" . $db_pw . "';\r\n\$database = '" . $db_database . "';\r\n\$prefix = '" . $prefix . "';\r\n\r\n?>");
 		fclose($file);
+
 
 		mysql_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "banlist` (
@@ -333,7 +341,7 @@
 
 		mysql_query("
 			INSERT INTO `" . $prefix . "posts` (`post_id`, `topic_id`, `forum_id`, `user_id`, `post_text`, `enable_bbcodes`, `enable_smilies`, `enable_urls`, `enable_signatur`, `is_topic`, `post_time`, `post_edit_user_id`, `post_edit_username`, `post_edit_user_level`, `post_edit_time`) VALUES
-			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank f¸r das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
+			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank f√ºr das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
 		");
 
 		mysql_query("
@@ -363,7 +371,7 @@
 			(10, 'bronze3.gif', 'Neuling', 10, 0),
 			(11, 'bronze2.gif', 'Neuling', 5, 0),
 			(12, 'bronze1.gif', 'Neuling', 2, 0),
-			(13, 'bronze_hidden.gif', 'Anf‰nger', 0, 0),
+			(13, 'bronze_hidden.gif', 'Anf√§nger', 0, 0),
 			(14, '', 'Administrator', 0, 1),
 			(15, '', 'Moderator', 0, 1);
 		");
@@ -504,7 +512,7 @@
 			(1, " . time() . ", '" . $username . "', '" . md5($password) . "', '" . $email . "', '', 14, '', 1, 1, 1, 10, 1, 0, '" . $_SERVER['REMOTE_ADDR'] . "', '', '', '', 0, 2, " . time() . ", 0, '');
 		");
 
-		return 9;
+		return 10;
 	}
 
 	?>
@@ -532,7 +540,8 @@
 						<?php elseif ($error == 6): ?>		Die Email ist ung&uuml;ltig!
 						<?php elseif ($error == 7): ?>		Das Passwort muss mindestens 6 Zeichen lang sein!
 						<?php elseif ($error == 8): ?>		Die Passw&ouml;rter sind nicht gleich!
-						<?php elseif ($error == 9): ?>		Das Forum wurde erfolgreich installiert! Lˆsche die Datei install.php! <a href="index.php">zum Forum</a>
+						<?php elseif ($error == 9): ?>		‚Äúconfig.php‚Äù ist nicht beschreibbar!
+						<?php elseif ($error == 10): ?>		Das Forum wurde erfolgreich installiert! L√∂sche die Datei install.php! <a href="index.php">zum Forum</a>
 						<?php endif; ?>
 					</div>
 					<div class="info_a"></div>
@@ -541,7 +550,7 @@
 
 					<section>
 						<h2>MySQL</h2>
-					
+
 						<table cellspacing="0" cellpadding="5" width="100%" border="0">
 							<tr>
 								<td width="25%">Host:</td>
