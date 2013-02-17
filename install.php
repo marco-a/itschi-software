@@ -6,7 +6,12 @@
 	*
 	*/
 
-	$error = '';
+	if (is_file('config.php')) {
+		header('Location: index.php');
+
+		exit;
+	}
+
 	$submit = (isset($_POST['submit'])) ? true : false;
 	$db_host = (isset($_POST['db_host'])) ? $_POST['db_host'] : 'localhost';
 	$db_username = (isset($_POST['db_username'])) ? $_POST['db_username'] : '';
@@ -21,7 +26,7 @@
 	$error = 0;
 	$chmod = substr(sprintf('%o', fileperms(dirname(__FILE__))), -4);
 	$chmod = ($chmod == '0777');
-	$config_writable = (file_exists("config.php") ? is_writable('config.php') : true);
+	$config_writable = is_writable('config.php');
 	$imagecreatefromgif = function_exists('imagecreatefromgif');
 
 	if ($submit) {
@@ -77,7 +82,7 @@
 		@chmod('images/avatar/', 0755);
 		@chmod('lib/cache/', 0755);
 
-		if (!is_writable('config.php') && file_exists("config.php")) {
+		if (!is_writable('config.php')) {
 			return 9;
 		}
 
@@ -236,7 +241,7 @@
 		mysql_query("
 			INSERT INTO `" . $prefix . "forums` (`forum_id`, `forum_name`, `forum_description`, `forum_order`, `is_category`, `forum_level`, `forum_posts`, `forum_topics`, `forum_closed`, `forum_last_post_id`, `forum_last_post_user_id`, `forum_last_post_time`, `forum_last_post_topic_id`, `forum_last_post_username`, `forum_last_post_user_level`) VALUES
 			(1, 'Erste Kategorie', '', 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, '', 0),
-			(2, 'Erstes Forum', 'Ein Text, der das Forum beschreibt', 2, 0, 0, 0, 1, 0, 1, 1, " . time() . ", 1, '" . $username . "', 2);
+			(2, 'Erstes Forum', 'Ein Text der das Forum beschreibt', 2, 0, 0, 0, 1, 0, 1, 1, " . time() . ", 1, '" . $username . "', 2);
 		");
 
 		mysql_query("
@@ -350,7 +355,7 @@
 
 		mysql_query("
 			INSERT INTO `" . $prefix . "posts` (`post_id`, `topic_id`, `forum_id`, `user_id`, `post_text`, `enable_bbcodes`, `enable_smilies`, `enable_urls`, `enable_signatur`, `is_topic`, `post_time`, `post_edit_user_id`, `post_edit_username`, `post_edit_user_level`, `post_edit_time`) VALUES
-			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank für das Nutzen der Itschi-Forensoftware!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
+			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank für das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
 		");
 
 		mysql_query("
@@ -560,8 +565,8 @@
 						<?php elseif ($error == 7): ?>		Das Passwort muss mindestens 6 Zeichen lang sein!
 						<?php elseif ($error == 8): ?>		Die Passw&ouml;rter sind nicht gleich!
 						<?php elseif ($error == 9): ?>		“config.php” ist nicht beschreibbar!
-						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erf&uuml;llt!
-						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! L&ouml;sche die Datei install.php! <a href="index.php">zum Forum</a>
+						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erfüllt!
+						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! Lösche die Datei install.php! <a href="index.php">zum Forum</a>
 						<?php endif; ?>
 					</div>
 					<div class="info_a"></div>
