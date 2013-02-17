@@ -150,10 +150,8 @@
 					<td>
 						<div class="fLeft" style="width: 49%;">
 							<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&page=<?=template::getVar('PAGE'); ?>#<?=$posts['ID']; ?>">
-								<img src="styles/itschi/images/neubeitrag.gif" border="0" />
+								<small><span><?=$posts['TIME']; ?> Uhr</span></small>
 							</a>
-
-							<small><span> - <?=$posts['TIME']; ?> Uhr</span></small>
 						</div>
 
 						<div class="fRight" style="width: 49%; text-align: right;">
