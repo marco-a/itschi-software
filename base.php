@@ -89,6 +89,8 @@
 	if (!preg_match('^\/admin\/^', $self)) {
 		$pRes = $db->query("SELECT package FROM " . PLUGINS_TABLE . " WHERE installed = 1");
 
+		plugin::init_classes();
+
 		while ($pRow = $db->fetch_object($pRes)) {
 			plugin::init($pRow->package);
 			plugin::run();
