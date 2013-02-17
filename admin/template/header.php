@@ -19,7 +19,7 @@
 
 				<li><a href="../user.php?id=<?=$user->row['user_id']; ?>">Angemeldet als <b><?=$user->row['username']; ?></b></a></li>
 				<li><a href="../">Zur&uuml;ck zur Hauptseite</a></li>
-				
+
 				<div class="clear"></div>
 			</ul>
 		</div>
@@ -44,6 +44,7 @@
 						<li><a href="bots.php"<?php if (template::getVar('PAGE') == 'bots' ||template::getVar('PAGE') == 'bot-new'): ?>class="active"<?php endif; ?>>Bots</a></li>
 						<li><a href="smilies.php"<?php if (template::getVar('PAGE') == 'smilies' ||template::getVar('PAGE') == 'smilie-new'): ?>class="active"<?php endif; ?>>Smilies</a></li>
 						<li><a href="ranks.php"<?php if (template::getVar('PAGE') == 'ranks' ||template::getVar('PAGE') == 'rank-new'): ?>class="active"<?php endif; ?>>R&auml;nge</a></li>
+						<li><a href="groups.php"<?php if (template::getVar('PAGE') == 'groups'): ?>class="active"<?php endif; ?>>Gruppen</a></li>
 						<li><a href="plugins.php"<?php if (template::getVar('PAGE') == 'plugins'): ?>class="active"<?php endif; ?>>Plugins</a></li>
 					</ul>
 
