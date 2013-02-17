@@ -1,3 +1,9 @@
 config.php
 
 .DS_Store
+
+lib/cache/ranks.php
+
+lib/cache/ranks.php
+
+lib/cache/smilies.php
