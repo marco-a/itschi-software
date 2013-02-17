@@ -2,7 +2,7 @@
 
 $hostname = 'localhost';
 $username = 'itschi';
-$password = 'paoolb3';
+$password = 'PASSWORT';
 $database = 'itschi';
 $prefix = 'itschi_';
 
