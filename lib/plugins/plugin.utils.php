@@ -11,6 +11,11 @@
 	*	It may also cause headaches.
 	*/
 
+	// TMP CHARSET
+	if (!defined('CHARSET')) {
+		define('CHARSET', 'UTF-8');
+	}
+
 	final class utils extends plugin {
 		/*
 			String functions
@@ -22,6 +27,24 @@
 
 		public function replace($text, $bbcodes, $smilies, $make_clickable, $html = true) {
 			return replace($text, $bbcodes, $smilies, $make_clickable, $html);
+		}
+
+		public function strToUpper($str) {
+			return mb_strtoupper($str, CHARSET);
+		}
+
+		public function strToLower($str) {
+			return mb_strtolower($str, CHARSET);
+		}
+
+		public function strLength($str) {
+			return mb_strlen($str, CHARSET);
+		}
+
+		public function strSubstr($str, $start, $length = NULL) {
+			if ($length == NULL) $length = $this->str_length($str);
+
+			return mb_substr($str, $start, $length, CHARSET);
 		}
 
 		/*
@@ -51,5 +74,5 @@
 		}
 	}
 
-	
+
 ?>
