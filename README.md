@@ -1,8 +1,6 @@
 Itschi Forum-Software
 ===============
 
-Well done, you found Itschi Forum-Software. At this very moment, this repository is empty. It will get its first code
-with an alpha-release soon. Be sure to always look for changes here.
-
-Sincerely,
-bluefirex
+Das ist die offizielle Repo der Itschi-Forensoftware. Bitte sei gewarnt: Der aktuelle Stand ist keinesfalls
+für den produktiven Einsatz gedacht. Der aktuelle Code dient nur zur Vorschau. Es sind mit sehr hoher
+Wahrscheinlichkeit schwere Bugs vorhanden oder es fehlen Dinge.
