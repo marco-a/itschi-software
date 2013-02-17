@@ -9,7 +9,7 @@
 	final class SQL extends plugin {
 		/**
 		 * 	@name checkPermission
-		 *	
+		 *
 		 *	@return bool
 		 */
 
@@ -30,18 +30,22 @@
 		 */
 
 		public function fetch_array($res) {
-			return mysql_fetch_assoc($res);
+			global $db;
+
+			return $db->fetch_array($res);
 		}
 
 		/**
 		 *	@name fetch_object
 		 *	@param resource
-		 *	
+		 *
 		 *	@return object
 		 */
 
 		public function fetch_object($res) {
-			return mysql_fetch_object($res);
+			global $db;
+
+			return $db->fetch_object($res);
 		}
 
 		/**
@@ -52,7 +56,9 @@
 		 */
 
 		public function num_rows($qry) {
-			return mysql_num_rows($qry);
+			global $db;
+
+			return $db->num_rows($qry);
 		}
 
 		/**
@@ -62,7 +68,9 @@
 		 */
 
 		public function insertID() {
-			return mysql_insert_id();
+			global $db;
+
+			return $db->insert_id();
 		}
 
 		/**
@@ -72,7 +80,9 @@
 		 */
 
 		public function free_result($res) {
-			return mysql_free_result($res);
+			global $db;
+
+			return $db->free_result($res);
 		}
 
 		/**
@@ -83,17 +93,21 @@
 		 */
 
 		public function chars($str) {
-			return mysql_real_escape_string($str);
+			global $db;
+
+			return $db->chars($str);
 		}
 
 		/**
 		 *	@name affected_rows
-		 *	
+		 *
 		 *	@return int
 		 */
 
 		public function affected_rows() {
-			return mysql_affected_rows();
+			global $db;
+
+			return $db->affected_rows();
 		}
 
 		/**
@@ -198,7 +212,7 @@
 		 *
 		 *	@param string table
 		 *	@param array values
-		 *	@info 
+		 *	@info
 		 *
 		 *	@return res
 		 */
