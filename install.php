@@ -6,7 +6,12 @@
 	*
 	*/
 
-	$error = '';
+	if (is_file('config.php')) {
+		header('Location: index.php');
+
+		exit;
+	}
+
 	$submit = (isset($_POST['submit'])) ? true : false;
 	$db_host = (isset($_POST['db_host'])) ? $_POST['db_host'] : 'localhost';
 	$db_username = (isset($_POST['db_username'])) ? $_POST['db_username'] : '';
@@ -561,8 +566,8 @@
 						<?php elseif ($error == 7): ?>		Das Passwort muss mindestens 6 Zeichen lang sein!
 						<?php elseif ($error == 8): ?>		Die Passw&ouml;rter sind nicht gleich!
 						<?php elseif ($error == 9): ?>		“config.php” ist nicht beschreibbar!
-						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erf&uuml;llt!
-						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! L&ouml;sche die Datei install.php! <a href="index.php">zum Forum</a>
+						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erfüllt!
+						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! Lösche die Datei install.php! <a href="index.php">zum Forum</a>
 						<?php endif; ?>
 					</div>
 					<div class="info_a"></div>

@@ -98,23 +98,19 @@
 			<br /><br />Mitglieder:
 
 			<?php
-				if (count(template::$blocks['online']) == 0) {
-					echo '-- Niemand';
-				} else {
-					foreach(template::$blocks['online'] as $online): ?>
+			if (count(template::$blocks['online']) == 0) {
+				echo '-- Niemand';
+			} else {
+				foreach(template::$blocks['online'] as $online): ?>
 					<?=$online['SEPARATOR']; ?>
 
 					<?php if ($online['IS_BOT']): ?>
-					<span style="color:#aaa">
-						<?=$online['BOT_NAME']; ?>
-					</span>
-					<?php else: ?>
+						<span style="color:#aaa"><?=$online['BOT_NAME']; ?></span>
+						<?php else: ?>
 						<a class="<?=$online['LEGEND']; ?>" href="user.php?id=<?=$online['ID']; ?>"><?=$online['USERNAME']; ?></a>
-					<?php endif; ?>
-					<?php endforeach; ?>
-			<?php
-				}
-			?>
+						<?php endif; ?>
+					<?php endforeach;
+			} ?>
 		</td>
 	</tr>
 </table>
