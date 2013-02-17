@@ -12,24 +12,6 @@
 
 	error_reporting(E_ALL & ~E_NOTICE);
 
-	if (@ini_get('register_globals') == 1 || strtolower(@ini_get('register_globals')) == 'on') {
-		if (isset($_REQUEST['GLOBALS'])) {
-			exit;
-		}
-
-		$superglobals = array('_GET', '_POST', '_REQUEST', '_ENV', '_FILES', '_SESSION', '_COOKIES', '_SERVER');
-
-		foreach ($superglobals as $value) {
-			if (is_array($GLOBALS[$value])) {
-				foreach ($GLOBALS[$value] as $key => $var) {
-					if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key]) {
-						unset($GLOBALS[$key]);
-					}
-				}
-			}
-		}
-	}
-
 	header('Content-Type: text/html; charset=utf-8');
 
 	$root = dirname(__FILE__) . '/';
