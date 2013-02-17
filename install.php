@@ -6,7 +6,24 @@
 	*
 	*/
 
-	$error = '';
+	if (is_file('config.php')) {
+		require_once('config.php');
+
+		if (!empty($prefix)) {
+			header('Location: index.php');
+
+			exit;
+		}
+	} else {
+		$fd = fopen('config.php', 'w+');
+
+		if ($fd !== false) {
+			fwrite($fd, '');
+
+			fclose($fd);
+		}
+	}
+
 	$submit = (isset($_POST['submit'])) ? true : false;
 	$db_host = (isset($_POST['db_host'])) ? $_POST['db_host'] : 'localhost';
 	$db_username = (isset($_POST['db_username'])) ? $_POST['db_username'] : '';
@@ -528,6 +545,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8" />
 		<title>Itschi &rsaquo; Installation</title>
 		<link rel="stylesheet" href="styles/standard/style.css" />
 		<link rel="stylesheet" href="styles/installer.css" />
