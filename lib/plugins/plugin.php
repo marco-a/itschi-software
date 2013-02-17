@@ -5,12 +5,29 @@
 	* @since 2007/05/25
 	*
 	*/
-	
+
 	require 'plugin.interface.php';
 
 	abstract class plugin implements pluginInterface {
 		protected static $package = 'com.gidix.examplePlugin';
 		protected static $permissions = array();
+
+		private static $objs = NULL;
+
+		/**
+		 * @name init_classes
+		 *
+		 * @return void
+		 */
+		public static function init_classes() {
+			if (self::$objs != NULL) return;
+
+			self::$objs = array();
+
+			self::$objs['SQL'] = new SQL();
+			self::$objs['TPL'] = new TPL();
+			self::$objs['utils'] = new utils();
+		}
 
 		/**
 		 *	@name init
@@ -20,6 +37,7 @@
 
 		public static function init($package) {
 			self::$package = $package;
+
 			self::$permissions = self::getPermissionList();
 		}
 
@@ -45,7 +63,7 @@
 							'.$type.''.$error.'
 						</code>
 					</div>
-					
+
 					<div class="info">
 						<small>Verursacht durch: '.self::$package.'</small>
 					</div>
@@ -58,7 +76,7 @@
 		/**
 		 *	@name getPermissions
 		 *
-		 *	@return array	
+		 *	@return array
 		 */
 
 		protected static function getPermissionList() {
@@ -157,7 +175,7 @@
 		 */
 
 		public static function SQL() {
-			return new SQL();
+			return (isset(self::$objs['SQL']) ? self::$objs['SQL'] : NULL);
 		}
 
 		/**
@@ -167,17 +185,17 @@
 		 */
 
 		public static function TPL() {
-			return new TPL();
+			return (isset(self::$objs['TPL']) ? self::$objs['TPL'] : NULL);
 		}
 
 		/**
 		 *	@name utils
-		 *	
+		 *
 		 *	@return object
 		 */
 
 		public static function utils() {
-			return new utils();
+			return (isset(self::$objs['utils']) ? self::$objs['utils'] : NULL);
 		}
 
 	}
