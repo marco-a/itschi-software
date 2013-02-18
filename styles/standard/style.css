@@ -601,9 +601,9 @@ div.dotted {
 
 div.bbcode_box {
 	margin-top: 5px;
-	border: 1px solid #dddddd;
+	border: 1px solid #eaeaea;
 	padding: 10px;
-	background: #f7f7f7;
+	background: #f6f6f6;
 }
 
 table.form {
