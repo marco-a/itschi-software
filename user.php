@@ -46,6 +46,14 @@
 		$db->free_result($res2);
 	}
 
+	if ($is_online) {
+		$online_time = (floor((time() - $row['user_login']) / 60));
+	 } else if(empty($row['user_login'])) {
+		$online_time = date('d.m.y H:i', $row['user_register']);
+	 } else {
+		$online_time = date('d.m.y H:i', $row['user_login']);
+	}
+
 	template::assign(array(
 		'TITLE_TAG'	=>	$row['username'] . ' | ',
 		'ID'		=>	$row['user_id'],
@@ -53,7 +61,7 @@
 		'USER_USERSTATUS'	=>	$row['user_status'],
 		'BAN'		=>	$row['user_ban'],
 		'IS_ONLINE'	=>	$is_online,
-		'ONLINE_TIME'	=>	($is_online) ? (floor((time() - $row['user_login']) / 60)) : date('d.m.y H:i', $row['user_login']),
+		'ONLINE_TIME'	=>	$online_time,
 		'ICQ'		=>	htmlspecialchars($row['user_icq']),
 		'SKYPE'		=>	htmlspecialchars($row['user_skype']),
 		'AVATAR'	=>	($row['user_avatar']) ? $row['user_avatar'] : $config['default_avatar'],
