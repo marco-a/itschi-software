@@ -115,6 +115,22 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
+		mysql_query("
+			CREATE TABLE IF NOT EXISTS `".$prefix."permissions` (
+				`permission_id` int(10) NOT NULL AUTO_INCREMENT,
+				`group_id` int(10) NOT NULL,
+				`permission_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+				PRIMARY KEY (`permission_id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+		");
+
+		mysql_query("
+			CREATE TABLE IF NOT EXISTS `".$prefix."groups` (
+			  	`group_id` int(10) NOT NULL AUTO_INCREMENT,
+			  	`group_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '--',
+			  	PRIMARY KEY (`group_id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+		");
 
 		mysql_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "bots` (
