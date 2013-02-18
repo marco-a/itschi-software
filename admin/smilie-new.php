@@ -59,8 +59,15 @@
 	$extensions = array('png', 'jpg', 'jpeg', 'gif', 'bmp');
 
 	if ($handle = @opendir('../images/smilies/')) {
-		while ($file = readdir($handle)) {
-			if ($file != '.' && $file != '..' && !is_dir('../images/smilies/' . $file) && in_array(strtolower(end(explode('.', $file))), $extensions)) {
+		while (($file = readdir($handle)) !== false) {
+			$ext = explode('.', $file);
+
+			if (count($ext) == 1) continue;
+
+			$ext = end($ext);
+			$ext = strtolower($ext);
+
+			if ($file != '.' && $file != '..' && !is_dir('../images/smilies/' . $file) && in_array($ext, $extensions)) {
 				template::assignBlock('smilies', array(
 					'SMILIE'	=>	$file
 				));
