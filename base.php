@@ -79,6 +79,8 @@
 		}
 	}
 
+	template::assign('admin', ($user->row['user_level'] == ADMIN));
+
 	$token->_('user.php', 'GET', USER);
 	$token->_('search.php', 'GET, POST', USER);
 	$token->_('viewforum.php', 'GET', USER);

@@ -33,6 +33,7 @@
 		</div>
 
 		<section id="content">
+			<?php if (template::getVar('admin')) {?>
 			<div id="nav">
 				<nav>
 					<ul>
@@ -53,5 +54,6 @@
 
 				<div class="clear"></div>
 			</div>
+			<?php } ?>
 
 			<div class="content">
