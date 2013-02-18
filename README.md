@@ -18,6 +18,6 @@ Der aktuelle Code dient nur zur Vorschau. Es sind mit sehr hoher Wahrscheinlichk
 ---
 Bitte alle auftretenden Bugs im [Issues-Bereich](https://github.com/bluefirex/itschi-software/issues) auf github melden!
 
-### Aktuelle Hinweise für Mit-Entwickler
+### Aktuelle Hinweise und ToDo
 ---
 1. Bitte keine Updates oder Entwicklungen am News-System für die Startseite einsenden. Das System wird zuerst von bluefirex umgesetzt, bevor Updates eingesendet werden.
