@@ -12,6 +12,12 @@
 		exit;
 	}
 
+	if (isset($_GET['remove'])) {
+		$id = (int)$_GET['remove'];
+
+		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
+	}
+
 	// get all plugins from directory for available plugins
 	$files = glob('../plugins/*', GLOB_ONLYDIR);
 

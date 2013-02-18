@@ -107,7 +107,7 @@
 						<?php if ($server['SERVERSTATUS']): ?>
 							<a href="#<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
-							<a href="#" class="button">Entfernen</a>
+							<a href="plugins.php?remove=<?=$server['ID'];?>" class="button">Entfernen</a>
 					</div>
 
 					<div class="clear"></div>
@@ -118,7 +118,7 @@
 	?>
 
 	<br /><br />
-	
+
 	<div class="h2box">
 		<div class="fLeft" style="width: 40%;">
 			<h1>Verfügbare Plugins</h1>
