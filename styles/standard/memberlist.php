@@ -50,7 +50,7 @@
 			?>
 
 						<div style="float:left;padding:15px 0;width:33%">
-							<a style="float:left;margin-right:10px;" href="user.php?id=<?=$members['ID']; ?>"><img class="img" src="images/avatar/mini/<?=$members['AVATAR']; ?>" alt="<?=$members['USERNAME']; ?>" /></a>
+							<a style="float:left;margin-right:10px;width: 50px;height: 50px;" href="user.php?id=<?=$members['ID']; ?>"><img class="img" src="images/avatar/mini/<?=$members['AVATAR']; ?>" alt="<?=$members['USERNAME']; ?>" /></a>
 							<b><a class="<?=$members['LEGEND']; ?>" href="user.php?id=<?=$members['ID']; ?>"><?=$members['USERNAME']; ?></a></b><br /><span><?=$members['RANK']; ?></span>
 						</div>
 
@@ -64,6 +64,6 @@
 	</div>
 </div>
 
-<?php if (template::getVar('PAGES_NUM') > '1'): ?>Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> | <?=template::getVar('PAGES'); ?><?php endif; ?> 
+<?php if (template::getVar('PAGES_NUM') > '1'): ?>Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> | <?=template::getVar('PAGES'); ?><?php endif; ?>
 
 <?php template::display('footer'); ?>

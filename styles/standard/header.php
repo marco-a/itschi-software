@@ -59,7 +59,7 @@
 						<a href="login.php">Login</a>
 					</li>
 				<?php } ?>
-				
+
 				<div class="clear"></div>
 			</ul>
 		</div>
@@ -82,7 +82,7 @@
 				<div class="clear"></div>
 			</nav>
 		</div>
-			
+
 		<div class="clear"></div>
-			
+
 		<section id="content">
