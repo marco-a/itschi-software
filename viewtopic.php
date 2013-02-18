@@ -1,7 +1,7 @@
 <?php
 	/**
 	*
-	* @package Itschi
+	* @package com.Itschi.forum.viewtopic
 	* @since 2007/05/25
 	*
 	*/
