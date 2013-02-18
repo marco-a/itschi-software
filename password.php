@@ -76,11 +76,11 @@ if (isset($_POST['send']))
 	}
 }
 
-$tpl->assign(array(
+template::assign(array(
 	'TITLE_TAG'	=>	'Passwort vegessen? | ',
 	'ERROR'		=>	$error
 ));
 
-$tpl->display('password.tpl');
+template::display('password');
 
 ?>
