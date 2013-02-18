@@ -4,10 +4,10 @@ config.php
 
 lib/cache/*.php
 
-!images/avatar/default.png
-
 images/avatar/*
 
-!images/avatar/mini/default.png
+!images/avatar/default.png
 
 images/avatar/mini/*
+
+!images/avatar/mini/default.png
