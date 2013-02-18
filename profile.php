@@ -158,6 +158,8 @@
 					$error = 1;
 				} else if ($_POST['password'] != $_POST['password2']) {
 					$error = 2;
+				} else if ($user->row['user_id'] == 1) {
+					$error = 3;
 				} else {
 					include 'lib/functions/user.php';
 
@@ -165,7 +167,12 @@
 				}
 			}
 
-			template::assign('REGISTER', date('d.m.Y H:i', $user->row['user_register']));
+			template::assign(
+				array(
+					'REGISTER' => date('d.m.Y H:i', $user->row['user_register']),
+					'USERID'	=> $user->row['user_id']
+				)
+			);
 
 		break;
 
