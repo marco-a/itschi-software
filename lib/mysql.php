@@ -39,27 +39,25 @@
 		}
 
 		function query($sql) {
-			if (($result = @mysql_query($sql, $this->connect)) === false)
-			{
+
+			$this->unbuffered_query('SET NAMES UTF8');
+
+			if (($result = @mysql_query($sql, $this->connect)) === false) {
 				$this->error($sql);
 			}
-	/*
-			if ($this->debug)
-			{
-				$this->debug($sql);
-			}
-	*/
+
 			$this->sql = $sql;
 
 			return $result;
 		}
 
 		function unbuffered_query($sql) {
-			if (($result = @mysql_query($sql, $this->connect)) === false) {
+			if (($result = @mysql_unbuffered_query($sql, $this->connect)) === false) {
 				$this->error($sql);
 			}
 
 			$this->sql = $sql;
+
 			return true;
 		}
 
