@@ -55,8 +55,14 @@
 	</tr>
 </table>
 
-<div class="h2box" style="margin-bottom:0;">
-	<h2>Synchronisieren</h2>
+<div class="h2box">
+	<h1 class="fLeft" style="width:30%;">Synchronisieren</h1>
+
+	<div class="fRight" style="padding-top: 30px; width: 30%; text-align: right;">
+		<a href="index.php?sync=0" class="button">Alles synchronisieren</a>
+	</div>
+
+	<div class="clear"></div>
 </div>
 
 <form action="index.php" method="post">
@@ -65,28 +71,28 @@
 			<td width="90%"><b>Globale Statistiken</b><br /><span class="grey">Mitglieder-, Themen-, Beitragszähler; Neuster User</span></td>
 			<td valign="top" align="center">
 				<a href="index.php?sync=1" class="button">Synchronisieren</a>
-				<?php if (template::getVar('SYNC') == '1'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
+				<?php if (template::getVar('SYNC') == 1 || template::getVar('SYNC') == 0): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
 			</td>
 		</tr>
 		<tr>
 			<td><b>Themenstatistiken</b><br /><span class="grey">Letzter Beitrag, Anzahl an Beiträgen</span></td>
 			<td align="center">
 				<a href="index.php?sync=2" class="button">Synchronisieren</a>
-				<?php if (template::getVar('SYNC') == '2'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
+				<?php if (template::getVar('SYNC') == 2|| template::getVar('SYNC') == 0): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
 			</td>
 		</tr>
 		<tr>
 			<td><b>Forenstatistiken</b><br /><span class="grey">Letzter Beitrag, Anzahl an Themen</span></td>
 			<td align="center">
 				<a href="index.php?sync=3" class="button">Synchronisieren</a>
-				<?php if (template::getVar('SYNC') == '3'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
+				<?php if (template::getVar('SYNC') == 3|| template::getVar('SYNC') == 0): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
 			</td>
 		</tr>
 		<tr>
 			<td><b>Cache leeren</b><br /><span class="grey">Templates, Bots, Ränge, Smilies</span></td>
 			<td align="center">
 				<a href="index.php?sync=4" class="button">Synchronisieren</a>
-				<?php if (template::getVar('SYNC') == '4'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
+				<?php if (template::getVar('SYNC') == 4|| template::getVar('SYNC') == 0): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
 			</td>
 		</tr>
 	</table>
