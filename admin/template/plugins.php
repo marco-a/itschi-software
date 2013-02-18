@@ -105,12 +105,12 @@
 			foreach(template::$blocks['server'] as $server):
 	?>
 				<div class="item">
-					<div class="fLeft" style="width: 69%;">
+					<div class="fLeft" style="width: 59%;">
 						<h2 style="margin-bottom: 0;"><?=$server['NAME']; ?> - <?php echo ($server['SERVERSTATUS'] ? '<small class="green">Online</small>' : '<small class="red">Offline</small>');?></h2>
 						<small><?=$server['URL']; ?><span class="grey">plugins.json</span></small>
 					</div>
 
-					<div class="fRight" style="width: 29%; text-align: right;">
+					<div class="fRight" style="width: 39%; text-align: right;">
 						<?php if ($server['SERVERSTATUS']): ?>
 							<a href="plugins.php?list=<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
