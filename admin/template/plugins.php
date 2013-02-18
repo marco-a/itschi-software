@@ -96,6 +96,10 @@
 		<div class="clear"></div>
 	</div>
 
+	<?php if (template::getVar('pluginServerCount') == 0): ?>
+		<div class="info">Es sind keine Plugin Server eingetragen.</div>
+	<?php endif; ?>
+
 	<?php
 		if (isset(template::$blocks['server'])):
 			foreach(template::$blocks['server'] as $server):
