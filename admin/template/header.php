@@ -8,7 +8,9 @@
 			token = '<?=template::getVar('USER_TOKEN'); ?>';
 		</script>
 		<script type="text/javascript" src="../js/jquery.js"></script>
-		<script type="text/javascript" src="../styles/standard/style.js"></script>
+		<script type="text/javascript" src="../js/main.js"></script>
+		<script type="text/javascript" src="../js/dropdown/jquery.dropdown.js"></script>
+
 	</head>
 	<body>
 		<div id="user_wrap">

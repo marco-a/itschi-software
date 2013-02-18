@@ -158,8 +158,12 @@
 										Dieses Plugin benötigt keine besonderen Rechte.
 									</span>
 								<?php else: ?>
-									<b>Berechtigungen:</b><br />
-									<?=$available['PERMISSIONS']; ?>
+									<div>
+										<span onclick="return Spoiler(this);"><b>Berechtigungen: </b><a href="#" onclick="return false;" style="font-weight:bold;">Anzeigen</a></span>
+										<div style="display:none" class="bbcode_box">
+											<?=$available['PERMISSIONS']; ?>
+										</div>
+									</div>
 								<?php endif; ?>
 							</div>
 						</div>

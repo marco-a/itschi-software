@@ -131,7 +131,7 @@
 			'\[img\](.*)\[/img\]'				=>	'<img src="$1" border="0" />',
 			'\[color=(.*)\](.*)\[/color\]'			=>	'<font color="$1">$2</font>',
 			'\[size=([0-9]{2,3})\](.*)\[/size\]'		=>	'<font style="font-size:$1%;">$2</font>',
-			'\[s\](.*)\[/s\]'				=>	'<div><div class="dotted"><span onclick="return Spoiler(this);"><b>Spoiler: </b><a href="#" onclick="return false;"><b>Anzeigen</b></a></span></div><div style="display:none" class="bbcode_box">$1</div></div>'
+			'\[s\](.*)\[/s\]'				=>	'<div><span onclick="return Spoiler(this);"><b>Spoiler: </b><a href="#" onclick="return false;" style="font-weight:bold;">Anzeigen</a></span><div style="display:none" class="bbcode_box">$1</div></div>'
 		);
 	}
 

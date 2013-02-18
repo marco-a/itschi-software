@@ -100,5 +100,5 @@ function Spoiler(div) {
 	} else {
 		obj.slideUp();
 		$(div).children('a').html('Anzeigen');
-	}
+	}      
 }
