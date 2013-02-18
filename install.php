@@ -304,6 +304,18 @@
 		");
 
 		mysql_query("
+			CREATE TABLE IF NOT EXISTS `" . $prefix . "plugin_server` (
+			  `server_id` int(5) NOT NULL AUTO_INCREMENT,
+			  `server_name` varchar(30) NOT NULL DEFAULT 'NoName',
+			  `server_url` varchar(120) DEFAULT NULL,
+			  `server_status` int(2) NOT NULL DEFAULT '0',
+			  `server_plugins` int(5) NOT NULL,
+			  `new_plugin` int(1) NOT NULL DEFAULT '0',
+			  PRIMARY KEY (`server_id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+		");
+
+		mysql_query("
 			CREATE TABLE `".$prefix."plugins` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,

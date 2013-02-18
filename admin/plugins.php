@@ -45,6 +45,31 @@
 		}
 	}
 
+
+	// get plugins from database
+	$res = $db->query("
+		SELECT *
+		FROM " . SERVER_TABLE . "
+		ORDER BY server_id ASC
+	");
+
+	while ($row = $db->fetch_object($res)) {
+		$server_id 			= $row->server_id;
+		$server_name 		= $row->server_name;
+		$server_url 		= $row->server_url;
+		$server_plugin_file = $server_url . '/plugins.json';
+		$server_status 		= @fopen($server_plugin_file,r);
+
+		// assign
+		template::assignBlock('server', array(
+			'ID'			=>	$server_id,
+			'NAME'			=>	htmlspecialchars($server_name),
+			'URL'			=>	urldecode($server_url),
+			'SERVERSTATUS'	=> 	$server_status
+		));
+	}
+
+
 	// get plugins from database
 	$res = $db->query("
 		SELECT *

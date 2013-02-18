@@ -86,6 +86,39 @@
 
 	<br /><br />
 
+	<div class="h2box" style="margin-bottom: 0;">
+		<div class="fLeft" style="width: 40%">
+			<h1>Plugin Server</h1>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<?php
+		if (isset(template::$blocks['server'])):
+			foreach(template::$blocks['server'] as $server):
+	?>
+				<div class="item">
+					<div class="fLeft" style="width: 69%;">
+						<strong><?=$server['NAME']; ?></strong> - <?php echo ($server['SERVERSTATUS'] ? '<small class="green">Online</small>' : '<small class="red">Offline</small>');?><br />
+						<small><?=$server['URL']; ?><span class="grey">plugins.json</span></small>
+					</div>
+
+					<div class="fRight" style="width: 29%; text-align: right;">
+						<?php if ($server['SERVERSTATUS']): ?>
+							<a href="#<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
+						<?php endif; ?>
+							<a href="#" class="button">Entfernen</a>
+					</div>
+
+					<div class="clear"></div>
+				</div>
+	<?php
+			endforeach;
+		endif;
+	?>
+
+	<br /><br />
+	
 	<div class="h2box">
 		<div class="fLeft" style="width: 40%;">
 			<h1>Verfügbare Plugins</h1>

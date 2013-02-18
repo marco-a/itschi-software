@@ -29,6 +29,7 @@
 	define('USERS_TABLE', $prefix . 'users');
 	define('BANLIST_TABLE', $prefix . 'banlist');
 	define('PLUGINS_TABLE', $prefix . 'plugins');
+	define('SERVER_TABLE', $prefix . 'plugin_server');
 	define('STYLES_TABLE', $prefix . 'styles');
 	define('PREFIX', $prefix);
 ?>
