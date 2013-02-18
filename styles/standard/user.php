@@ -42,7 +42,7 @@
 	<div class="info">Das Mitglied ist gesperrt</div>
 <?php endif; ?>
 
-<div style="width:100%;">
+<div style="width:100%;overflow: hidden;word-wrap: break-word;">
 	<table align="center" cellpadding="10" cellspacing="0">
 		<tr>
 			<td width="25%" valign="top">
@@ -71,7 +71,7 @@
 						<td valign="top">
 							<span>Beitr&auml;ge:</span>
 						</td>
-						
+
 						<td>
 							<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USER_USERNAME'); ?>">Beitr&auml;ge des Mitglieds</a><br />
 							<span class="grey"><?=template::getVar('PRO'); ?>% aller Beitr&auml;ge<br />
@@ -80,7 +80,7 @@
 					</tr>
 				</table>
 			</td>
-			
+
 			<td width="25%" valign="top">
 				<table class="userProfile">
 					<tr>
