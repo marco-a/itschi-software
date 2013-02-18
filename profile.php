@@ -24,7 +24,7 @@
 
 			if (isset($_GET['delete']) && $user->row['user_avatar']) {
 				if (empty($_GET['ok'])) {
-					message_box('Willst du Dein Avatar wirklich l&ouml;schen?', 'profile.php?mode=avatar&delete=1&ok=1', 'Avatar l&ouml;schen', 'profile.php?mode=avatar', 'Abbrechen');
+					message_box('Willst du Dein Avatar wirklich löschen?', 'profile.php?mode=avatar&delete=1&ok=1', 'Avatar löschen', 'profile.php?mode=avatar', 'Abbrechen');
 				} else {
 					@unlink('images/avatar/' . $user->row['user_avatar']);
 					@unlink('images/avatar/mini/' . $user->row['user_avatar']);
@@ -37,7 +37,7 @@
 
 					$user->row['user_avatar'] = '';
 
-					message_box('Der Avatar wurde gel&ouml;scht', 'profile.php?mode=avatar', 'zur&uuml;ck zur &Uuml;bersicht');
+					message_box('Der Avatar wurde gelöscht', 'profile.php?mode=avatar', 'zurück zur Übersicht');
 				}
 			}
 
@@ -75,7 +75,7 @@
 
 					$user->row['user_avatar'] = $newfile;
 
-					message_box('Der Avatar wurde hochgeladen', 'profile.php?mode=avatar', 'zur&uuml;ck zur &Uuml;bersicht');
+					message_box('Der Avatar wurde hochgeladen', 'profile.php?mode=avatar', 'zurück zur Übersicht');
 				}
 			}
 
@@ -106,7 +106,7 @@
 						WHERE user_id = " . $user->row['user_id']
 					);
 
-					message_box('Die neue E-Mail wurde gespeichert', 'profile.php?mode=email', 'zur&uuml;ck zur &Uuml;bersicht');
+					message_box('Die neue E-Mail wurde gespeichert', 'profile.php?mode=account', 'zurück zur Übersicht');
 				}
 
 			}
@@ -125,7 +125,7 @@
 						WHERE user_id = " . $user->row['user_id']
 					);
 
-					message_box('Das neue Passwort wurde gespeichert', 'profile.php?mode=password', 'zur&uuml;ck zur &Uuml;bersicht');
+					message_box('Das neue Passwort wurde gespeichert', 'profile.php?mode=account', 'zurück zur Übersicht');
 				}
 			}
 
@@ -186,7 +186,7 @@
 
 				$user->update_vars();
 
-				message_box('Die Daten wurden gespeichert', 'profile.php', 'zur&uuml;ck zur &Uuml;bersicht');
+				message_box('Die Daten wurden gespeichert', 'profile.php', 'zurück zur Übersicht');
 			}
 
 			template::assign(array(

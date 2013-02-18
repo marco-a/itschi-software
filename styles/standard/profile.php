@@ -4,7 +4,7 @@
 	<ul>
 		<li><a href="profile.php" <?php if (!template::getVar('MODE')): ?>class="active"<?php endif; ?>>Profil</a></li>
 		<li><a href="profile.php?mode=avatar" <?php if (template::getVar('MODE') == 'avatar'): ?>class="active"<?php endif; ?>>Avatar</a></li>
-		
+
 		<li><a href="profile.php?mode=account" <?php if (template::getVar('MODE') == 'account'): ?>class="active"<?php endif; ?>>Account</a></li>
 
 		<?php if (template::getVar('ENABLE_DELETE')): ?>
@@ -37,7 +37,7 @@
 					<div style="width: 500px; margin: auto;">
 						<div class="fLeft" style="width: 180px">
 							<img class="img" src="images/avatar/<?=template::getVar('AVATAR'); ?>" width="150px" height="150px" />
-							
+
 							<div style="position: absolute; margin-top: -18.5px; margin-left: -5px;">
 								<?php if (template::getVar('AVATAR') != template::getVar('DEFAULT_AVATAR')): ?><a href="profile.php?mode=avatar&delete=1" class="button redB">Avatar l&ouml;schen</a><?php endif; ?>
 							</div>
@@ -81,7 +81,7 @@
 				<div class="fLeft" style="width:48%;">
 					<h1>E-Mail-Adresse &auml;ndern</h1>
 
-					<form action="profile.php?mode=email" method="post">
+					<form action="profile.php?mode=account" method="post">
 						<table cellpadding="5" cellspacing="0" width="100%">
 							<tr>
 								<td width="40%">Aktuelle E-Mail-Adresse:</td>
@@ -110,7 +110,7 @@
 				<div class="fRight" style="width:48%;">
 					<h1>Passwort &auml;ndern</h1>
 
-					<form name="eintrag" enctype="multipart/form-data" action="profile.php?mode=password" method="post">
+					<form name="eintrag" enctype="multipart/form-data" action="profile.php?mode=account" method="post">
 						<table cellpadding="5" cellspacing="0" width="100%">
 							<tr>
 								<td width="40%">Neues Passwort:</td>
@@ -212,7 +212,7 @@
 										<td valign="top">
 											<span>Beitr&auml;ge:</span>
 										</td>
-										
+
 										<td>
 											<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USERNAME'); ?>">Beitr&auml;ge von dir</a><br />
 											<span class="grey"><?=template::getVar('PRO'); ?>% aller Beitr&auml;ge<br />
@@ -221,7 +221,7 @@
 									</tr>
 								</table>
 							</td>
-							
+
 							<td width="50%" valign="top">
 								<table class="userProfile">
 									<tr>
@@ -249,7 +249,7 @@
 						<tr>
 							<td colspan="2">
 								<textarea name="signatur" style="width:99%; height: 100px;" placeholder="Signatur..."><?=template::getVar('SIGNATUR'); ?></textarea>
-							
+
 								<div class="options">
 									<div class="title">
 										Optionen:
