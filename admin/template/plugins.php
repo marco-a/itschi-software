@@ -114,7 +114,8 @@
 						<?php if ($server['SERVERSTATUS']): ?>
 							<a href="plugins.php?list=<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
-							<a href="plugins.php?remove=<?=$server['ID'];?>" class="button redB">Entfernen</a>
+							<a href="server-new.php?id=<?=$server['ID']; ?>" class="button greyB">bearbeiten</a>
+							<a href="plugins.php?remove=<?=$server['ID'];?>" class="button redB">entfernen</a>
 					</div>
 
 					<div class="clear"></div>
