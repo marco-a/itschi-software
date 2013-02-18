@@ -36,6 +36,12 @@ function scandir_r($dir, $callback) {
 
 scandir_r(ROOT, function($file, $path, $ext) {
 	if ($ext == 'php' || $ext == 'html') {
+		if ($file == 'fix_utf.php') {
+			echo 'skipped fix_utf.php'.PHP_EOL.PHP_EOL;
+
+			return;
+		}
+
 		echo 'got file '.$file.' -> '.$path.PHP_EOL;
 
 		$content = file_get_contents($path);
@@ -44,12 +50,12 @@ scandir_r(ROOT, function($file, $path, $ext) {
 
 		$content = str_replace(
 		array(
-			'ü',
-			'ö',
-			'ä',
-			'Ü',
-			'Ö',
-			'Ä'
+			'&uuml;',
+			'&ouml;',
+			'&auml;',
+			'&Uuml;',
+			'&Ouml;',
+			'&Auml;'
 		),
 		array(
 			'ü',
