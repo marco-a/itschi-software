@@ -1146,7 +1146,7 @@ ul.sidebarNav {
 		text-align: center;
 	}
 
-		#login .inputs input[type=text], #login .inputs input[type=password],
+		#login .inputs input[type=text], #login .inputs input[type=password], #login .inputs input[type=email],
 		#register .inputs input[type=text], #register .inputs input[type=password], #register .inputs input[type=email] {
 			width: 95%;
 			padding: 10px;
