@@ -106,7 +106,7 @@
 	?>
 				<div class="item">
 					<div class="fLeft" style="width: 69%;">
-						<strong><?=$server['NAME']; ?></strong> - <?php echo ($server['SERVERSTATUS'] ? '<small class="green">Online</small>' : '<small class="red">Offline</small>');?><br />
+						<h2 style="margin-bottom: 0;"><?=$server['NAME']; ?> - <?php echo ($server['SERVERSTATUS'] ? '<small class="green">Online</small>' : '<small class="red">Offline</small>');?></h2>
 						<small><?=$server['URL']; ?><span class="grey">plugins.json</span></small>
 					</div>
 
