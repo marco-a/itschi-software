@@ -191,7 +191,7 @@
 					<br />
 					<br />
 
-					Gründer können aus Sicherheitsgründen das Konto nicht löschen.
+					Gründer können ihr Konto aus Sicherheitsgründen nicht löschen.
 				</div>
 				<?php endif; ?>
 
