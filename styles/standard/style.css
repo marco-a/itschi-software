@@ -489,13 +489,13 @@ a.redB, input.redB {
 	}
 
 a.greenB, input.greenB {
-	background: #009b00;
-	border: 1px solid #009b00;
+	background: #69a018;
+	border: 1px solid #69a018;
 	color: #fff;
 }
 
 	a.greenB:hover, a.greenB:active, input.greenB:hover, input.greenB:active {
-		background: #006300;
+		background: #527f10;
 	}
 
 a.yellowB, input.yellowB {
