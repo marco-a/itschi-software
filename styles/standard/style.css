@@ -488,6 +488,16 @@ a.redB, input.redB {
 		background: #630000;
 	}
 
+a.greenB, input.greenB {
+	background: #009b00;
+	border: 1px solid #009b00;
+	color: #fff;
+}
+
+	a.greenB:hover, a.greenB:active, input.greenB:hover, input.greenB:active {
+		background: #006300;
+	}
+
 a.yellowB, input.yellowB {
 	color: #443c0a;
 	background: #ddc31c;
