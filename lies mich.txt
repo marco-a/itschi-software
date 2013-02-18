@@ -1,9 +1,0 @@
-/**
-*
-* @package Itschi
-* @since 2007/05/25
-*
-*/
-Schritt 1	Lade alle Dateien in deinen FTP-Ordner.
-Schritt 2	Rufe die Datei install.php mit dem Browser auf und gib die Daten ein.
-Schritt 3	Lösche die Datei install.php.
