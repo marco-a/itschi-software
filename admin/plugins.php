@@ -77,13 +77,12 @@
 		$server_plugin_file = sprintf('http://%s%s', $server_url, 'plugins.json');
 
 		$server_status = false;
+		$server_content = @file_get_contents($server_plugin_file);
+		$server_status = @json_decode($server_content);
+		unset($server_content);
 
-		if (($server_content = @file_get_contents($server_plugin_file)) !== false) {
-			$server_status = @json_decode($server_content);
-
+		if (is_array($server_status)) {
 			$server_status = ($server_status == NULL || $server_status == false ? false : true);
-
-			unset($server_content);
 		}
 
 		// assign
@@ -93,7 +92,6 @@
 			'URL'			=>	htmlspecialchars(urldecode($server_url)),
 			'SERVERSTATUS'	=> 	$server_status
 		));
-
 		++$count;
 	}
 
