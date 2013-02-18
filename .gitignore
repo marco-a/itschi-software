@@ -3,3 +3,11 @@ config.php
 .DS_Store
 
 lib/cache/*.php
+
+!images/avatar/default.png
+
+images/avatar/*
+
+!images/avatar/mini/default.png
+
+images/avatar/mini/*
