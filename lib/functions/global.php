@@ -83,7 +83,6 @@
 	}
 
 	function message_box($message, $link, $link_text, $link2 = '', $link2_text = '', $refresh = false) {
-		global $tpl, $config, $user;
 
 		template::assign(array(
 			'MESSAGE'	=>	$message,
@@ -99,7 +98,6 @@
 	}
 
 	function login_box() {
-		global $tpl, $config, $user;
 
 		template::assign(array(
 			'REDIRECT'	=>	htmlspecialchars($_SERVER['REQUEST_URI']),
@@ -107,6 +105,7 @@
 		));
 
 		template::display('login');
+		exit;
 	}
 
 	function make_clickable($str) {
