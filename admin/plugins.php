@@ -55,15 +55,16 @@
 			$res = $db->query('
 				SELECT `package`
 				FROM ' . PLUGINS_TABLE . '
-				WHERE `package` = \'' . $data->package . '\'');
+				WHERE `package` = \'' . $db->chars($data->package) . '\'');
 
+			// never trust user data
 			template::assignBlock('plugins', array(
-				'NAME'			=>	$data->name,
-				'VERSION'		=>	$data->version,
-				'DESCRIPTION'	=>	$data->description,
-				'LASTUPDATE'	=>	$data->lastUpdate,
-				'DEVELOPER'		=>	$data->developer,
-				'PACKAGE'		=>	$data->package,
+				'NAME'			=>	htmlspecialchars($data->name),
+				'VERSION'		=>	htmlspecialchars($data->version),
+				'DESCRIPTION'	=>	htmlspecialchars($data->description),
+				'LASTUPDATE'	=>	htmlspecialchars($data->lastUpdate),
+				'DEVELOPER'		=>	htmlspecialchars($data->developer),
+				'PACKAGE'		=>	htmlspecialchars($data->package),
 				'INSTALLED'		=>	(bool) $db->num_rows($res),
 			));
 
@@ -71,7 +72,7 @@
 		}
 
 		template::assign(array(
-			'SERVERNAME'	=>	$row->server_name,
+			'SERVERNAME'	=>	htmlspecialchars($row->server_name),
 			'PLUGINCOUNT'	=>	count($server_data),
 		));
 
@@ -132,7 +133,7 @@
 		$server_status = @json_decode($server_content);
 		unset($server_content);
 		$server_status = ($server_status == NULL || $server_status == false ? false : true);
-		
+
 
 		// assign
 		template::assignBlock('server', array(
