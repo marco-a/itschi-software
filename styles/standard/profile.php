@@ -259,7 +259,7 @@
 
 						<tr>
 							<td colspan="2">
-								<textarea name="signatur" style="width:99%; height: 100px;" placeholder="Signatur..."><?=template::getVar('SIGNATUR'); ?></textarea>
+								<textarea name="signatur" style="width:99%; max-width:99%; height: 100px;" placeholder="Signatur..."><?=template::getVar('SIGNATUR'); ?></textarea>
 
 								<div class="options">
 									<div class="title">
