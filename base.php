@@ -55,10 +55,6 @@
 
 	unset($password);
 
-	$admin_tpl = ($user->row['user_level'] == ADMIN && (substr(dirname($_SERVER['PHP_SELF']), -5) == 'admin'));
-
-	//$tpl->dir = ($admin_tpl) ? 'admin/template/' : 'styles/' . $config['theme'] . '/';
-
 	if ($config['enable'] && $user->row['user_level'] != ADMIN && basename($_SERVER['PHP_SELF']) != 'login.php') {
 		$message = ($config['enable_text']) ? $config['enable_text'] : 'Das Forum wurde deaktiviert';
 
