@@ -30,7 +30,9 @@
 								</a>
 							</h3>
 
-							<?=$forum['DESCRIPTION']; ?>
+							<div style="width: 500px; word-wrap: break-word;">
+								<?=$forum['DESCRIPTION']; ?>
+							</div>
 
 							<?php
 								if (count($forum['SUBFORUMS']) > 0) {
