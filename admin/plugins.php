@@ -58,13 +58,19 @@
 		$server_name 		= $row->server_name;
 		$server_url 		= $row->server_url;
 		$server_plugin_file = $server_url . '/plugins.json';
-		$server_status 		= @fopen($server_plugin_file,r);
+		$server_status 		= @fopen($server_plugin_file, 'r');
+
+		if ($server_status != false) {
+			fclose($server_status);
+
+			$server_status = true;
+		}
 
 		// assign
 		template::assignBlock('server', array(
 			'ID'			=>	$server_id,
 			'NAME'			=>	htmlspecialchars($server_name),
-			'URL'			=>	urldecode($server_url),
+			'URL'			=>	htmlspecialchars(urldecode($server_url)),
 			'SERVERSTATUS'	=> 	$server_status
 		));
 	}
