@@ -8,6 +8,8 @@
 
 	require 'base.php';
 
+	if (!$user->row) header("Location: ./index.php");
+
 	$error = '';
 	$redirect = (isset($_POST['redirect'])) ? strip($_POST['redirect']) : 'index.php';
 

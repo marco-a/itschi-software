@@ -8,6 +8,8 @@
 
 	require 'base.php';
 
+	if (!$user->row) header("Location: ./index.php");
+
 	$error = '';
 	$deny =	array();
 	$username =	(isset($_POST['username'])) ? $_POST['username'] : '';
