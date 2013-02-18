@@ -9,13 +9,13 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
 	if (isset($_GET['delete'])) {
 		if (empty($_GET['ok'])) {
-			message_box('Willst du den Rang wirklich l&ouml;schen?', 'ranks.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Rang l&ouml;schen', 'ranks.php', 'Abbrechen');
+			message_box('Willst du den Rang wirklich löschen?', 'ranks.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Rang löschen', 'ranks.php', 'Abbrechen');
 			exit;
 		} else {
 			$db->query('

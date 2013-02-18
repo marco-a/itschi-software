@@ -8,7 +8,7 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
@@ -108,7 +108,7 @@
 			}
 
 			if ($p['TPL']) {
-				$pL .= '<li class="main">HTML und JavaScript in Templates einf&uuml;gen</li>';
+				$pL .= '<li class="main">HTML und JavaScript in Templates einfügen</li>';
 			}
 
 			if ($p['HTTP']) {

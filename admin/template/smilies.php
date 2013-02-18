@@ -4,7 +4,7 @@
 	<h1 class="fLeft" style="width: 40%;">Smilies <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
 	
 	<div class="fRight" style="padding-top: 30px; width: 40%; text-align: right;">
-		<a href="smilie-new.php" class="button">Smilie hinzuf&uuml;gen</a>
+		<a href="smilie-new.php" class="button">Smilie hinzufügen</a>
 	</div>
 	
 	<div class="clear"></div>
@@ -27,7 +27,7 @@ foreach(template::$blocks['smilies'] as $smilies):
 		<td><?=$smilies['EMOTION']; ?></td>
 		<td align="right">
 			<a href="smilie-new.php?id=<?=$smilies['ID']; ?>" class="button greyB">bearbeiten</a>
-			<a href="smilies.php?delete=<?=$smilies['ID']; ?>" class="button redB">l&ouml;schen</a>
+			<a href="smilies.php?delete=<?=$smilies['ID']; ?>" class="button redB">löschen</a>
 		</td>
 	</tr>
 

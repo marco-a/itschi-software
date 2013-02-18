@@ -10,7 +10,7 @@
 
 <div class="fRight actionsR noP" style="width: 40%;">
 	<a href="mail.php?dir=<?=template::getVar('DIR'); ?>&mode=new&id=<?=template::getVar('MAIL_USER_ID'); ?>&answer=<?=template::getVar('MAIL_ID'); ?>" class="button blueB">Antworten</a>
-	<a href="mail.php?dir=<?=template::getVar('DIR'); ?>&mode=delete&id=<?=template::getVar('MAIL_ID'); ?>" class="button redB">L&ouml;schen</a>
+	<a href="mail.php?dir=<?=template::getVar('DIR'); ?>&mode=delete&id=<?=template::getVar('MAIL_ID'); ?>" class="button redB">Löschen</a>
 	<a href="mail.php?dir=<?=template::getVar('DIR'); ?>&mode=new&id=<?=$user->row; ?>&answer=<?=template::getVar('MAIL_ID'); ?>&quote=<?=template::getVar('MAIL_ID'); ?>" class="button greyB">Zitieren</a>
 </div>
 

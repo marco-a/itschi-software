@@ -4,7 +4,7 @@
 	<h1 class="fLeft" style="width: 30%;">Bots <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
 	
 	<div class="fRight" style="padding-top: 30px; width: 30%; text-align: right;">
-		<a href="bot-new.php" class="button">Bot hinzuf&uuml;gen</a>
+		<a href="bot-new.php" class="button">Bot hinzufügen</a>
 	</div>
 	
 	<div class="clear"></div>
@@ -27,7 +27,7 @@
 					<td><?=$bots['AGENT']; ?></td>
 					<td align="right">
 						<a href="bot-new.php?id=<?=$bots['ID']; ?>" class="button greyB">bearbeiten</a>
-						<a href="bots.php?delete=<?=$bots['ID']; ?>" class="button redB">l&ouml;schen</a>
+						<a href="bots.php?delete=<?=$bots['ID']; ?>" class="button redB">löschen</a>
 					</td>
 				</tr>
 

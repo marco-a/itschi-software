@@ -35,7 +35,7 @@
 		<tr>
 			<td>Gruppieren nach:</td>
 			<td>
-				<input type="radio" name="group" value="p" id="group_p" checked /> <label for="group_p">Beitr&auml;gen</label> &nbsp; 
+				<input type="radio" name="group" value="p" id="group_p" checked /> <label for="group_p">Beiträgen</label> &nbsp; 
 				<input type="radio" name="group" value="t" id="group_t" /> <label for="group_t">Themen</label>
 			</td>
 		</tr>

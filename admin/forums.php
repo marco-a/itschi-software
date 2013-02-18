@@ -9,7 +9,7 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
@@ -84,7 +84,7 @@
 		$forum_id = (int)$_GET['delete'];
 
 		if (empty($_GET['ok'])) {
-			message_box('Willst du das Forum mit Inhalt wirklich l&ouml;schen?', 'forums.php?delete=' . $forum_id . '&ok=1', 'Forum l&ouml;schen', 'forums.php', 'Abbrechen');
+			message_box('Willst du das Forum mit Inhalt wirklich löschen?', 'forums.php?delete=' . $forum_id . '&ok=1', 'Forum löschen', 'forums.php', 'Abbrechen');
 			exit;
 		} else {
 			$res = $db->query('

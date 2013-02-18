@@ -39,9 +39,9 @@
 		$db->free_result($res);
 
 		if ($forum_id) {
-			message_box('Alle Themen in diesem Forum wurden als gelesen markiert', 'viewforum.php?id=' . $forum_id, 'zur&uuml;ck zum Forum', '', '', 3);
+			message_box('Alle Themen in diesem Forum wurden als gelesen markiert', 'viewforum.php?id=' . $forum_id, 'zurück zum Forum', '', '', 3);
 		} else {
-			message_box('Alle Foren wurden als gelesen markiert', 'forum.php', 'zur&uuml;ck zum Forum', '', '', 3);
+			message_box('Alle Foren wurden als gelesen markiert', 'forum.php', 'zurück zum Forum', '', '', 3);
 		}
 	}
 
@@ -111,7 +111,7 @@
 		$db->free_result($res);
 
 		if (!$row2['option_id'] || $row2['vote']) {
-			$message = 'Du hast schon gevotet oder keine Auswahlm&ouml;glichkeit ausgew&auml;hlt';
+			$message = 'Du hast schon gevotet oder keine Auswahlmöglichkeit ausgewählt';
 		} else {
 			$db->query('
 				INSERT INTO ' . POLL_VOTES_TABLE . '
@@ -134,7 +134,7 @@
 			$message = 'Deine Stimme wurde abgegeben';
 		}
 
-		message_box($message, 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zur&uuml;ck zum Forum', 3);
+		message_box($message, 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zurück zum Forum', 3);
 	}
 
 	function close_topic($row) {
@@ -150,7 +150,7 @@
 			WHERE topic_id = ' . $row['topic_id']
 		);
 
-		message_box('Das Thema wurde ' . (($row['topic_closed']) ? 'ge&ouml;ffnet' : 'geschlossen'), 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zur&uuml;ck zum Forum', 3);
+		message_box('Das Thema wurde ' . (($row['topic_closed']) ? 'geöffnet' : 'geschlossen'), 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zurück zum Forum', 3);
 	}
 
 	function important_topic($row) {
@@ -166,7 +166,7 @@
 			WHERE topic_id = ' . $row['topic_id']
 		);
 
-		message_box('Das Thema wurde als ' . (($row['topic_important']) ? 'nicht ' : '') . 'wichtig markiert', 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zur&uuml;ck zum Forum', 3);
+		message_box('Das Thema wurde als ' . (($row['topic_important']) ? 'nicht ' : '') . 'wichtig markiert', 'viewtopic.php?id=' . $row['topic_id'], 'weiter zum Thema', 'viewforum.php?id=' . $row['forum_id'], 'zurück zum Forum', 3);
 	}
 
 	function delete_topic_post($post_id) {
@@ -188,7 +188,7 @@
 
 		if ($row['is_topic']) {
 			if (empty($_GET['ok'])) {
-				message_box('Willst du das Thema wirklich l&ouml;schen?', 'viewforum.php?id=' . $row['forum_id'] . '&delete=' . $row['post_id'] . '&ok=1', 'Thema l&ouml;schen', '/forum/' . $row['forum_id'] . '/' . $row['topic_id'], 'Abbrechen');
+				message_box('Willst du das Thema wirklich löschen?', 'viewforum.php?id=' . $row['forum_id'] . '&delete=' . $row['post_id'] . '&ok=1', 'Thema löschen', '/forum/' . $row['forum_id'] . '/' . $row['topic_id'], 'Abbrechen');
 			}
 
 			$res2 = $db->query('
@@ -240,10 +240,10 @@
 				WHERE forum_id = ' . $row['forum_id']
 			);
 
-			message_box('Das Thema wurde gel&ouml;scht', 'viewforum.php?id=' . $row['forum_id'], 'zur&uuml;ck zum Forum', '', '', 3);
+			message_box('Das Thema wurde gelöscht', 'viewforum.php?id=' . $row['forum_id'], 'zurück zum Forum', '', '', 3);
 		} else {
 			if (!isset($_GET['ok'])) {
-				message_box('Willst du den Beitrag wirklich l&ouml;schen?', 'viewtopic.php?id=' . $row['topic_id'] . '&delete=' . $row['post_id'] . '&ok=1', 'Beitrag l&ouml;schen', '/forum/' . $row['forum_id'] . '/' . $row['topic_id'], 'Abbrechen');
+				message_box('Willst du den Beitrag wirklich löschen?', 'viewtopic.php?id=' . $row['topic_id'] . '&delete=' . $row['post_id'] . '&ok=1', 'Beitrag löschen', '/forum/' . $row['forum_id'] . '/' . $row['topic_id'], 'Abbrechen');
 			}
 
 			config_set_count('posts_num', -1);
@@ -301,7 +301,7 @@
 				WHERE forum_id = ' . $row['forum_id']
 			);
 
-			message_box('Der Beitrag wurde gel&ouml;scht', 'viewtopic.php?id=' . $row['topic_id'], 'zur&uuml;ck zum Thema', '', '', 3);
+			message_box('Der Beitrag wurde gelöscht', 'viewtopic.php?id=' . $row['topic_id'], 'zurück zum Thema', '', '', 3);
 		}
 	}
 ?>

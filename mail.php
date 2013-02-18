@@ -42,7 +42,7 @@
 			$db->free_result($res);
 
 			if (!$row || ($row['to_user_id'] != $user->row['user_id'] && $row['user_id'] != $user->row['user_id'])) {
-				message_box('Die Nachricht existiert nicht', 'mail.php', 'zur&uuml;ck');
+				message_box('Die Nachricht existiert nicht', 'mail.php', 'zurück');
 			}
 
 			if ($row['mail_read'] == 0 && $row['to_user_id'] == $user->row['user_id']) {

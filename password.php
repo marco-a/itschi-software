@@ -72,7 +72,7 @@ if (isset($_POST['send']))
 	{
 		mail($row['user_email'], 'Passwort neu setzen', "Hallo " . $row['username'] . ", \n \n du hast dein Passwort vergessen? Wenn nicht ignoriere diese Mail. \n \n Klicke auf den folgenden Link um dein Passwort neu zu setzten: \n \n http://" . $_SERVER['HTTP_HOST'] . (dirname($_SERVER['PHP_SELF']) == '/' ? '' : dirname($_SERVER['PHP_SELF'])) . "/password.php?mode=set&id=" . $row['user_id'] . "&p=" . urlencode(base64_encode($_POST['pw'])) . "&key=" . md5($row['user_password']) . " \n \n ", 'from:' . $config['email']);
 
-		message_box('Ein Best&auml;tigungslink wurde an deine E-Mail geschickt', 'index.php', 'weiter zur Startseite');
+		message_box('Ein Bestätigungslink wurde an deine E-Mail geschickt', 'index.php', 'weiter zur Startseite');
 	}
 }
 

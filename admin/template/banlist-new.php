@@ -7,7 +7,7 @@
 		<?php elseif (template::getVar('ERROR') == '3'): ?>	Du kannst dich nicht selber sperren
 		<?php elseif (template::getVar('ERROR') == '4'): ?>	Das Mitglied existiert nicht
 		<?php elseif (template::getVar('ERROR') == '5'): ?>	Das Mitglied ist ein Administrator oder Moderator und kann nicht gesperrt werden
-		<?php elseif (template::getVar('ERROR') == '6'): ?>	F&uuml;r dieses Mitglied existiert bereits eine Sperre
+		<?php elseif (template::getVar('ERROR') == '6'): ?>	Für dieses Mitglied existiert bereits eine Sperre
 		<?php endif; ?>
 	</div>
 <?php endif; ?>

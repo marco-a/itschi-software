@@ -43,14 +43,14 @@
 				<span class="package"><?=$plugins['PACKAGE']; ?></span>
 				<h2><?=$plugins['NAME']; ?> <span class="version"><?=$plugins['VERSION']; ?></span></h2>
 
-				<a href="javascript:void(0);" data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Rechte &amp; Abh&auml;ngigkeiten einblenden &rsaquo;</a><br /><br />
+				<a href="javascript:void(0);" data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Rechte &amp; Abhängigkeiten einblenden &rsaquo;</a><br /><br />
 
 				<div class="permissionBox" data-id="<?=$plugins['ID']; ?>" style="display: none;">
 					<div class="fLeft" style="width: 48%;">
 						<div class="permissions">
 							<?php if (!$plugins['PERMISSIONS']): ?>
 								<span class="grey">
-									Dieses Plugin ben&ouml;tigt keine besonderen Rechte.
+									Dieses Plugin benötigt keine besonderen Rechte.
 								</span>
 							<?php else: ?>
 								<b>Berechtigungen:</b><br />
@@ -60,10 +60,10 @@
 					</div>
 
 					<div class="fRight" style="width: 48%;">
-						<b>Abh&auml;ngigkeiten:</b><br /><br />
+						<b>Abhängigkeiten:</b><br /><br />
 
 						<?php if (!$plugins['DEPENDENCIES']): ?>
-							<span class="grey">Keine Abh&auml;ngigkeiten von anderen Plugins</span>
+							<span class="grey">Keine Abhängigkeiten von anderen Plugins</span>
 						<?php else: ?>
 
 						<?php endif; ?>
@@ -88,7 +88,7 @@
 
 	<div class="h2box">
 		<div class="fLeft" style="width: 40%;">
-			<h1>Verf&uuml;gbare Plugins</h1>
+			<h1>Verfügbare Plugins</h1>
 		</div>
 
 		<div class="fRight" style="padding-top: 7px;">
@@ -99,7 +99,7 @@
 	</div>
 
 	<?php if (!template::getVar('AVAILABLE')): ?>
-		<div class="info">Es sind keine Plugins verf&uuml;gbar.</div>
+		<div class="info">Es sind keine Plugins verfügbar.</div>
 	<?php endif; ?>
 
 	<?php
@@ -115,7 +115,7 @@
 							<div class="permissions">
 								<?php if (!$available['PERMISSIONS']): ?>
 									<span class="grey">
-										Dieses Plugin ben&ouml;tigt keine besonderen Rechte.
+										Dieses Plugin benötigt keine besonderen Rechte.
 									</span>
 								<?php else: ?>
 									<b>Berechtigungen:</b><br />
@@ -125,10 +125,10 @@
 						</div>
 
 						<div class="fRight" style="width: 48%;">
-							<b>Abh&auml;ngigkeiten:</b><br /><br />
+							<b>Abhängigkeiten:</b><br /><br />
 
 							<?php if (!$available['DEPENDENCIES']): ?>
-								<span class="grey">Keine Abh&auml;ngigkeiten von anderen Plugins</span>
+								<span class="grey">Keine Abhängigkeiten von anderen Plugins</span>
 							<?php else: ?>
 
 							<?php endif; ?>

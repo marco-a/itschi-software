@@ -569,14 +569,14 @@
 
 					<?php if ($error): ?>
 					<div class="info">
-						<?php if ($error == 1): ?>		Verbindung zur Datenbank fehlgeschlagen - &Uuml;berpr&uuml;fe die MySQL-Daten
+						<?php if ($error == 1): ?>		Verbindung zur Datenbank fehlgeschlagen - Überprüfe die MySQL-Daten
 						<?php elseif ($error == 2): ?>		Der Prefix darf nur aus folgenden Zeichen bestehen: A-Za-z_
 						<?php elseif ($error == 3): ?>		Bitte Username, Email und Passwort eingeben!
 						<?php elseif ($error == 4): ?>		Der Username darf keine Sonderzeichen, Umlaute oder Leerzeichen enthalten
 						<?php elseif ($error == 5): ?>		Der Username muss 3 - 15 Zeichen lang sein!
-						<?php elseif ($error == 6): ?>		Die Email ist ung&uuml;ltig!
+						<?php elseif ($error == 6): ?>		Die Email ist ungültig!
 						<?php elseif ($error == 7): ?>		Das Passwort muss mindestens 6 Zeichen lang sein!
-						<?php elseif ($error == 8): ?>		Die Passw&ouml;rter sind nicht gleich!
+						<?php elseif ($error == 8): ?>		Die Passwörter sind nicht gleich!
 						<?php elseif ($error == 9): ?>		“config.php” ist nicht beschreibbar!
 						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erfüllt!
 						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! Lösche die Datei install.php! <a href="index.php">zum Forum</a>

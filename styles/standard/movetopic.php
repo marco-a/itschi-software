@@ -10,7 +10,7 @@
 		<tr>
 			<td class="title" colspan="2">Titel</td>
 			<td class="title" align="center">Aufrufe</td>
-			<td class="title" align="center">Beitr&auml;ge</td>
+			<td class="title" align="center">Beiträge</td>
 			<td width="22%" class="title">Letzter Beitrag</td>
 		</tr>
 

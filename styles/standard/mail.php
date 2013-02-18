@@ -3,9 +3,9 @@
 <?php if (template::getVar('ERROR')): ?>
 	<div class="info">
 
-		<?php if (template::getVar('ERROR') == '1'): ?>		Die Nachricht wurde gel&ouml;scht
-		<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Nachrichten wurden gel&ouml;scht
-		<?php elseif (template::getVar('ERROR') == '3'): ?>	Der Ordner ist voll - Bitte l&ouml;sche einige Nachrichten
+		<?php if (template::getVar('ERROR') == '1'): ?>		Die Nachricht wurde gelöscht
+		<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Nachrichten wurden gelöscht
+		<?php elseif (template::getVar('ERROR') == '3'): ?>	Der Ordner ist voll - Bitte lösche einige Nachrichten
 		<?php endif; ?>
 
 	</div>
@@ -72,7 +72,7 @@
 			<td valign="top" align="right">
 				<a onclick="return Mark(1);" href="#" class="button greyB">Alle markieren</a>
 				<a onclick="return Mark(0);" href="#" class="button greyB">Alle unmarkieren</a> &nbsp;&nbsp;
-				<input type="submit" name="markierte" value="Markierte l&ouml;schen" />
+				<input type="submit" name="markierte" value="Markierte löschen" />
 			</td>
 		</tr>
 	</table>

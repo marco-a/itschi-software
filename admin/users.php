@@ -9,13 +9,13 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
 	if (isset($_GET['delete'])) {
 		if (empty($_GET['ok'])) {
-			message_box('Willst du das Mitglied wirklich l&ouml;schen?', 'users.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Mitglied l&ouml;schen', 'users.php', 'Abbrechen');
+			message_box('Willst du das Mitglied wirklich löschen?', 'users.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Mitglied löschen', 'users.php', 'Abbrechen');
 			exit;
 		} else {
 			include '../includes/functions_user.php';

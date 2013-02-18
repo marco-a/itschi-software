@@ -9,7 +9,7 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
@@ -71,7 +71,7 @@
 
 
 		if (!$row['forum_id']) {
-			message_box('Forum existiert nicht!', '../', 'zur&uuml;ck');
+			message_box('Forum existiert nicht!', '../', 'zurück');
 			exit;
 		}
 

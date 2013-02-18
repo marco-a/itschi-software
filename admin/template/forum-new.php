@@ -61,7 +61,7 @@
 		</tr>
 
 		<tr class="noBorder">
-			<td>Forum nur sichtbar f&uuml;r:</td>
+			<td>Forum nur sichtbar für:</td>
 			<td>
 				<input type="radio" name="level" id="level0" value="0"<?php if (template::getVar('LEVEL') == '0'): ?> checked<?php endif; ?> /> <label for="level0">Jeden</label>
 				<input type="radio" name="level" id="level1" value="1"<?php if (template::getVar('LEVEL') == '1'): ?> checked<?php endif; ?> /> <label for="level1">Mitglieder</label>

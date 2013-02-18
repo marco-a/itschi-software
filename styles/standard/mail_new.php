@@ -28,9 +28,9 @@
 
 			<div class="info">
 				<?php if (template::getVar('ERROR') == '1'): ?>		Pro Tag darfst du nur <?=template::getVar('PERDAY'); ?> Nachrichten schreiben
-				<?php elseif (template::getVar('ERROR') == '2'): ?>	Der Empf&auml;nger existiert nicht
+				<?php elseif (template::getVar('ERROR') == '2'): ?>	Der Empfänger existiert nicht
 				<?php elseif (template::getVar('ERROR') == '3'): ?>	Du musst einen Betreff und einen Text eingeben	
-				<?php elseif (template::getVar('ERROR') == '4'): ?>	Der Posteingang vom Empf&auml;nger ist voll
+				<?php elseif (template::getVar('ERROR') == '4'): ?>	Der Posteingang vom Empfänger ist voll
 				<?php elseif (template::getVar('ERROR') == '5'): ?>	Dein Ordner Gesendete Nachrichten ist voll
 				<?php elseif (template::getVar('ERROR') == '6'): ?>	Der Text darf maximal <?=template::getVar('MAX_CHARS'); ?> Zeichen lang sein
 				<?php endif; ?>
@@ -77,7 +77,7 @@
 				&nbsp;&nbsp;
 
 				<input id="option4" type="checkbox" value="1" name="signatur"<?php if (template::getVar('SIGNATUR')): ?> checked<?php endif; ?>/>
-				<label for="option4">Signatur anh&auml;ngen</label>
+				<label for="option4">Signatur anhängen</label>
 			</div>
 
 			<div class="clear"></div>

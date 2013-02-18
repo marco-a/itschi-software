@@ -9,7 +9,7 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
@@ -120,7 +120,7 @@
 		$db->free_result($res);
 
 		if (!$row['ban_id']) {
-			message_box('Der Eintrag existiert nicht', 'banlist.php', 'zur&uuml;ck');
+			message_box('Der Eintrag existiert nicht', 'banlist.php', 'zurück');
 			exit;
 		}
 

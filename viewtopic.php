@@ -30,9 +30,9 @@
 	$user_level = ($user->row) ? $user->row['user_level'] + 1 : 0;
 
 	if (!$row) {
-		message_box('Das Thema existiert nicht', 'forum.php', 'zur&uuml;ck zum Forum');
+		message_box('Das Thema existiert nicht', 'forum.php', 'zurück zum Forum');
 	} else if ($user_level < $row['forum_level']) {
-		message_box('Du bist nicht berechtigt das Thema zu sehen', 'forum.php', 'zur&uuml;ck zum Forum');
+		message_box('Du bist nicht berechtigt das Thema zu sehen', 'forum.php', 'zurück zum Forum');
 	}
 
 	if ($user->row) {

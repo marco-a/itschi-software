@@ -69,7 +69,7 @@
 			}
 
 			if ($row['user_unlock']) {
-				message_box('Du hast Deine E-Mail noch nicht best&auml;tigt', '/', 'zur&uuml;ck zur Startseite');
+				message_box('Du hast Deine E-Mail noch nicht bestätigt', '/', 'zurück zur Startseite');
 			}
 
 			if (!$this->session_started) {
@@ -246,7 +246,7 @@
 			{
 				$this->logout();
 
-				message_box('Du wurdest gesperrt bis: ' . date('d.m.Y H:i', $row['ban_time']) . ' Uhr<br />Grund: <i>' . htmlspecialchars($row['ban_reason']) . '</i>', '/', 'zur&uuml;ck zur Startseite');
+				message_box('Du wurdest gesperrt bis: ' . date('d.m.Y H:i', $row['ban_time']) . ' Uhr<br />Grund: <i>' . htmlspecialchars($row['ban_reason']) . '</i>', '/', 'zurück zur Startseite');
 			}
 
 			$db->query('

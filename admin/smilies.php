@@ -9,13 +9,13 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
 	if (isset($_GET['delete'])) {
 		if (empty($_GET['ok'])) {
-			message_box('Willst du den Smilie wirklich l&ouml;schen?', 'smilies.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Smilie l&ouml;schen', 'smilies.php', 'Abbrechen');
+			message_box('Willst du den Smilie wirklich löschen?', 'smilies.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Smilie löschen', 'smilies.php', 'Abbrechen');
 			exit;
 		} else {
 			$db->query('

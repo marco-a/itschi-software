@@ -5,7 +5,7 @@
 		<?php if (template::getVar('ERROR') == '1'): ?>		Der Username darf keine Sonderzeichen, Umlaute oder Leerzeichen enthalten
 		<?php elseif (template::getVar('ERROR') == '2'): ?>	Der Username muss 3 - 15 Zeichen lang sein
 		<?php elseif (template::getVar('ERROR') == '3'): ?>	Der Username ist schon vergeben
-		<?php elseif (template::getVar('ERROR') == '4'): ?>	Die Email ist ung&uuml;ltig
+		<?php elseif (template::getVar('ERROR') == '4'): ?>	Die Email ist ungültig
 		<?php elseif (template::getVar('ERROR') == '5'): ?>	Die Email ist schon vergeben
 		<?php elseif (template::getVar('ERROR') == '6'): ?>	Das Passwort muss mindestens 6 Zeichen lang sein
 		<?php elseif (template::getVar('ERROR') == '7'): ?>	Die Daten wurden erfolgreich gespeichert
@@ -35,7 +35,7 @@
 				<input type="radio" name="level" id="level2" value="<?=template::getVar('LEVEL_ADMIN'); ?>"<?php if (template::getVar('LEVEL') == template::getVar('LEVEL_ADMIN')): ?> checked<?php endif; ?>  /> <label for="level2">Administrator</label> 
 
 				<?php if (template::getVar('ID') == '1'): ?>
-					<br /><br /><span class="grey">Gr&uuml;nder - Rechte k&ouml;nnen nicht ge&auml;ndert werden!</span>
+					<br /><br /><span class="grey">Gründer - Rechte können nicht geändert werden!</span>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -108,7 +108,7 @@
 				<img src="../images/avatar/<?=template::getVar('AVATAR'); ?>" alt="Avatar" /><br />
 				
 				<input id="avatar" value="1" type="checkbox" name="avatar" />
-				<label for="avatar">Avatar l&ouml;schen</label>
+				<label for="avatar">Avatar löschen</label>
 			</td>
 		</tr>
 	</table>

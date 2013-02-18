@@ -33,7 +33,7 @@
 
 							<th width="100px" align="right">
 								<a href="forum-new.php?id=<?=$forums['ID']; ?>" class="grey">bearbeiten</a> &nbsp;&minus;&nbsp;
-								<a href="forums.php?delete=<?=$forums['ID']; ?>" class="red">l&ouml;schen</a>
+								<a href="forums.php?delete=<?=$forums['ID']; ?>" class="red">löschen</a>
 							</td>
 						</tr>
 					</table>
@@ -73,7 +73,7 @@
 
 							<td width="100px" align="right">
 								<a href="forum-new.php?id=<?=$forums['ID']; ?>" class="button greyB">bearbeiten</a>
-								<a href="forums.php?delete=<?=$forums['ID']; ?>" class="button redB">l&ouml;schen</a>
+								<a href="forums.php?delete=<?=$forums['ID']; ?>" class="button redB">löschen</a>
 							</td>
 						</tr>
 					</table>

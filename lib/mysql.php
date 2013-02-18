@@ -16,7 +16,7 @@
 	//		$this->debug = (isset($_GET['explain'])) ? true : false;
 
 			$this->connect = @mysql_connect($host, $username, $pw) or die('Verbindung zur Datenbank fehlgeschlagen');
-			@mysql_select_db($database, $this->connect) or die('Datenbank konnte nicht ausgew&auml;hlt werden');
+			@mysql_select_db($database, $this->connect) or die('Datenbank konnte nicht ausgewählt werden');
 
 			mysql_unbuffered_query("SET NAMES 'utf8'", $this->connect);
 		}

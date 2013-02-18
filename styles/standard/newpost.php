@@ -23,7 +23,7 @@
 			
 			<div class="info">
 				<?php if (template::getVar('ERROR') == '1'): ?>		Du musst einen Text eingeben
-				<?php elseif (template::getVar('ERROR') == '2'): ?>	Pro Tag darfst du nur <?=template::getVar('POSTS_PERDAY'); ?> Beitr&auml;ge schreiben
+				<?php elseif (template::getVar('ERROR') == '2'): ?>	Pro Tag darfst du nur <?=template::getVar('POSTS_PERDAY'); ?> Beiträge schreiben
 				<?php elseif (template::getVar('ERROR') == '3'): ?>	Das Thema ist geschlossen
 				<?php elseif (template::getVar('ERROR') == '4'): ?>	Das Forum ist geschlossen
 				<?php elseif (template::getVar('ERROR') == '5'): ?>	Der Text darf maximal <?=template::getVar('MAX_CHARS'); ?> Zeichen lang sein
@@ -73,7 +73,7 @@
 				&nbsp;&nbsp;
 
 				<input id="option4" type="checkbox" value="1" name="signatur"<?php if (template::getVar('SIGNATUR')): ?> checked<?php endif; ?>/>
-				<label for="option4">Signatur anh&auml;ngen</label>
+				<label for="option4">Signatur anhängen</label>
 			</div>
 
 			<div class="clear"></div>
@@ -82,7 +82,7 @@
 
 	<?php if (!template::getVar('EDIT')): ?>
 		<br />
-		<h3>Letzte Beitr&auml;ge</h3>
+		<h3>Letzte Beiträge</h3>
 		<br />
 
 		<div id="posts">
@@ -116,7 +116,7 @@
 									<?=$posts['TEXT']; ?>
 
 									<?php if ($posts['EDIT_USER_ID']): ?>
-										<div style="border-top:1px solid #dddddd;padding:5px;">Der Eintrag wurde am <?=$posts['EDIT_TIME']; ?> Uhr von <?php if ($posts['EDIT_USER_ID']): ?><a class="<?=$posts['EDIT_USER_LEGEND']; ?>" href="user.php?id=<?=$posts['EDIT_USER_ID']; ?>"><?=$posts['EDIT_USERNAME']; ?></a><?php else: ?><span>Unbekannt</span><?php endif; ?> ge&auml;ndert.</div><br />
+										<div style="border-top:1px solid #dddddd;padding:5px;">Der Eintrag wurde am <?=$posts['EDIT_TIME']; ?> Uhr von <?php if ($posts['EDIT_USER_ID']): ?><a class="<?=$posts['EDIT_USER_LEGEND']; ?>" href="user.php?id=<?=$posts['EDIT_USER_ID']; ?>"><?=$posts['EDIT_USERNAME']; ?></a><?php else: ?><span>Unbekannt</span><?php endif; ?> geändert.</div><br />
 									<?php endif; ?>
 
 									<?php if ($posts['USER_SIGNATUR']): ?>
@@ -142,7 +142,7 @@
 											<small>
 												<?php if ($posts['USER_ID'] == $user->row['user_id'] || template::getVar('IS_MOD')): ?>
 													<a href="<?php if ($posts['IS_TOPIC']): ?>newtopic.php?edit=1&id=<?=template::getVar('TOPIC_ID'); ?><?php else: ?>newpost.php?edit=1&id=<?=$posts['ID']; ?><?php endif; ?>">Bearbeiten</a> &nbsp;&nbsp;
-													<a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>">L&ouml;schen</a> &nbsp;&nbsp;
+													<a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>">Löschen</a> &nbsp;&nbsp;
 												<?php endif; ?>
 
 												<a href="newpost.php?id=<?=template::getVar('TOPIC_ID'); ?>&quote=<?=$posts['ID']; ?>">Zitieren</a>

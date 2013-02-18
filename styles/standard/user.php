@@ -69,13 +69,13 @@
 					</tr>
 					<tr>
 						<td valign="top">
-							<span>Beitr&auml;ge:</span>
+							<span>Beiträge:</span>
 						</td>
 
 						<td>
-							<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USER_USERNAME'); ?>">Beitr&auml;ge des Mitglieds</a><br />
-							<span class="grey"><?=template::getVar('PRO'); ?>% aller Beitr&auml;ge<br />
-							<?=template::getVar('PRODAY'); ?> Beitr&auml;ge pro Tag</span>
+							<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USER_USERNAME'); ?>">Beiträge des Mitglieds</a><br />
+							<span class="grey"><?=template::getVar('PRO'); ?>% aller Beiträge<br />
+							<?=template::getVar('PRODAY'); ?> Beiträge pro Tag</span>
 						</td>
 					</tr>
 				</table>

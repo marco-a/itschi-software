@@ -42,7 +42,7 @@
 		$db->free_result($res);
 
 		if (!$row || $row['is_category']) {
-			message_box('Die Kategorie existiert nicht', 'forum.php', 'zur&uuml;ck zum Forum');
+			message_box('Die Kategorie existiert nicht', 'forum.php', 'zurück zum Forum');
 		}
 
 		if ($submit) {
@@ -150,11 +150,11 @@
 		$db->free_result($res);
 
 		if (!$row) {
-			message_box('Das Thema existiert nicht', 'forum.php', 'zur&uuml;ck zum Forum');
+			message_box('Das Thema existiert nicht', 'forum.php', 'zurück zum Forum');
 		}
 
 		if ($row['user_id'] != $user->row['user_id'] && $user->row['user_level'] != ADMIN && $user->row['user_level'] != MOD) {
-			message_box('Du bist nicht berechtigt das Thema zu bearbeiten', 'forum.php', 'zur&uuml;ck zum Forum');
+			message_box('Du bist nicht berechtigt das Thema zu bearbeiten', 'forum.php', 'zurück zum Forum');
 		}
 
 		if (!$submit && !isset($_POST['preview'])) {

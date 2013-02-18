@@ -26,7 +26,7 @@
 	$db->free_result($res);
 
 	if (!$row) {
-		message_box('Das Mitglied existiert nicht', 'index.php', 'zur&uuml;ck');
+		message_box('Das Mitglied existiert nicht', 'index.php', 'zurück');
 		exit;
 	}
 

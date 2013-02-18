@@ -21,7 +21,7 @@
 			<br />
 			<div class="info">
 				<?php if (template::getVar('ERROR') == '1'): ?>		Du musst einen Text eingeben
-				<?php elseif (template::getVar('ERROR') == '2'): ?>	Pro Tag darfst du nur <?=template::getVar('POSTS_PERDAY'); ?> Beitr&auml;ge schreiben
+				<?php elseif (template::getVar('ERROR') == '2'): ?>	Pro Tag darfst du nur <?=template::getVar('POSTS_PERDAY'); ?> Beiträge schreiben
 				<?php elseif (template::getVar('ERROR') == '3'): ?>	Das Thema ist geschlossen
 				<?php elseif (template::getVar('ERROR') == '4'): ?>	Du musst einen Titel eingeben
 				<?php elseif (template::getVar('ERROR') == '5'): ?>	Das Forum ist geschlossen
@@ -73,7 +73,7 @@
 				&nbsp;&nbsp;
 
 				<input id="option4" type="checkbox" value="1" name="signatur"<?php if (template::getVar('SIGNATUR')): ?> checked<?php endif; ?>/>
-				<label for="option4">Signatur anh&auml;ngen</label>
+				<label for="option4">Signatur anhängen</label>
 			</div>
 
 			<div class="clear"></div>

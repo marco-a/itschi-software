@@ -103,7 +103,7 @@
 		$db->free_result($res);
 
 		if (!$row['user_id']) {
-			message_box('Das Mitglied wurde nicht gefunden', 'forum.php', 'zur&uuml;ck zum Forum');
+			message_box('Das Mitglied wurde nicht gefunden', 'forum.php', 'zurück zum Forum');
 		}
 
 		if (!$row['user_unlock']) {

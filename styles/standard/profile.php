@@ -39,7 +39,7 @@
 							<img class="img" src="images/avatar/<?=template::getVar('AVATAR'); ?>" width="150px" height="150px" />
 
 							<div style="position: absolute; margin-top: -18.5px; margin-left: -5px;">
-								<?php if (template::getVar('AVATAR') != template::getVar('DEFAULT_AVATAR')): ?><a href="profile.php?mode=avatar&delete=1" class="button redB">Avatar l&ouml;schen</a><?php endif; ?>
+								<?php if (template::getVar('AVATAR') != template::getVar('DEFAULT_AVATAR')): ?><a href="profile.php?mode=avatar&delete=1" class="button redB">Avatar löschen</a><?php endif; ?>
 							</div>
 						</div>
 
@@ -68,10 +68,10 @@
 
 				<div class="info">
 					<?php if (template::getVar('ERROR') == '1'): ?>		Das aktuelle Passwort stimmt nicht
-					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Email ist ung&uuml;ltig
+					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Email ist ungültig
 					<?php elseif (template::getVar('ERROR') == '3'): ?>	Die Email ist schon vergeben
 					<?php elseif (template::getVar('ERROR') == '4'): ?>		Das aktuelle Passwort stimmt nicht
-					<?php elseif (template::getVar('ERROR') == '5'): ?>	Die Passw&ouml;rter sind nicht gleich
+					<?php elseif (template::getVar('ERROR') == '5'): ?>	Die Passwörter sind nicht gleich
 					<?php elseif (template::getVar('ERROR') == '6'): ?>	Das Passwort muss mindestens 6 Zeichen lang sein
 					<?php endif; ?>
 				</div>
@@ -79,7 +79,7 @@
 				<?php endif; ?>
 
 				<div class="fLeft" style="width:48%;">
-					<h1>E-Mail-Adresse &auml;ndern</h1>
+					<h1>E-Mail-Adresse ändern</h1>
 
 					<form action="profile.php?mode=account" method="post">
 						<table cellpadding="5" cellspacing="0" width="100%">
@@ -100,7 +100,7 @@
 
 							<tr>
 								<td colspan="2" align="right">
-									<input type="submit" name="form_email" value="E-Mail-Adresse &auml;ndern" />
+									<input type="submit" name="form_email" value="E-Mail-Adresse ändern" />
 								</td>
 							</tr>
 						</table>
@@ -108,7 +108,7 @@
 				</div>
 
 				<div class="fRight" style="width:48%;">
-					<h1>Passwort &auml;ndern</h1>
+					<h1>Passwort ändern</h1>
 
 					<form name="eintrag" enctype="multipart/form-data" action="profile.php?mode=account" method="post">
 						<table cellpadding="5" cellspacing="0" width="100%">
@@ -129,7 +129,7 @@
 
 							<tr>
 								<td colspan="2" align="right">
-									<input type="submit" name="form_pw" value="Passwort &auml;ndern" />
+									<input type="submit" name="form_pw" value="Passwort ändern" />
 								</td>
 							</tr>
 						</table>
@@ -144,7 +144,7 @@
 
 				<div class="info">
 					<?php if (template::getVar('ERROR') == '1'): ?>		Das aktuelle Passwort stimmt nicht
-					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Passw&ouml;rter sind nicht gleich
+					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Passwörter sind nicht gleich
 					<?php endif; ?>
 				</div>
 
@@ -156,10 +156,10 @@
 						<br />
 						<br />
 
-						Dein kompletter Account wird gel&ouml;scht.
-						Beitr&auml;ge im Forum werden nicht gel&ouml;scht.<br />
-						Achtung: Diese Aktion kann nicht r&uuml;ckg&auml;ngig gemacht werden!
-						Gel&ouml;scht ist gel&ouml;scht!
+						Dein kompletter Account wird gelöscht.
+						Beiträge im Forum werden nicht gelöscht.<br />
+						Achtung: Diese Aktion kann nicht rückgängig gemacht werden!
+						Gelöscht ist gelöscht!
 					</div>
 
 					<br />
@@ -178,7 +178,7 @@
 						<tr>
 							<td></td>
 							<td>
-								<input type="submit" name="form_delete" value="Meinen Account endg&uuml;ltig l&ouml;schen" />
+								<input type="submit" name="form_delete" value="Meinen Account endgültig löschen" />
 							</td>
 						</tr>
 					</table>
@@ -210,13 +210,13 @@
 									</tr>
 									<tr>
 										<td valign="top">
-											<span>Beitr&auml;ge:</span>
+											<span>Beiträge:</span>
 										</td>
 
 										<td>
-											<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USERNAME'); ?>">Beitr&auml;ge von dir</a><br />
-											<span class="grey"><?=template::getVar('PRO'); ?>% aller Beitr&auml;ge<br />
-											<?=template::getVar('PRODAY'); ?> Beitr&auml;ge pro Tag</span>
+											<?=template::getVar('POSTS'); ?> | <a href="search.php?user=<?=template::getVar('USERNAME'); ?>">Beiträge von dir</a><br />
+											<span class="grey"><?=template::getVar('PRO'); ?>% aller Beiträge<br />
+											<?=template::getVar('PRODAY'); ?> Beiträge pro Tag</span>
 										</td>
 									</tr>
 								</table>

@@ -1,10 +1,10 @@
 <?php template::display('header'); ?>
 
 <div class="h2box">
-	<h1 class="fLeft" style="width:30%;">R&auml;nge <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
+	<h1 class="fLeft" style="width:30%;">Ränge <span class="light">(<?=template::getVar('NUM'); ?>)</span></h1>
 	
 	<div class="fRight" style="padding-top: 30px; width: 30%; text-align: right;">
-		<a href="rank-new.php" class="button">Rang hinzuf&uuml;gen</a>
+		<a href="rank-new.php" class="button">Rang hinzufügen</a>
 	</div>
 	
 	<div class="clear"></div>
@@ -14,7 +14,7 @@
 	<tr>
 		<td width="20%" class="title">Rang-Bild</td>
 		<td class="title">Titel</td>
-		<td class="title">ab Beitr&auml;ge</td>
+		<td class="title">ab Beiträge</td>
 		<td width="175px" class="title">&nbsp;</td>
 	</tr>
 
@@ -29,7 +29,7 @@ foreach(template::$blocks['ranks'] as $ranks):
 		<td><?=$ranks['POSTS']; ?></td>
 		<td>
 			<a href="rank-new.php?id=<?=$ranks['ID']; ?>" class="button greyB">bearbeiten</a>
-			<a href="ranks.php?delete=<?=$ranks['ID']; ?>" class="button redB">l&ouml;schen</a>
+			<a href="ranks.php?delete=<?=$ranks['ID']; ?>" class="button redB">löschen</a>
 		</td>
 	</tr>
 

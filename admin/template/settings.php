@@ -10,7 +10,7 @@
 
 <?php if (template::getVar('ERROR')): ?>
 	<div class="info">
-		<?php if (template::getVar('ERROR') == '2'): ?>		Die E-Mail ist ung&uuml;tig.
+		<?php if (template::getVar('ERROR') == '2'): ?>		Die E-Mail ist ungütig.
 		<?php elseif (template::getVar('ERROR') == '3'): ?>	Du musst einen "Avatar der angezeigt wird wenn keiner hochgeladen wurde" angeben.
 		<?php elseif (template::getVar('ERROR') == '1'): ?>	Die Einstellungen wurden gespeichert.
 		<?php endif; ?>
@@ -96,7 +96,7 @@
 		</tr>
 
 		<tr>
-			<td>Beitr&auml;ge pro Seite:</td>
+			<td>Beiträge pro Seite:</td>
 			<td><input type="number" value="<?=template::getVar('POSTS_PERPAGE'); ?>" name="posts_perpage" /></td>
 		</tr>
 
@@ -116,12 +116,12 @@
 
 	<table class="two-column">
 		<tr>
-			<td width="50%">Maximale Anzahl Beitr&auml;ge/Nachrichten pro Tag:</td>
+			<td width="50%">Maximale Anzahl Beiträge/Nachrichten pro Tag:</td>
 			<td width="50%"><input type="text" value="<?=template::getVar('POSTS_PERDAY'); ?>" name="posts_perday" /></td>
 		</tr>
 
 		<tr>
-			<td>Maximale Anzahl an Zeichen im Text:<br /><span class="blue">Gib 0 ein f&uuml;r unendlich</span></td>
+			<td>Maximale Anzahl an Zeichen im Text:<br /><span class="blue">Gib 0 ein für unendlich</span></td>
 			<td valign="top"><input type="text" value="<?=template::getVar('MAX_POST_CHARS'); ?>" name="max_post_chars" /></td>
 		</tr>
 
@@ -131,14 +131,14 @@
 		</tr>
 
 		<tr>
-			<td>E-Mail-Best&auml;tigung bei Registrierung:</td>
+			<td>E-Mail-Bestätigung bei Registrierung:</td>
 			<td><input type="radio" value="1" id="enable_unlock1" name="enable_unlock"<?php if (template::getVar('ENABLE_UNLOCK')): ?> checked<?php endif; ?> /> <label for="enable_unlock1">Ja</label> &nbsp; <input type="radio" value="0" id="enable_unlock2" name="enable_unlock"<?php if (!template::getVar('ENABLE_UNLOCK')): ?> checked<?php endif; ?> /> <label for="enable_unlock2">Nein</label></td>
 		</tr>
 
 		<tr>
 			<td>
-				Nicht freigeschaltete Mitglieder l&ouml;schen nach:<br />
-				<small class="grey" style="font-weight: 500;">Gib 0 ein um das L&ouml;schen zu deaktivieren</small>
+				Nicht freigeschaltete Mitglieder löschen nach:<br />
+				<small class="grey" style="font-weight: 500;">Gib 0 ein um das Löschen zu deaktivieren</small>
 			</td>
 
 			<td valign="top">
@@ -203,7 +203,7 @@
 		</tr>
 
 		<tr>
-			<td>Minimale Breite x H&ouml;he:</td>
+			<td>Minimale Breite x Höhe:</td>
 			<td>
 				<input type="number" value="<?=template::getVar('AVATAR_MIN_WIDTH'); ?>" name="avatar_min_width" /> x
 				<input type="number" value="<?=template::getVar('AVATAR_MIN_HEIGHT'); ?>" name="avatar_min_height" />
@@ -212,7 +212,7 @@
 
 		<tr>
 			<td>
-				Maximale Breite x H&ouml;he:
+				Maximale Breite x Höhe:
 			</td>
 
 			<td>

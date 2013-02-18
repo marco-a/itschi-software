@@ -29,7 +29,7 @@
 	<tr>
 		<td class="title">Mitglied</td>
 		<td class="title">E-Mail</td>
-		<td class="title">Beitr&auml;ge</td>
+		<td class="title">Beiträge</td>
 		<td width="30%" class="title">Aktion</td>
 	</tr>
 
@@ -43,7 +43,7 @@
 					<td><?=$users['POSTS']; ?></td>
 					<td>
 						<a href="user.php?id=<?=$users['ID']; ?>" class="button greyB">bearbeiten</a>
-						<a href="users.php?delete=<?=$users['ID']; ?>" class="button redB">l&ouml;schen</a>
+						<a href="users.php?delete=<?=$users['ID']; ?>" class="button redB">löschen</a>
 					</td>
 				</tr>
 	<?php

@@ -9,13 +9,13 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
 	if (isset($_GET['delete'])) {
 		if (empty($_GET['ok'])) {
-			message_box('Willst du den Bot wirklich l&ouml;schen?', 'bots.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Bot l&ouml;schen', 'bots.php', 'Abbrechen');
+			message_box('Willst du den Bot wirklich löschen?', 'bots.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Bot löschen', 'bots.php', 'Abbrechen');
 			exit;
 		} else {
 			$db->query('

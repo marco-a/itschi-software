@@ -67,7 +67,7 @@
 							<b><a class="<?=$posts['USER_LEGEND']; ?>" href="user.php?id=<?=$posts['USER_ID']; ?>"><?=$posts['USERNAME']; ?></a></b><br />
 							<small class="grey">
 								<?php if ($posts['USER_LEGEND'] == 'admin'): ?><b><?php endif; ?><?=$posts['USER_RANK']; ?><?php if ($posts['USER_LEGEND'] == 'admin'): ?></b><?php endif; ?> &nbsp;&minus;&nbsp;
-								<?=$posts['USER_POSTS']; ?> Beitr&auml;ge
+								<?=$posts['USER_POSTS']; ?> Beiträge
 							</small>
 						<?php else: ?>
 							<b>Unbekannt</b>
@@ -83,14 +83,14 @@
 							<?php if (template::getVar('IS_MOD')): ?>
 								<a href="movetopic.php?id=<?=template::getVar('TOPIC_ID'); ?>" class="button greyB">verschieben</a>
 								<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&important=1" class="button greyB"><?php if (template::getVar('TOPIC_IMPORTANT')): ?>un<?php endif; ?>wichtig markieren</a>
-								<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&close=1" class="button blackB"><?php if (template::getVar('TOPIC_CLOSED')): ?>&ouml;ffnen<?php else: ?>schlie&szlig;en<?php endif; ?></a>
+								<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&close=1" class="button blackB"><?php if (template::getVar('TOPIC_CLOSED')): ?>öffnen<?php else: ?>schlie&szlig;en<?php endif; ?></a>
 								&nbsp;&minus;&nbsp;
 							<?php endif; ?>
 
 							<?php if ($posts['USER_ID'] == $user->row['user_id'] || template::getVar('IS_MOD')): ?>
 
 								<a href="<?php if ($posts['IS_TOPIC']): ?>newtopic.php?edit=1&id=<?=template::getVar('TOPIC_ID'); ?><?php else: ?>newpost.php?edit=1&id=<?=$posts['ID']; ?><?php endif; ?>" class="button greyB">Bearbeiten</a>
-								<a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>" class="button redB">L&ouml;schen</a>
+								<a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>" class="button redB">Löschen</a>
 
 							<?php endif; ?>
 
@@ -133,7 +133,7 @@
 						<?=$posts['TEXT']; ?>
 
 						<?php if ($posts['EDIT_USER_ID']): ?>
-							<div style="border-top:1px solid #dddddd;padding:5px;">Der Eintrag wurde am <?=$posts['EDIT_TIME']; ?> Uhr von <?php if ($posts['EDIT_USER_ID']): ?><a class="<?=$posts['EDIT_USER_LEGEND']; ?>" href="user.php?id=<?=$posts['EDIT_USER_ID']; ?>"><?=$posts['EDIT_USERNAME']; ?></a><?php else: ?><span>Unbekannt</span><?php endif; ?> ge&auml;ndert.</div><br />
+							<div style="border-top:1px solid #dddddd;padding:5px;">Der Eintrag wurde am <?=$posts['EDIT_TIME']; ?> Uhr von <?php if ($posts['EDIT_USER_ID']): ?><a class="<?=$posts['EDIT_USER_LEGEND']; ?>" href="user.php?id=<?=$posts['EDIT_USER_ID']; ?>"><?=$posts['EDIT_USERNAME']; ?></a><?php else: ?><span>Unbekannt</span><?php endif; ?> geändert.</div><br />
 						<?php endif; ?>
 
 						<?php if ($posts['USER_SIGNATUR']): ?>
@@ -160,7 +160,7 @@
 									<?php if($posts['USER_ID'] == $user->row['user_id'] || template::getVar('IS_MOD')): ?>
 
 									 <a href="<?php if ($posts['IS_TOPIC']): ?>newtopic.php?edit=1&id=<?=template::getVar('TOPIC_ID'); ?><?php else: ?>newpost.php?edit=1&id=<?=$posts['ID']; ?><?php endif; ?>">Bearbeiten</a> &nbsp;&nbsp;
-									 <a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>">L&ouml;schen</a> &nbsp;&nbsp;
+									 <a href="<?php if ($posts['IS_TOPIC']): ?>viewforum.php?id=<?=template::getVar('FORUM_ID'); ?><?php else: ?>viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?><?php endif; ?>&delete=<?=$posts['ID']; ?>">Löschen</a> &nbsp;&nbsp;
 
 									<?php endif; ?>
 
@@ -181,7 +181,7 @@
 <table width="100%">
 	<tr>
 		<td valign="top">
-			<?=template::getVar('TOPIC_POSTS'); ?> <?php if (template::getVar('TOPIC_POSTS') == '1'): ?>Beitrag<?php else: ?>Beitr&auml;ge<?php endif; ?>
+			<?=template::getVar('TOPIC_POSTS'); ?> <?php if (template::getVar('TOPIC_POSTS') == '1'): ?>Beitrag<?php else: ?>Beiträge<?php endif; ?>
 
 			<?php if (template::getVar('PAGES_NUM') > 1): ?>
 			 | Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> | <?=template::getVar('PAGES'); ?>

@@ -49,7 +49,7 @@
 		</tr>
 
 		<tr id="posts"<?php if (template::getVar('SPECIAL')): ?> style="display:none;"<?php endif; ?>>
-			<td>ab Foren-Beitr&auml;gen:</td>
+			<td>ab Foren-Beiträgen:</td>
 			<td><input value="<?=template::getVar('POSTS'); ?>" type="number" size="4" name="posts" /></td>
 		</tr>
 	</table>

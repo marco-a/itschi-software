@@ -155,7 +155,7 @@
 
 			} else {
 				echo '
-					<div class="pluginInfo"><b>Warnung:</b> Plugin "'.self::$package.'" ist unvollst&auml;ndig. (<i>main.php missing</i>)</div>
+					<div class="pluginInfo"><b>Warnung:</b> Plugin "'.self::$package.'" ist unvollständig. (<i>main.php missing</i>)</div>
 				';
 			}
 		}

@@ -22,7 +22,7 @@
 </style>
 
 <div class="h2box" style="margin-bottom:0;">
-	<h2>&Uuml;bersicht</h2>
+	<h2>Übersicht</h2>
 </div>
 
 <table border="0" cellspacing="0" cellpadding="5" width="100%" style="text-align: center;" class="s">
@@ -39,7 +39,7 @@
 
 		<td width="25%">
 			<span class="number"><?=template::getVar('POSTS_NUM'); ?></span>
-			Beitr<?php if (template::getVar('POSTS_NUM') == '1'): ?>ag<?php else: ?>&auml;ge<?php endif; ?>
+			Beitr<?php if (template::getVar('POSTS_NUM') == '1'): ?>ag<?php else: ?>äge<?php endif; ?>
 		</td>
 
 		<td width="25%">
@@ -62,14 +62,14 @@
 <form action="index.php" method="post">
 	<table cellpadding="5" cellspacing="0" width="100%">
 		<tr>
-			<td width="90%"><b>Globale Statistiken</b><br /><span class="grey">Mitglieder-, Themen-, Beitragsz&auml;hler; Neuster User</span></td>
+			<td width="90%"><b>Globale Statistiken</b><br /><span class="grey">Mitglieder-, Themen-, Beitragszähler; Neuster User</span></td>
 			<td valign="top" align="center">
 				<a href="index.php?sync=1" class="button">Synchronisieren</a>
 				<?php if (template::getVar('SYNC') == '1'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
 			</td>
 		</tr>
 		<tr>
-			<td><b>Themenstatistiken</b><br /><span class="grey">Letzter Beitrag, Anzahl an Beitr&auml;gen</span></td>
+			<td><b>Themenstatistiken</b><br /><span class="grey">Letzter Beitrag, Anzahl an Beiträgen</span></td>
 			<td align="center">
 				<a href="index.php?sync=2" class="button">Synchronisieren</a>
 				<?php if (template::getVar('SYNC') == '2'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>
@@ -83,7 +83,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><b>Cache leeren</b><br /><span class="grey">Templates, Bots, R&auml;nge, Smilies</span></td>
+			<td><b>Cache leeren</b><br /><span class="grey">Templates, Bots, Ränge, Smilies</span></td>
 			<td align="center">
 				<a href="index.php?sync=4" class="button">Synchronisieren</a>
 				<?php if (template::getVar('SYNC') == '4'): ?> <br /><br /><span class="green">Synchronisiert</span><?php endif; ?>

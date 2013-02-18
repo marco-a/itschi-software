@@ -9,13 +9,13 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
 	if (isset($_GET['delete'])) {
 		if (empty($_GET['ok'])) {
-			message_box('Willst du die Sperre wirklich l&ouml;schen?', 'banlist.php?delete=' . (int)$_GET['delete'] . '&u=' . (int)$_GET['u'] . '&ok=1', 'Sperre l&ouml;schen', 'banlist.php', 'Abbrechen');
+			message_box('Willst du die Sperre wirklich löschen?', 'banlist.php?delete=' . (int)$_GET['delete'] . '&u=' . (int)$_GET['u'] . '&ok=1', 'Sperre löschen', 'banlist.php', 'Abbrechen');
 			exit;
 		} else {
 			$db->query('

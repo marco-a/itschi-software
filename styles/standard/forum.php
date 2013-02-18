@@ -56,7 +56,7 @@
 
 						<td width="9%" class="center">
 							<b style="font-size: 16px;"><?=$forum['POSTS']; ?></b><br />
-							<small class="grey">Beitr<?=(($forum['POSTS'] == 1) ? 'ag' : '&auml;ge'); ?></small>
+							<small class="grey">Beitr<?=(($forum['POSTS'] == 1) ? 'ag' : 'äge'); ?></small>
 						</td>
 
 						<td width="20%">
@@ -123,7 +123,7 @@
 		<td class="inhalt">
 			<b><?=template::getVar('USERS'); ?></b> Mitglieder &nbsp;| &nbsp;
 			<b><?=template::getVar('TOPICS'); ?></b> Themen &nbsp;|&nbsp;
-			<b><?=template::getVar('POSTS'); ?></b> Beitr&auml;ge &nbsp;|&nbsp;
+			<b><?=template::getVar('POSTS'); ?></b> Beiträge &nbsp;|&nbsp;
 			Neuster Benutzer: <a class="<?=template::getVar('NEWEST_USER_LEGEND'); ?>" href="user.php?id=<?=template::getVar('NEWEST_USER_ID'); ?>"><?=template::getVar('NEWEST_USERNAME'); ?></a>
 		</td>
 	</tr>

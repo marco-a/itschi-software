@@ -14,7 +14,7 @@
 <div id="login">
 	<form action="login.php" method="post">
 		<div class="title">
-			<h2>Willkommen zur&uuml;ck!</h2>
+			<h2>Willkommen zurück!</h2>
 		</div>
 
 		<div class="inputs">

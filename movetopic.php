@@ -14,7 +14,7 @@
 	}
 
 	if ($user->row['user_level'] != ADMIN && $user->row['user_level'] != MOD) {
-		message_box('Du bist dazu nicht berechtigt', '/forum/', 'zur&uuml;ck zum Forum');
+		message_box('Du bist dazu nicht berechtigt', '/forum/', 'zurück zum Forum');
 	}
 
 	$forum_id = (isset($_POST['forum_id'])) ? (int)$_POST['forum_id'] : 0;

@@ -52,7 +52,7 @@
 
 								<td width="10%" class="center">
 									<b style="font-size: 16px;">'.$s['POSTS'].'</b><br />
-									<small class="grey">Beitr'.(($s['POSTS'] == 1) ? 'ag' : '&auml;ge').'</small>
+									<small class="grey">Beitr'.(($s['POSTS'] == 1) ? 'ag' : 'äge').'</small>
 								</td>
 
 								<td width="22%" style="padding-left:10px">
@@ -143,7 +143,7 @@
 
 						<td class="center" width="10%">
 							<b style="font-size: 16px;"><?=$topic['POSTS']; ?></b><br />
-							<small class="grey">Beitr<?php if ($topic['POSTS'] == 1): ?>ag<?php else: ?>&auml;ge<?php endif; ?></small>
+							<small class="grey">Beitr<?php if ($topic['POSTS'] == 1): ?>ag<?php else: ?>äge<?php endif; ?></small>
 						</td>
 
 						<td class="center" width="10%">

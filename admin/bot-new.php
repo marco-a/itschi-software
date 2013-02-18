@@ -9,7 +9,7 @@
 	require '../base.php';
 
 	if ($user->row['user_level'] != ADMIN) {
-		message_box('Keine Berechtigung!', '../', 'zur&uuml;ck');
+		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
@@ -54,7 +54,7 @@
 		$db->free_result($res);
 
 		if (!$row['bot_id']) {
-			message_box('Der Bot existiert nicht!', '../', 'zur&uuml;ck');
+			message_box('Der Bot existiert nicht!', '../', 'zurück');
 			exit;
 		}
 

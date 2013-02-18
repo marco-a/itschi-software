@@ -45,7 +45,7 @@
 
 					<td>
 						<a href="banlist-new.php?id=<?=$banlist['ID']; ?>" class="button greyB">bearbeiten</a>
-						<a href="banlist.php?delete=<?=$banlist['ID']; ?>&u=<?=$banlist['USER_ID']; ?>" class="button redB">l&ouml;schen</a>
+						<a href="banlist.php?delete=<?=$banlist['ID']; ?>&u=<?=$banlist['USER_ID']; ?>" class="button redB">löschen</a>
 					</td>
 				</tr>
 	<?php

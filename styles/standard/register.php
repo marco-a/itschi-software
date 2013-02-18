@@ -2,15 +2,15 @@
 
 <?php if (template::getVar('ERROR')): ?>
 	<div class="info">
-		<?php if (template::getVar('ERROR') == '1'): ?>		Bitte alle Felder ausf&uuml;llen.
+		<?php if (template::getVar('ERROR') == '1'): ?>		Bitte alle Felder ausfüllen.
 		<?php elseif (template::getVar('ERROR') == '2'): ?>	Der Benutzername darf keine Sonderzeichen, Umlaute oder Leerzeichen enthalten
 		<?php elseif (template::getVar('ERROR') == '3'): ?>	Der Benutzername muss 3 - 15 Zeichen lang sein
 		<?php elseif (template::getVar('ERROR') == '4'): ?>	Der Benutzername ist nicht erlaubt
 		<?php elseif (template::getVar('ERROR') == '5'): ?>	Der Benutzername ist schon vergeben
-		<?php elseif (template::getVar('ERROR') == '6'): ?>	Die E-Mail ist ung&uuml;ltig
+		<?php elseif (template::getVar('ERROR') == '6'): ?>	Die E-Mail ist ungültig
 		<?php elseif (template::getVar('ERROR') == '7'): ?>	Die Email ist schon vergeben
 		<?php elseif (template::getVar('ERROR') == '8'): ?>	Das Passwort muss mindestens 6 Zeichen lang sein
-		<?php elseif (template::getVar('ERROR') == '9'): ?>	Die Pass&ouml;wrter sind nicht gleich
+		<?php elseif (template::getVar('ERROR') == '9'): ?>	Die Passöwrter sind nicht gleich
 		<?php elseif (template::getVar('ERROR') == '10'): ?>	Der Sicherheitscode ist falsch
 		<?php endif; ?>
 	</div>
