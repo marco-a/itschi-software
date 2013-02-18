@@ -76,12 +76,14 @@
 
 		$server_plugin_file = sprintf('http://%s%s', $server_url, 'plugins.json');
 
-		$server_status 		= @fopen($server_plugin_file, 'r');
+		$server_status = false;
 
-		if ($server_status != false) {
-			fclose($server_status);
+		if (($server_content = @file_get_contents($server_plugin_file)) !== false) {
+			$server_status = @json_decode($server_content);
 
-			$server_status = true;
+			$server_status = ($server_status == NULL || $server_status == false ? false : true);
+
+			unset($server_content);
 		}
 
 		// assign

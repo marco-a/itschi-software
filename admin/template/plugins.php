@@ -108,7 +108,7 @@
 
 					<div class="fRight" style="width: 29%; text-align: right;">
 						<?php if ($server['SERVERSTATUS']): ?>
-							<a href="#<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
+							<a href="plugins.php?list=<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
 							<a href="plugins.php?remove=<?=$server['ID'];?>" class="button">Entfernen</a>
 					</div>
