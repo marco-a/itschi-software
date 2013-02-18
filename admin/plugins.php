@@ -12,10 +12,71 @@
 		exit;
 	}
 
+	function getPluginListURL($server_url)
+	{
+		$server_url = str_replace('http://', '', $server_url);
+
+		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
+
+		if ($slash != '/') {
+			$server_url .= '/';
+		}
+
+		return sprintf('http://%s%s', $server_url, 'plugins.json');
+	}
+
 	if (isset($_GET['remove'])) {
 		$id = (int)$_GET['remove'];
 
 		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
+	}
+
+	if (isset($_GET['list'])) {
+		$id = (int)$_GET['list'];
+
+		if($id <= 0) {
+			message_box('Es ist ein Fehler aufgetreten', './plugins.php', 'Zurück');
+			exit;
+		}
+
+		$res = $db->query('
+			SELECT *
+			FROM ' . SERVER_TABLE . '
+			WHERE server_id = ' . $id
+		);
+
+		$row = $db->fetch_object($res);
+		$db->free_result($res);
+
+		$server_url = getPluginListURL($row->server_url);
+		$server_data = @json_decode(@file_get_contents($server_url));
+
+		foreach ($server_data as $data) {
+			$res = $db->query('
+				SELECT `package`
+				FROM ' . PLUGINS_TABLE . '
+				WHERE `package` = \'' . $data->package . '\'');
+
+			template::assignBlock('plugins', array(
+				'NAME'			=>	$data->name,
+				'VERSION'		=>	$data->version,
+				'DESCRIPTION'	=>	$data->description,
+				'LASTUPDATE'	=>	$data->lastUpdate,
+				'DEVELOPER'		=>	$data->developer,
+				'PACKAGE'		=>	$data->package,
+				'INSTALLED'		=>	(bool) $db->num_rows($res),
+			));
+
+			$db->free_result($res);
+		}
+
+		template::assign(array(
+			'SERVERNAME'	=>	$row->server_name,
+			'PLUGINCOUNT'	=>	count($server_data),
+		));
+
+		template::display('plugin-list');
+		exit;
 	}
 
 	// get all plugins from directory for available plugins
@@ -65,16 +126,8 @@
 		$server_id 			= $row->server_id;
 		$server_name 		= $row->server_name;
 		$server_url 		= $row->server_url;
-		//$server_plugin_file = $server_url . '/plugins.json';
-		$server_url = str_replace('http://', '', $server_url);
 
-		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
-
-		if ($slash != '/') {
-			$server_url .= '/';
-		}
-
-		$server_plugin_file = sprintf('http://%s%s', $server_url, 'plugins.json');
+		$server_plugin_file = getPluginListURL($server_url);
 		$server_content = @file_get_contents($server_plugin_file);
 		$server_status = @json_decode($server_content);
 		unset($server_content);
@@ -240,5 +293,5 @@
 		'INSTALLED'	=>	$installed > 0
 	));
 
-	template::display('plugins', true);
+	template::display('plugins');
 ?>
