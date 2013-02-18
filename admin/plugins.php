@@ -75,15 +75,11 @@
 		}
 
 		$server_plugin_file = sprintf('http://%s%s', $server_url, 'plugins.json');
-
-		$server_status = false;
 		$server_content = @file_get_contents($server_plugin_file);
 		$server_status = @json_decode($server_content);
 		unset($server_content);
-
-		if (is_array($server_status)) {
-			$server_status = ($server_status == NULL || $server_status == false ? false : true);
-		}
+		$server_status = ($server_status == NULL || $server_status == false ? false : true);
+		
 
 		// assign
 		template::assignBlock('server', array(
