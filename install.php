@@ -312,7 +312,7 @@
 			  `server_plugins` int(5) NOT NULL,
 			  `new_plugin` int(1) NOT NULL DEFAULT '0',
 			  PRIMARY KEY (`server_id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
 		mysql_query("
