@@ -47,8 +47,8 @@
 						<li><a href="bots.php"<?php if (template::getVar('PAGE') == 'bots' ||template::getVar('PAGE') == 'bot-new'): ?>class="active"<?php endif; ?>>Bots</a></li>
 						<li><a href="smilies.php"<?php if (template::getVar('PAGE') == 'smilies' ||template::getVar('PAGE') == 'smilie-new'): ?>class="active"<?php endif; ?>>Smilies</a></li>
 						<li><a href="ranks.php"<?php if (template::getVar('PAGE') == 'ranks' ||template::getVar('PAGE') == 'rank-new'): ?>class="active"<?php endif; ?>>Ränge</a></li>
-						<li><a href="groups.php"<?php if (template::getVar('PAGE') == 'groups'): ?>class="active"<?php endif; ?>>Gruppen</a></li>
-						<li><a href="plugins.php"<?php if (template::getVar('PAGE') == 'plugins'): ?>class="active"<?php endif; ?>>Plugins</a></li>
+						<li><a href="groups.php"<?php if (template::getVar('PAGE') == 'groups' ||template::getVar('PAGE') == 'group-new'): ?>class="active"<?php endif; ?>>Gruppen</a></li>
+						<li><a href="plugins.php"<?php if (template::getVar('PAGE') == 'plugins'||template::getVar('PAGE') == 'server-new'): ?>class="active"<?php endif; ?>>Plugins</a></li>
 					</ul>
 
 					<div class="clear"></div>
