@@ -65,7 +65,7 @@
 				<tr>
 					<td colspan="3" class="text">
 						<?php if (template::getVar('POLL_TITLE')): ?>
-							<div style="float: left; width: 45%; padding-right: 10px;">
+							<div style="float: left; width: 45%; padding-right: 20px; word-wrap: break-word;">
 								<?=$posts['TEXT']; ?>
 							</div>
 						<?php
