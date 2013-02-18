@@ -12,8 +12,7 @@
 		exit;
 	}
 
-	function getPluginListURL($server_url)
-	{
+	function getPluginListURL($server_url) {
 		$server_url = str_replace('http://', '', $server_url);
 
 		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
@@ -51,7 +50,11 @@
 		$server_url = getPluginListURL($row->server_url);
 		$server_data = @json_decode(@file_get_contents($server_url));
 
+		$plugincount = 0;
+
 		foreach ($server_data as $data) {
+			++$plugincount;
+
 			$res = $db->query('
 				SELECT `package`
 				FROM ' . PLUGINS_TABLE . '
@@ -73,7 +76,7 @@
 
 		template::assign(array(
 			'SERVERNAME'	=>	htmlspecialchars($row->server_name),
-			'PLUGINCOUNT'	=>	count($server_data),
+			'PLUGINCOUNT'	=>	$plugincount // count is nasty
 		));
 
 		template::display('plugin-list');
