@@ -226,7 +226,7 @@
 		");
 
 		mysql_query("
-			CREATE TABLE `".$prefix."forums` (
+			CREATE TABLE IF NOT EXISTS `".$prefix."forums` (
 			  `forum_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `forum_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `forum_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -316,7 +316,7 @@
 		");
 
 		mysql_query("
-			CREATE TABLE `".$prefix."plugins` (
+			CREATE TABLE IF NOT EXISTS `".$prefix."plugins` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
 			  `package` varchar(255) DEFAULT NULL,
@@ -451,7 +451,7 @@
 		");
 
 		mysql_query("
-			CREATE TABLE `".$prefix."styles` (
+			CREATE TABLE IF NOT EXISTS `".$prefix."styles` (
 			  `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
 			  `author` varchar(255) DEFAULT NULL,
