@@ -65,7 +65,17 @@
 		$server_id 			= $row->server_id;
 		$server_name 		= $row->server_name;
 		$server_url 		= $row->server_url;
-		$server_plugin_file = $server_url . '/plugins.json';
+		//$server_plugin_file = $server_url . '/plugins.json';
+		$server_url = str_replace('http://', '', $server_url);
+
+		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
+
+		if ($slash != '/') {
+			$server_url .= '/';
+		}
+
+		$server_plugin_file = sprintf('http://%s%s', $server_url, 'plugins.json');
+
 		$server_status 		= @fopen($server_plugin_file, 'r');
 
 		if ($server_status != false) {
