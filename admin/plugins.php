@@ -52,12 +52,14 @@
 	}
 
 
-	// get plugins from database
+	// get plugin server from database
 	$res = $db->query("
 		SELECT *
 		FROM " . SERVER_TABLE . "
 		ORDER BY server_id ASC
 	");
+
+	$count = 0;
 
 	while ($row = $db->fetch_object($res)) {
 		$server_id 			= $row->server_id;
@@ -79,8 +81,11 @@
 			'URL'			=>	htmlspecialchars(urldecode($server_url)),
 			'SERVERSTATUS'	=> 	$server_status
 		));
+
+		++$count;
 	}
 
+	template::assign('pluginServerCount', $count);
 
 	// get plugins from database
 	$res = $db->query("

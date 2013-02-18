@@ -86,10 +86,13 @@
 
 	<br /><br />
 
-	<div class="h2box" style="margin-bottom: 0;">
-		<div class="fLeft" style="width: 40%">
-			<h1>Plugin Server</h1>
+	<div class="h2box">
+		<h1 class="fLeft" style="width:30%;">Plugin Server <span class="light">(<?=template::getVar('pluginServerCount');?>)</span></h1>
+
+		<div class="fRight" style="padding-top: 30px; width: 30%; text-align: right;">
+			<a href="server-new.php" class="button">Server hinzufügen</a>
 		</div>
+
 		<div class="clear"></div>
 	</div>
 
