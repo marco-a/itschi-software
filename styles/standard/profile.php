@@ -143,13 +143,15 @@
 				<?php if (template::getVar('ERROR')): ?>
 
 				<div class="info">
-					<?php if (template::getVar('ERROR') == '1'): ?>		Das aktuelle Passwort stimmt nicht
-					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Passwörter sind nicht gleich
+					<?php if (template::getVar('ERROR') == '1'): ?>		Das aktuelle Passwort stimmt nicht.
+					<?php elseif (template::getVar('ERROR') == '2'): ?>	Die Passwörter sind nicht gleich.
+					<?php elseif (template::getVar('ERROR') == '3'): ?>	Gründer können das Konto nicht im Benutzerpanel löschen.
 					<?php endif; ?>
 				</div>
 
 				<?php endif; ?>
 
+				<?php if (template::getVar('USERID') != 1) : ?>
 				<form name="eintrag" enctype="multipart/form-data" action="profile.php?mode=delete" method="post">
 					<div class="info">
 						Mitgliedschaft besteht seit <span><?=template::getVar('REGISTER'); ?> Uhr</span>
@@ -183,6 +185,15 @@
 						</tr>
 					</table>
 				</form>
+				<?php else: ?>
+				<div class="info">
+					Mitgliedschaft besteht seit <span><?=template::getVar('REGISTER'); ?> Uhr</span>
+					<br />
+					<br />
+
+					Gründer können aus Sicherheitsgründen das Konto nicht löschen.
+				</div>
+				<?php endif; ?>
 
 			<?php else: ?>
 
