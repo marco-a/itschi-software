@@ -40,7 +40,6 @@
 	$php_v = sprintf('%.1lf', phpversion()); // SPRINTF FTW :3
 	$php_version = ($php_v >= 5.3);
 	$imagecreatefromgif = function_exists('imagecreatefromgif');
-	$existcurl = function_exists('curl_init');
 
 	if ($submit) {
 		if ($chmod && $config_writable && $imagecreatefromgif) {
@@ -637,11 +636,6 @@
 							<tr>
 								<td width="25%">imagecreatefromgif()</td>
 								<td class="textStatus<?php echo ($imagecreatefromgif ? 'OK' : 'NotOK'); ?>">ist <?php echo ($imagecreatefromgif ? 'vorhanden' : 'nicht vorhanden');?></td>
-							</tr>
-
-							<tr>
-								<td width="25%">curl</td>
-								<td class="textStatus<?php echo ($existcurl ? 'OK' : 'NotOK'); ?>">ist <?php echo ($existcurl ? 'vorhanden' : 'Plugin Server können nicht verwendet werden');?></td>
 							</tr>
 						</table>
 					</section>
