@@ -91,7 +91,7 @@
 				$file = current($parameter);
 				unset($parameter[0]);
 
-				$file = str_replace('./', '', $file);
+				// $file = str_replace('./', '', $file);
 
 				if ($this->check_exception($file, 'GET', $this->env)) {
 					return $matches[0];

@@ -20,8 +20,9 @@
 				</li>
 
 				<?php if (template::getVar('admin')): ?>
-				<li><a href="../user.php?id=<?=$user->row['user_id']; ?>">Angemeldet als <b><?=$user->row['username']; ?></b></a></li>
+					<li><a href="../user.php?id=<?=$user->row['user_id']; ?>">Angemeldet als <b><?=$user->row['username']; ?></b></a></li>
 				<?php endif; ?>
+				
 				<li><a href="../">Zurück zur Hauptseite</a></li>
 
 				<div class="clear"></div>
@@ -38,26 +39,26 @@
 
 		<section id="content">
 			<?php if (template::getVar('admin')) {?>
-			<div id="nav">
-				<nav>
-					<ul>
-						<li><a href="index.php"<?php if (template::getVar('PAGE') == 'index'): ?>class="active"<?php endif; ?>>Startseite</a></li>
-						<li><a href="settings.php"<?php if (template::getVar('PAGE') == 'settings'): ?>class="active"<?php endif; ?>>Einstellungen</a></li>
-						<li><a href="users.php"<?php if (template::getVar('PAGE') == 'users' ||template::getVar('PAGE') == 'user'): ?>class="active"<?php endif; ?>>Mitglieder</a></li>
-						<li><a href="banlist.php"<?php if (template::getVar('PAGE') == 'banlist' ||template::getVar('PAGE') == 'banlist-new'): ?>class="active"<?php endif; ?>>Sperrungen</a></li>
-						<li><a href="forums.php"<?php if (template::getVar('PAGE') == 'forums' ||template::getVar('PAGE') == 'forum-new'): ?>class="active"<?php endif; ?>>Foren</a></li>
-						<li><a href="bots.php"<?php if (template::getVar('PAGE') == 'bots' ||template::getVar('PAGE') == 'bot-new'): ?>class="active"<?php endif; ?>>Bots</a></li>
-						<li><a href="smilies.php"<?php if (template::getVar('PAGE') == 'smilies' ||template::getVar('PAGE') == 'smilie-new'): ?>class="active"<?php endif; ?>>Smilies</a></li>
-						<li><a href="ranks.php"<?php if (template::getVar('PAGE') == 'ranks' ||template::getVar('PAGE') == 'rank-new'): ?>class="active"<?php endif; ?>>Ränge</a></li>
-						<li><a href="groups.php"<?php if (template::getVar('PAGE') == 'groups' ||template::getVar('PAGE') == 'group-new'): ?>class="active"<?php endif; ?>>Gruppen</a></li>
-						<li><a href="plugins.php"<?php if (template::getVar('PAGE') == 'plugins'||template::getVar('PAGE') == 'server-new'): ?>class="active"<?php endif; ?>>Plugins</a></li>
-					</ul>
+				<div id="nav">
+					<nav>
+						<ul>
+							<li><a href="index.php"<?php if (template::getVar('PAGE') == 'index'): ?>class="active"<?php endif; ?>>Startseite</a></li>
+							<li><a href="settings.php"<?php if (template::getVar('PAGE') == 'settings'): ?>class="active"<?php endif; ?>>Einstellungen</a></li>
+							<li><a href="users.php"<?php if (template::getVar('PAGE') == 'users' ||template::getVar('PAGE') == 'user'): ?>class="active"<?php endif; ?>>Mitglieder</a></li>
+							<li><a href="banlist.php"<?php if (template::getVar('PAGE') == 'banlist' ||template::getVar('PAGE') == 'banlist-new'): ?>class="active"<?php endif; ?>>Sperrungen</a></li>
+							<li><a href="forums.php"<?php if (template::getVar('PAGE') == 'forums' ||template::getVar('PAGE') == 'forum-new'): ?>class="active"<?php endif; ?>>Foren</a></li>
+							<li><a href="bots.php"<?php if (template::getVar('PAGE') == 'bots' ||template::getVar('PAGE') == 'bot-new'): ?>class="active"<?php endif; ?>>Bots</a></li>
+							<li><a href="smilies.php"<?php if (template::getVar('PAGE') == 'smilies' ||template::getVar('PAGE') == 'smilie-new'): ?>class="active"<?php endif; ?>>Smilies</a></li>
+							<li><a href="ranks.php"<?php if (template::getVar('PAGE') == 'ranks' ||template::getVar('PAGE') == 'rank-new'): ?>class="active"<?php endif; ?>>Ränge</a></li>
+							<li><a href="groups.php"<?php if (template::getVar('PAGE') == 'groups' ||template::getVar('PAGE') == 'group-new'): ?>class="active"<?php endif; ?>>Gruppen</a></li>
+							<li><a href="plugins.php"<?php if (template::getVar('PAGE') == 'plugins'||template::getVar('PAGE') == 'server-new'): ?>class="active"<?php endif; ?>>Plugins</a></li>
+						</ul>
+
+						<div class="clear"></div>
+					</nav>
 
 					<div class="clear"></div>
-				</nav>
-
-				<div class="clear"></div>
-			</div>
+				</div>
 			<?php } ?>
 
 			<div class="content">
