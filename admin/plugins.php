@@ -15,10 +15,30 @@
 		exit;
 	}
 
-	if (isset($_GET['remove'])) {
-		$id = (int)$_GET['remove'];
+	if (isset($_GET['removeServer'])) {
+		$id = (int)$_GET['removeServer'];
 
 		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
+	}
+
+	if (isset($_GET['removePlugin'])) {
+		$id = (int)$_GET['removePlugin'];
+
+		$res = $db->query('
+			SELECT `package`
+			FROM ' . PLUGINS_TABLE . '
+			WHERE `id` = ' . $id);
+		$row = $db->fetch_object($res);
+		$db->free_result($res);
+
+		$plugin_dir = '../plugins/' . $row->package;
+		if(!lib\plugins::removeFolder($plugin_dir))
+		{
+			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden', './plugins.php', 'Zurück');
+			exit;
+		} else {
+			$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
+		}
 	}
 
 	if (isset($_GET['list'])) {
