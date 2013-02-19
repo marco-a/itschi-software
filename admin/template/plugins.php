@@ -128,8 +128,8 @@
 	<br /><br />
 
 	<div class="h2box">
-		<div class="fLeft" style="width: 40%;">
-			<h1>Verfügbare Plugins</h1>
+		<div class="fLeft" style="width: 50%;">
+			<h1>Lokal verfügbare Plugins</h1>
 		</div>
 
 		<div class="fRight" style="padding-top: 7px;">
