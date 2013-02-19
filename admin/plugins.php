@@ -6,22 +6,13 @@
 	*
 	*/
 	require '../base.php';
+	require_once '../lib/plugins/plugin.server.php';
+
+	use \Itschi\lib as lib;
 
 	if ($user->row['user_level'] != ADMIN) {
 		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
-	}
-
-	function getPluginListURL($server_url) {
-		$server_url = str_replace('http://', '', $server_url);
-
-		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
-
-		if ($slash != '/') {
-			$server_url .= '/';
-		}
-
-		return sprintf('http://%s%s', $server_url, 'plugins.json');
 	}
 
 	if (isset($_GET['remove'])) {
@@ -47,7 +38,7 @@
 		$row = $db->fetch_object($res);
 		$db->free_result($res);
 
-		$server_url = getPluginListURL($row->server_url);
+		$server_url = lib\pluginServer::getPluginListURL($row->server_url);
 		$server_data = @json_decode(@file_get_contents($server_url));
 
 		$plugin_mess = '';
@@ -168,7 +159,7 @@
 		$server_name 		= $row->server_name;
 		$server_url 		= $row->server_url;
 
-		$server_plugin_file = getPluginListURL($server_url);
+		$server_plugin_file = lib\pluginServer::getPluginListURL($server_url);
 		$server_content = @file_get_contents($server_plugin_file);
 		$server_status = @json_decode($server_content);
 		unset($server_content);
