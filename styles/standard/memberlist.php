@@ -10,14 +10,12 @@
 </div>
 
 <div class="tabs noJS">
-	<?php if (template::getVar('MODE') == 'team'): ?>
-		<ul>
+	<ul>
+		<?php if (template::getVar('MODE') == 'team'): ?>
 			<li><a href="memberlist.php?mode=team" <?php if (!template::getVar('CHAR')): ?>class="active"<?php endif; ?>>Alle</a></li>
-			<li><a href="memberlist.php?mode=team&q=14" <?php if (template::getVar('CHAR') == '14'): ?>class="active"<?php endif; ?>>Administrator</a></li>
-			<li><a href="memberlist.php?mode=team&q=15" <?php if (template::getVar('CHAR') == '15'): ?>class="active"<?php endif; ?>>Moderator</a></li>
-		</ul>
+			<li><a href="memberlist.php?mode=team&amp;q=14" <?php if (template::getVar('CHAR') == '14'): ?>class="active"<?php endif; ?>>Administrator</a></li>
+			<li><a href="memberlist.php?mode=team&amp;q=15" <?php if (template::getVar('CHAR') == '15'): ?>class="active"<?php endif; ?>>Moderator</a></li>
 		<?php else: ?>
-		<ul>
 			<li><a href="memberlist.php" <?php if (!template::getVar('CHAR')): ?>class="active"<?php endif; ?>>Alle</a></li>
 			<li><a href="memberlist.php?q=a" <?php if (template::getVar('CHAR') == 'a'): ?>class="active"<?php endif; ?>>A</a></li>
 			<li><a href="memberlist.php?q=b" <?php if (template::getVar('CHAR') == 'b'): ?>class="active"<?php endif; ?>>B</a></li>
@@ -45,8 +43,8 @@
 			<li><a href="memberlist.php?q=x" <?php if (template::getVar('CHAR') == 'x'): ?>class="active"<?php endif; ?>>X</a></li>
 			<li><a href="memberlist.php?q=y" <?php if (template::getVar('CHAR') == 'y'): ?>class="active"<?php endif; ?>>Y</a></li>
 			<li><a href="memberlist.php?q=z" <?php if (template::getVar('CHAR') == 'z'): ?>class="active"<?php endif; ?>>Z</a></li>
-		</ul>
-	<?php endif; ?>
+		<?php endif; ?>
+	</ul>
 
 	<div class="content" <?php if (template::getVar('MODE') == 'team'): ?>style="border-top:1px solid #e0e0e0;"<?php endif; ?>>
 		<div id="members" class="tabContent">
