@@ -133,17 +133,27 @@
 			");
 
 			$row = $db->fetch_object($res);
-
 			if (!isset($row->id)) {
 				$db->query("
 					INSERT INTO " . PLUGINS_TABLE . "
 					(title, package, permissions, dependencies, minVersion, maxVersion, URL, datum, installed)
 					VALUES ('".$name."', '".$package."', '".$permissions."', '".$dependencies."', '".$minVersion."', '".$maxVersion."', '".$URL."', '".time()."', '0')
 				");
+			} else {
+				$db->query("
+				UPDATE " . PLUGINS_TABLE . " SET
+					`title` = '".$name."',
+					`permissions` = '".$permissions."',
+					`dependencies` =  '".$dependencies."',
+					`minVersion` =  '".$minVersion."',
+					`maxVersion` =  '".$maxVersion."',
+					`URL` =  '".$URL."',
+					`datum` =  '".time()."'
+				WHERE `id` = " . $row->id
+				);
 			}
 		}
 	}
-
 
 	// get plugin server from database
 	$res = $db->query("
