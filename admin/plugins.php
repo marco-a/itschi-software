@@ -6,28 +6,41 @@
 	*
 	*/
 	require '../base.php';
+	require_once '../lib/plugins/plugin.server.php';
+
+	use \Itschi\lib as lib;
 
 	if ($user->row['user_level'] != ADMIN) {
 		message_box('Keine Berechtigung!', '../', 'zurück');
 		exit;
 	}
 
-	function getPluginListURL($server_url) {
-		$server_url = str_replace('http://', '', $server_url);
+	$plugins = new lib\plugins();
 
-		$slash = substr($server_url, mb_strlen($server_url) - 1, 1);
-
-		if ($slash != '/') {
-			$server_url .= '/';
-		}
-
-		return sprintf('http://%s%s', $server_url, 'plugins.json');
-	}
-
-	if (isset($_GET['remove'])) {
-		$id = (int)$_GET['remove'];
+	if (isset($_GET['removeServer'])) {
+		$id = (int)$_GET['removeServer'];
 
 		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
+	}
+
+	if (isset($_GET['removePlugin'])) {
+		$id = (int)$_GET['removePlugin'];
+
+		$res = $db->query('
+			SELECT `package`
+			FROM ' . PLUGINS_TABLE . '
+			WHERE `id` = ' . $id);
+		$row = $db->fetch_object($res);
+		$db->free_result($res);
+
+		$plugin_dir = '../plugins/' . $row->package;
+		if(!lib\plugins::removeFolder($plugin_dir))
+		{
+			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden', './plugins.php', 'Zurück');
+			exit;
+		} else {
+			$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
+		}
 	}
 
 	if (isset($_GET['list'])) {
@@ -47,7 +60,7 @@
 		$row = $db->fetch_object($res);
 		$db->free_result($res);
 
-		$server_url = getPluginListURL($row->server_url);
+		$server_url = lib\pluginServer::getPluginListURL($row->server_url);
 		$server_data = @json_decode(@file_get_contents($server_url));
 
 		$plugin_mess = '';
@@ -55,21 +68,21 @@
 		/*
 		 *		TODO: Code aufräumen und auf sicherheit prüfen!
 		 */
-		if(isset($_GET['install'])) {
-			$plugin_pack = htmlspecialchars($_GET['install']);
-			$plugin_file = htmlspecialchars(urldecode($_GET['install'].'.zip'));
+		if(isset($_GET['download'])) {
+			$plugin_pack = htmlspecialchars($_GET['download']);
+			$plugin_file = htmlspecialchars(urldecode($_GET['download'].'.zip'));
 			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
 
 			if(@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
-				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />';
+				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />
+				Das Plugin kann nun bei den Lokal verfügbare Plugins installiert werden.';
 
 				$zip = new ZipArchive();
 
 				if ($zip->open($plugin_file) === TRUE) {
 					$zip->extractTo('../plugins/'.$plugin_pack.'/');
 					$zip->close();
-
-					$plugin_mess .= 'Plugin wird installiert....'; // TODO: Installation!
+					$plugins->synchronizeLocalPlugins();
 				} else {
 					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
 					$zip->close();
@@ -102,7 +115,7 @@
 					'LASTUPDATE'	=>	htmlspecialchars($data->lastUpdate),
 					'DEVELOPER'		=>	htmlspecialchars($data->developer),
 					'PACKAGE'		=>	htmlspecialchars($data->package),
-					'INSTALLED'		=>	(bool) $db->num_rows($res),
+					'EXISTING'		=>	(bool) $db->num_rows($res),
 				));
 
 				$db->free_result($res);
@@ -117,42 +130,10 @@
 		));
 
 		template::display('plugin-list');
-		exit;
+		exit; // exit da hier ein anderes template angezeigt wird
 	}
 
-	// get all plugins from directory for available plugins
-	$files = glob('../plugins/*', GLOB_ONLYDIR);
-
-	foreach ($files as $file) {
-		$json = @json_decode(file_get_contents($file . '/plugin.json'), true);
-
-		if ($json) {
-			$package = $db->chars($json['package']);
-			$name = $db->chars($json['name']);
-			$permissions = @json_encode($json['permissions']);
-			$dependencies = @json_encode($json['dependencies']);
-			$minVersion = $db->chars($json['minVersion']);
-			$maxVersion = $db->chars($json['maxVersion']);
-			$URL = $db->chars($json['URL']);
-
-			$res = $db->query("
-				SELECT id
-				FROM " . PLUGINS_TABLE . "
-				WHERE package = '".$package."'
-			");
-
-			$row = $db->fetch_object($res);
-
-			if (!isset($row->id)) {
-				$db->query("
-					INSERT INTO " . PLUGINS_TABLE . "
-					(title, package, permissions, dependencies, minVersion, maxVersion, URL, datum, installed)
-					VALUES ('".$name."', '".$package."', '".$permissions."', '".$dependencies."', '".$minVersion."', '".$maxVersion."', '".$URL."', '".time()."', '0')
-				");
-			}
-		}
-	}
-
+	$plugins->synchronizeLocalPlugins();
 
 	// get plugin server from database
 	$res = $db->query("
@@ -168,7 +149,7 @@
 		$server_name 		= $row->server_name;
 		$server_url 		= $row->server_url;
 
-		$server_plugin_file = getPluginListURL($server_url);
+		$server_plugin_file = lib\pluginServer::getPluginListURL($server_url);
 		$server_content = @file_get_contents($server_plugin_file);
 		$server_status = @json_decode($server_content);
 		unset($server_content);

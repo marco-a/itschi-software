@@ -19,7 +19,9 @@
 					<a class="noLink"><?=template::getVar('PAGE_TITLE'); ?></a>
 				</li>
 
+				<?php if (template::getVar('admin')): ?>
 				<li><a href="../user.php?id=<?=$user->row['user_id']; ?>">Angemeldet als <b><?=$user->row['username']; ?></b></a></li>
+				<?php endif; ?>
 				<li><a href="../">Zurück zur Hauptseite</a></li>
 
 				<div class="clear"></div>

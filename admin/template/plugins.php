@@ -115,7 +115,7 @@
 							<a href="plugins.php?list=<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
 							<a href="server-new.php?id=<?=$server['ID']; ?>" class="button greyB">bearbeiten</a>
-							<a href="plugins.php?remove=<?=$server['ID'];?>" class="button redB">entfernen</a>
+							<a href="plugins.php?removeServer=<?=$server['ID'];?>" class="button redB">entfernen</a>
 					</div>
 
 					<div class="clear"></div>
@@ -128,8 +128,8 @@
 	<br /><br />
 
 	<div class="h2box">
-		<div class="fLeft" style="width: 40%;">
-			<h1>Verfügbare Plugins</h1>
+		<div class="fLeft" style="width: 50%;">
+			<h1>Lokal verfügbare Plugins</h1>
 		</div>
 
 		<div class="fRight" style="padding-top: 7px;">
@@ -148,7 +148,7 @@
 			foreach(template::$blocks['available'] as $available):
 	?>
 				<div class="item">
-					<div class="fLeft" style="width: 69%;">
+					<div class="fLeft" style="width: 59%;">
 						<span class="package"><?=$available['PACKAGE']; ?></span>
 						<h2><?=$available['NAME']; ?> <span class="version"><?=$available['VERSION']; ?></span></h2>
 
@@ -180,12 +180,13 @@
 						</div>
 					</div>
 
-					<div class="fRight" style="width: 29%; text-align: right;">
+					<div class="fRight" style="width: 39%; text-align: right;">
 						<?php if ($available['COMPATIBLE']): ?>
-							<a href="./plugins_install.php?id=<?=$available['ID']; ?>" class="button">Installieren</a>
+							<a href="./plugins_install.php?id=<?=$available['ID']; ?>" class="button greenB">installieren</a>
 						<?php else: ?>
 							<small class="red">Nicht kompatibel mit dieser Version.</small>
 						<?php endif; ?>
+						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB">löschen</a>
 					</div>
 
 					<div class="clear"></div>

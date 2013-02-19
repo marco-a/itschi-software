@@ -25,10 +25,10 @@
 						<b>Letztes Update:</b> <?=date('d.m.Y', $plugin['LASTUPDATE']); ?>
 					</div>
 					<div class="fRight" style="width: 29%; text-align: right;">
-					<?php if ($plugin['INSTALLED']): ?>
-						<a href="" class="button redB">deinstallieren</a>
+					<?php if ($plugin['EXISTING']): ?>
+						<small class="red">bereits lokal vorhanden.</small>
 					<?php else: ?>
-						<a href="./plugins.php?list=<?=template::getVar('SERVERID');?>&install=<?=$plugin['PACKAGE']; ?>" class="button greenB">installieren</a>
+						<a href="./plugins.php?list=<?=template::getVar('SERVERID');?>&download=<?=$plugin['PACKAGE']; ?>" class="button greenB">herunterladen</a>
 					<?php endif; ?>
 					</div>
 					<div class="clear"></div>
