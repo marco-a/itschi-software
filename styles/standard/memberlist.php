@@ -46,7 +46,7 @@
 		<?php endif; ?>
 	</ul>
 
-	<div class="content" <?php if (template::getVar('MODE') == 'team'): ?>style="border-top:1px solid #e0e0e0;"<?php endif; ?>>
+	<div class="content">
 		<div id="members" class="tabContent">
 			<?php
 				if (isset(template::$blocks['members'])):
