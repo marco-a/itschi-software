@@ -50,6 +50,45 @@
 		$server_url = getPluginListURL($row->server_url);
 		$server_data = @json_decode(@file_get_contents($server_url));
 
+		$plugin_mess = NULL;
+		$error = FALSE;
+
+
+		/*
+		 *		TODO: Code aufräumen und auf sicherheit prüfen!
+		 */
+		if(isset($_GET['install'])) {
+			$plugin_pack	=	htmlspecialchars($_GET['install']);
+			$plugin_file 	= 	htmlspecialchars(urldecode($_GET['install'] . '.zip'));
+			$plugin_url 	=	htmlspecialchars(urldecode($row->server_url));
+            
+			if(@copy($plugin_url . $plugin_file, $plugin_file)) {
+				$plugin_mess = 'Download von "' . $plugin_url . $plugin_file .'" erfolgreich.<br />Datei wird entpackt.<br />';
+	            $zip = new ZipArchive;
+	            if ($zip->open($plugin_file) === TRUE) { 
+
+					$plugin_mess = 'Datei wurde entpackt.';
+	                $zip->extractTo('../plugins/'.$plugin_pack.'/'); 
+	                $zip->close();
+	                if(file_exists($plugin_file)){
+					    unlink($plugin_file);
+					}
+
+					$plugin_mess = 'Datei wird installiert....'; // TODO: Installation!
+				} else {
+					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
+					$error = TRUE;
+	                $zip->close();
+	                if(file_exists($plugin_file)){
+					    unlink($plugin_file);
+					}
+				}
+			} else {
+				$plugin_mess = '<strong>FEHLER:</strong> Download von "' . $plugin_url . $plugin_file .'" fehlgeschlagen';
+				$error = TRUE;
+			}
+		}
+
 		$plugincount = 0;
 
 		foreach ($server_data as $data) {
@@ -75,8 +114,10 @@
 		}
 
 		template::assign(array(
+			'SERVERID'		=>	htmlspecialchars($row->server_id),
 			'SERVERNAME'	=>	htmlspecialchars($row->server_name),
-			'PLUGINCOUNT'	=>	$plugincount // count is nasty
+			'PLUGINCOUNT'	=>	$plugincount, // count is nasty
+			'MESSAGE'		=>	$plugin_mess
 		));
 
 		template::display('plugin-list');

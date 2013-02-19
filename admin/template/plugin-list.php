@@ -1,5 +1,9 @@
 <?php template::display('header'); ?>
 
+	<?php if (template::getVar('MESSAGE')): ?>
+		<div class="info"><?=template::getVar('MESSAGE');?></div>
+	<?php endif; ?>
+
 <div id="plugins">
 	<div class="h2box">
 		<h1 style="width:100%;">Verfügbare Plugins <span class="light">(<?=template::getVar('SERVERNAME');?>)</span></h1>
@@ -24,7 +28,7 @@
 					<?php if ($plugin['INSTALLED']): ?>
 						<a href="" class="button redB">deinstallieren</a>
 					<?php else: ?>
-						<a href="" class="button greenB">installieren</a>
+						<a href="./plugins.php?list=<?=template::getVar('SERVERID');?>&install=<?=$plugin['PACKAGE']; ?>" class="button greenB">installieren</a>
 					<?php endif; ?>
 					</div>
 					<div class="clear"></div>
