@@ -52,15 +52,14 @@
 			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
 
 			if(@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
-				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />';
+				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />
+				Das Plugin kann nun bei den Lokal verfügbare Plugins installiert werden.';
 
 				$zip = new ZipArchive();
 
 				if ($zip->open($plugin_file) === TRUE) {
 					$zip->extractTo('../plugins/'.$plugin_pack.'/');
 					$zip->close();
-
-					$plugin_mess .= 'Plugin wird installiert....'; // TODO: Installation!
 				} else {
 					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
 					$zip->close();
