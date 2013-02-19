@@ -10,7 +10,13 @@
 </div>
 
 <div class="tabs noJS">
-	<?php if (template::getVar('MODE') != 'team'): ?>
+	<?php if (template::getVar('MODE') == 'team'): ?>
+		<ul>
+			<li><a href="memberlist.php?mode=team" <?php if (!template::getVar('CHAR')): ?>class="active"<?php endif; ?>>Alle</a></li>
+			<li><a href="memberlist.php?mode=team&q=14" <?php if (template::getVar('CHAR') == '14'): ?>class="active"<?php endif; ?>>Administrator</a></li>
+			<li><a href="memberlist.php?mode=team&q=15" <?php if (template::getVar('CHAR') == '15'): ?>class="active"<?php endif; ?>>Moderator</a></li>
+		</ul>
+		<?php else: ?>
 		<ul>
 			<li><a href="memberlist.php" <?php if (!template::getVar('CHAR')): ?>class="active"<?php endif; ?>>Alle</a></li>
 			<li><a href="memberlist.php?q=a" <?php if (template::getVar('CHAR') == 'a'): ?>class="active"<?php endif; ?>>A</a></li>
