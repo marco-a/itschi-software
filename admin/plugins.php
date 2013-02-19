@@ -50,60 +50,63 @@
 		$server_url = getPluginListURL($row->server_url);
 		$server_data = @json_decode(@file_get_contents($server_url));
 
-		$plugin_mess = NULL;
+		$plugin_mess = '';
 
 		/*
 		 *		TODO: Code aufräumen und auf sicherheit prüfen!
 		 */
 		if(isset($_GET['install'])) {
-			$plugin_pack	=	htmlspecialchars($_GET['install']);
-			$plugin_file 	= 	htmlspecialchars(urldecode($_GET['install'] . '.zip'));
-			$plugin_url 	=	htmlspecialchars(urldecode($row->server_url));
-            
-			if(@copy($plugin_url . $plugin_file, $plugin_file)) {
-				$plugin_mess = 'Download von "<em>' . $plugin_url . $plugin_file .'</em>" erfolgreich.<br />';
-	            $zip = new ZipArchive;
-	            if ($zip->open($plugin_file) === TRUE) { 
-	                $zip->extractTo('../plugins/'.$plugin_pack.'/'); 
-	                $zip->close();
-	                if(file_exists($plugin_file)){
-					    unlink($plugin_file);
-					}
+			$plugin_pack = htmlspecialchars($_GET['install']);
+			$plugin_file = htmlspecialchars(urldecode($_GET['install'].'.zip'));
+			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
+
+			if(@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
+				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />';
+
+				$zip = new ZipArchive();
+
+				if ($zip->open($plugin_file) === TRUE) {
+					$zip->extractTo('../plugins/'.$plugin_pack.'/');
+					$zip->close();
+
 					$plugin_mess .= 'Plugin wird installiert....'; // TODO: Installation!
 				} else {
 					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
-	                $zip->close();
-	                if(file_exists($plugin_file)){
-					    unlink($plugin_file);
-					}
+					$zip->close();
+				}
+
+				if(is_file($plugin_file)){
+					unlink($plugin_file);
 				}
 			} else {
-				$plugin_mess = '<strong>FEHLER:</strong> Download von "<em>' . $plugin_url . $plugin_file .'</em>" fehlgeschlagen.';
+				$plugin_mess = '<strong>FEHLER:</strong> Download von "<em>'.$plugin_url.$plugin_file.'</em>" fehlgeschlagen.';
 			}
 		}
 
 		$plugincount = 0;
 
-		foreach ($server_data as $data) {
-			++$plugincount;
+		if (is_array($server_data)) {
+			foreach ($server_data as $data) {
+				++$plugincount;
 
-			$res = $db->query('
-				SELECT `package`
-				FROM ' . PLUGINS_TABLE . '
-				WHERE `package` = \'' . $db->chars($data->package) . '\'');
+				$res = $db->query('
+					SELECT `package`
+					FROM ' . PLUGINS_TABLE . '
+					WHERE `package` = \'' . $db->chars($data->package) . '\'');
 
-			// never trust user data
-			template::assignBlock('plugins', array(
-				'NAME'			=>	htmlspecialchars($data->name),
-				'VERSION'		=>	htmlspecialchars($data->version),
-				'DESCRIPTION'	=>	htmlspecialchars($data->description),
-				'LASTUPDATE'	=>	htmlspecialchars($data->lastUpdate),
-				'DEVELOPER'		=>	htmlspecialchars($data->developer),
-				'PACKAGE'		=>	htmlspecialchars($data->package),
-				'INSTALLED'		=>	(bool) $db->num_rows($res),
-			));
+				// never trust user data
+				template::assignBlock('plugins', array(
+					'NAME'			=>	htmlspecialchars($data->name),
+					'VERSION'		=>	htmlspecialchars($data->version),
+					'DESCRIPTION'	=>	htmlspecialchars($data->description),
+					'LASTUPDATE'	=>	htmlspecialchars($data->lastUpdate),
+					'DEVELOPER'		=>	htmlspecialchars($data->developer),
+					'PACKAGE'		=>	htmlspecialchars($data->package),
+					'INSTALLED'		=>	(bool) $db->num_rows($res),
+				));
 
-			$db->free_result($res);
+				$db->free_result($res);
+			}
 		}
 
 		template::assign(array(
