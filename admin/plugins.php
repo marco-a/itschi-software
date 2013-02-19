@@ -51,8 +51,6 @@
 		$server_data = @json_decode(@file_get_contents($server_url));
 
 		$plugin_mess = NULL;
-		$error = FALSE;
-
 
 		/*
 		 *		TODO: Code aufräumen und auf sicherheit prüfen!
@@ -63,7 +61,7 @@
 			$plugin_url 	=	htmlspecialchars(urldecode($row->server_url));
             
 			if(@copy($plugin_url . $plugin_file, $plugin_file)) {
-				$plugin_mess = 'Download von "' . $plugin_url . $plugin_file .'" erfolgreich.<br />Datei wird entpackt.<br />';
+				$plugin_mess = 'Download von "<em>' . $plugin_url . $plugin_file .'</em>" erfolgreich.<br />';
 	            $zip = new ZipArchive;
 	            if ($zip->open($plugin_file) === TRUE) { 
 	                $zip->extractTo('../plugins/'.$plugin_pack.'/'); 
@@ -71,19 +69,16 @@
 	                if(file_exists($plugin_file)){
 					    unlink($plugin_file);
 					}
-
 					$plugin_mess .= 'Plugin wird installiert....'; // TODO: Installation!
 				} else {
 					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
-					$error = TRUE;
 	                $zip->close();
 	                if(file_exists($plugin_file)){
 					    unlink($plugin_file);
 					}
 				}
 			} else {
-				$plugin_mess = '<strong>FEHLER:</strong> Download von "' . $plugin_url . $plugin_file .'" fehlgeschlagen';
-				$error = TRUE;
+				$plugin_mess = '<strong>FEHLER:</strong> Download von "<em>' . $plugin_url . $plugin_file .'</em>" fehlgeschlagen.';
 			}
 		}
 
