@@ -19,7 +19,6 @@
 		$query = "user_level > 0 AND ";
 	} else if ($mode == 'team' && $char) {
 		$query = "user_rank = '".$char."' AND ";
-		echo $char;
 	} else if ($mode != 'team' && $char) {
 		$query = "username " . (($char == 1) ? "NOT REGEXP '^[a-z]'" : "LIKE '" . $db->chars(substr($char, 0, 1)) . "%'") . " AND ";
 	}
