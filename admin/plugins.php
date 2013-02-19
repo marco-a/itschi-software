@@ -66,15 +66,13 @@
 				$plugin_mess = 'Download von "' . $plugin_url . $plugin_file .'" erfolgreich.<br />Datei wird entpackt.<br />';
 	            $zip = new ZipArchive;
 	            if ($zip->open($plugin_file) === TRUE) { 
-
-					$plugin_mess = 'Datei wurde entpackt.';
 	                $zip->extractTo('../plugins/'.$plugin_pack.'/'); 
 	                $zip->close();
 	                if(file_exists($plugin_file)){
 					    unlink($plugin_file);
 					}
 
-					$plugin_mess = 'Datei wird installiert....'; // TODO: Installation!
+					$plugin_mess .= 'Plugin wird installiert....'; // TODO: Installation!
 				} else {
 					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
 					$error = TRUE;
