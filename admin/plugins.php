@@ -46,9 +46,9 @@
 		/*
 		 *		TODO: Code aufräumen und auf sicherheit prüfen!
 		 */
-		if(isset($_GET['install'])) {
-			$plugin_pack = htmlspecialchars($_GET['install']);
-			$plugin_file = htmlspecialchars(urldecode($_GET['install'].'.zip'));
+		if(isset($_GET['download'])) {
+			$plugin_pack = htmlspecialchars($_GET['download']);
+			$plugin_file = htmlspecialchars(urldecode($_GET['download'].'.zip'));
 			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
 
 			if(@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
@@ -92,7 +92,7 @@
 					'LASTUPDATE'	=>	htmlspecialchars($data->lastUpdate),
 					'DEVELOPER'		=>	htmlspecialchars($data->developer),
 					'PACKAGE'		=>	htmlspecialchars($data->package),
-					'INSTALLED'		=>	(bool) $db->num_rows($res),
+					'EXISTING'		=>	(bool) $db->num_rows($res),
 				));
 
 				$db->free_result($res);
