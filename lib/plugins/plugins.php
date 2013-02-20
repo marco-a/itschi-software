@@ -14,14 +14,15 @@
 
 			$id = (int) $id;
 			$res = $db->query('
-				SELECT `package`
+				SELECT package
 				FROM ' . PLUGINS_TABLE . '
-				WHERE `id` = ' . $id . ' and `installed` = 0');
+				WHERE id = ' . $id . ' and installed = 0
+			');
 
 			if ($db->num_rows($res) != 1) {
 				message_box('Das Plugin konnte nicht installiert werden.', './plugins.php', 'zurück');
 			} else {
-				$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'1\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+				$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'1\' WHERE id = %d', PLUGINS_TABLE, $id));
 				message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
 			}
 
@@ -33,14 +34,15 @@
 
 			$id = (int) $id;
 			$res = $db->query('
-				SELECT `package`
+				SELECT package
 				FROM ' . PLUGINS_TABLE . '
-				WHERE `id` = ' . $id . ' and `installed` = 1');
+				WHERE id = ' . $id . ' and installed = 1
+			');
 
 			if ($db->num_rows($res) != 1) {
 				message_box('Das Plugin konnte nicht deinstalliert werden.', './plugins.php', 'zurück');
 			} else {
-				$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'0\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+				$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'0\' WHERE id = %d', PLUGINS_TABLE, $id));
 				message_box('Das Plugin wurde deinstalliert.', './plugins.php', 'weiter');
 			}
 
@@ -69,8 +71,8 @@
 		/**
 		 * get all plugins from directory for available plugins
 		 */
-		public function synchronizeLocalPlugins()
-		{
+
+		public function synchronizeLocalPlugins() {
 			global $db;
 
 			$files = glob('../plugins/*', GLOB_ONLYDIR);
@@ -93,6 +95,7 @@
 					");
 
 					$row = $db->fetch_object($res);
+					
 					if (!isset($row->id)) {
 						$db->query("
 							INSERT INTO " . PLUGINS_TABLE . "
