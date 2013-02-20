@@ -39,7 +39,7 @@
 		}
 	},
 
-	"minVersion": "3.0.1",
+	"minVersion": "3.0.0",
 	"maxVersion": "3.0.0",
 	"URL": "http://www.gidix.de/"
 }

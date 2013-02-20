@@ -25,7 +25,7 @@
 	if (isset($_GET['removeServer'])) {
 		$id = (int)$_GET['removeServer'];
 
-		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
+		$db->unbuffered_query(sprintf('DELETE FROM %s WHERE server_id = %d', SERVER_TABLE, $id));
 	}
 
 	/**
@@ -35,15 +35,16 @@
 		$id = (int)$_GET['removePlugin'];
 
 		$res = $db->query('
-			SELECT `package`
+			SELECT package
 			FROM ' . PLUGINS_TABLE . '
-			WHERE `id` = ' . $id);
+			WHERE id = ' . $id . '
+		');
+
 		$row = $db->fetch_object($res);
 		$db->free_result($res);
 
 		$plugin_dir = '../plugins/' . $row->package;
-		if(!lib\plugins::removeFolder($plugin_dir))
-		{
+		if (!lib\plugins::removeFolder($plugin_dir)) {
 			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden.', './plugins.php', 'zurück');
 			exit;
 		} else {
@@ -54,6 +55,7 @@
 	/**
 	 * install the Plugin
 	 */
+
 	if (isset($_GET['install'])) {
 		$id = (int)$_GET['install'];
 
@@ -63,6 +65,7 @@
 	/**
 	 * uninstall the Plugin
 	 */
+
 	if (isset($_GET['uninstall'])) {
 		$id = (int)$_GET['uninstall'];
 
@@ -72,10 +75,11 @@
 	/**
 	 * listed all plugins of a plugin-server
 	 */
+
 	if (isset($_GET['list'])) {
 		$id = (int)$_GET['list'];
 
-		if($id <= 0) {
+		if ($id <= 0) {
 			message_box('Es ist ein Fehler aufgetreten.', './plugins.php', 'Zurück');
 			exit;
 		}
@@ -97,12 +101,13 @@
 		/*
 		 *		TODO: Code aufräumen und auf sicherheit prüfen!
 		 */
-		if(isset($_GET['download'])) {
+
+		if (isset($_GET['download'])) {
 			$plugin_pack = htmlspecialchars($_GET['download']);
 			$plugin_file = htmlspecialchars(urldecode($_GET['download'].'.zip'));
 			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
 
-			if(@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
+			if (@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
 				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />
 				Das Plugin kann nun bei den Lokal verfügbare Plugins installiert werden.';
 
@@ -117,7 +122,7 @@
 					$zip->close();
 				}
 
-				if(is_file($plugin_file)){
+				if (is_file($plugin_file)){
 					unlink($plugin_file);
 				}
 			} else {
@@ -329,7 +334,9 @@
 			'COMPATIBLE'	=>	$compatible,
 			'VERSION'		=>	$version,
 			'PERMISSIONS'	=>	$pL,
-			'ID'			=>	$row->id
+			'ID'			=>	$row->id,
+			'MINVERSION'	=>	($minVersion) ? htmlspecialchars($row->minVersion) : '-',
+			'MAXVERSION'	=>	($maxVersion) ? htmlspecialchars($row->maxVersion) : '-'
 		));
 
 

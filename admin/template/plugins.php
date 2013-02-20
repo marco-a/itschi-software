@@ -181,12 +181,19 @@
 					</div>
 
 					<div class="fRight" style="width: 39%; text-align: right;">
+						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB">Löschen</a>
+
 						<?php if ($available['COMPATIBLE']): ?>
 							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
 						<?php else: ?>
-							<small class="red">Nicht kompatibel mit dieser Version.</small>
+							<br /><br />
+
+							<small class="red">Nicht kompatibel.</small><br />
+							<small class="grey">
+								min. Version: <?=$available['MINVERSION']; ?><br />
+								max. Version: <?=$available['MAXVERSION']; ?>
+							</small>
 						<?php endif; ?>
-						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB">löschen</a>
 					</div>
 
 					<div class="clear"></div>
