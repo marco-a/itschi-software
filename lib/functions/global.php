@@ -22,7 +22,7 @@
 	function config_vars() {
 		global $db, $cache;
 
-		$config = array();
+		$config = $cache->get('config');
 
 		$res = $db->query('
 			SELECT config_name, config_value
@@ -36,7 +36,7 @@
 
 		$db->free_result($res);
 
-		return array_merge($cache->get('config'), $config);
+		return $config;
 	}
 
 	function config_set($name, $value) {
@@ -180,7 +180,11 @@
 	function usernameCheck($before, $username, $after) {
 		global $db;
 
-		$res = $db->query("SELECT user_id FROM " . USERS_TABLE . " WHERE username = '" . $db->chars($username) . "'");
+		$res = $db->query("
+			SELECT user_id
+			FROM " . USERS_TABLE . "
+			WHERE username = '" . $db->chars($username) . "'
+		");
 		$row = $db->fetch_array($res);
 		$db->free_result($res);
 
@@ -207,9 +211,7 @@
 	}
 
 	function getPage($var = 'page') {
-		if (!isset($_GET[$var])) return 1;
-		
-		$page = (int)$_GET[$var];
+		$page = (isset($_GET[$var])) ? (int)$_GET[$var] : 0;
 
 		if ($page > 0) {
 			return $page;
