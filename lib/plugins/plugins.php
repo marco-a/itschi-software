@@ -10,7 +10,41 @@
 
 	class plugins {
 		public function install($id) {
+			global $db;
 
+			$id = (int) $id;
+			$res = $db->query('
+				SELECT `package`
+				FROM ' . PLUGINS_TABLE . '
+				WHERE `id` = ' . $id . ' and `installed` = 0');
+
+			if ($db->num_rows($res) != 1) {
+				message_box('Das Plugin konnte nicht installiert werden.', './plugins.php', 'zurück');
+			} else {
+				$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'1\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+				message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
+			}
+
+			$db->free_result($res);
+		}
+
+		public function uninstall($id) {
+			global $db;
+
+			$id = (int) $id;
+			$res = $db->query('
+				SELECT `package`
+				FROM ' . PLUGINS_TABLE . '
+				WHERE `id` = ' . $id . ' and `installed` = 1');
+
+			if ($db->num_rows($res) != 1) {
+				message_box('Das Plugin konnte nicht deinstalliert werden.', './plugins.php', 'zurück');
+			} else {
+				$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'0\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+				message_box('Das Plugin wurde deinstalliert.', './plugins.php', 'weiter');
+			}
+
+			$db->free_result($res);
 		}
 
 		public static function removeFolder($dir) {
