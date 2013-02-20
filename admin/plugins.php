@@ -17,12 +17,20 @@
 
 	$plugins = new lib\plugins();
 
+	#region Options
+
+	/**
+	 * remove a plugin-server
+	 */
 	if (isset($_GET['removeServer'])) {
 		$id = (int)$_GET['removeServer'];
 
 		$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `server_id` = %d', SERVER_TABLE, $id));
 	}
 
+	/**
+	 * deletes the plugin (from disk)
+	 */
 	if (isset($_GET['removePlugin'])) {
 		$id = (int)$_GET['removePlugin'];
 
@@ -36,18 +44,63 @@
 		$plugin_dir = '../plugins/' . $row->package;
 		if(!lib\plugins::removeFolder($plugin_dir))
 		{
-			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden', './plugins.php', 'Zurück');
+			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden.', './plugins.php', 'zurück');
 			exit;
 		} else {
 			$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
 		}
 	}
 
+	/**
+	 * install the Plugin
+	 */
+	if (isset($_GET['install'])) {
+		$id = (int)$_GET['install'];
+
+		$res = $db->query('
+			SELECT `package`
+			FROM ' . PLUGINS_TABLE . '
+			WHERE `id` = ' . $id . ' and `installed` = 0');
+
+		if ($db->num_rows($res) != 1) {
+			message_box('Das Plugin konnte nicht installiert werden.', './plugins.php', 'zurück');
+		} else {
+			$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'1\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+			message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
+		}
+
+		$db->free_result($res);
+	}
+
+	/**
+	 * uninstall the Plugin
+	 */
+	if (isset($_GET['uninstall'])) {
+		$id = (int)$_GET['uninstall'];
+
+		$res = $db->query('
+			SELECT `package`
+			FROM ' . PLUGINS_TABLE . '
+			WHERE `id` = ' . $id . ' and `installed` = 1');
+
+		if ($db->num_rows($res) != 1) {
+			message_box('Das Plugin konnte nicht deinstalliert werden.', './plugins.php', 'zurück');
+		} else {
+			$db->unbuffered_query(sprintf('UPDATE `%s` SET `installed` = \'0\' WHERE `id` = %d', PLUGINS_TABLE, $id));
+			message_box('Das Plugin wurde deinstalliert.', './plugins.php', 'weiter');
+		}
+
+		$db->free_result($res);
+	}
+
+	/**
+	 * listed all plugins of a plugin-server
+	 */
 	if (isset($_GET['list'])) {
 		$id = (int)$_GET['list'];
 
 		if($id <= 0) {
-			message_box('Es ist ein Fehler aufgetreten', './plugins.php', 'Zurück');
+			message_box('Es ist ein Fehler aufgetreten.', './plugins.php', 'Zurück');
 			exit;
 		}
 
@@ -132,6 +185,8 @@
 		template::display('plugin-list');
 		exit; // exit da hier ein anderes template angezeigt wird
 	}
+
+	#endregion Options
 
 	$plugins->synchronizeLocalPlugins();
 

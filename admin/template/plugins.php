@@ -74,7 +74,7 @@
 			</div>
 
 			<div class="fRight" style="width: 29%; text-align: right;">
-				<a href="./plugins_uninstall.php?id=<?=$plugins['ID']; ?>" class="button">Deinstallieren</a>
+				<a href="./plugins.php?uninstall=<?=$plugins['ID']; ?>" class="button">Deinstallieren</a>
 			</div>
 
 			<div class="clear"></div>
@@ -182,7 +182,7 @@
 
 					<div class="fRight" style="width: 39%; text-align: right;">
 						<?php if ($available['COMPATIBLE']): ?>
-							<a href="./plugins_install.php?id=<?=$available['ID']; ?>" class="button greenB">installieren</a>
+							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
 						<?php else: ?>
 							<small class="red">Nicht kompatibel mit dieser Version.</small>
 						<?php endif; ?>
