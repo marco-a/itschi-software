@@ -41,6 +41,6 @@
 		 *	@name utils
 		**/
 
-		//public static function utils();
+		public static function utils();
 	}
 ?>
