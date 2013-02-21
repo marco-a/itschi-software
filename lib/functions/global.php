@@ -116,22 +116,58 @@
 		return $str;
 	}
 
+	function bbcode_list($text) {
+	    $pattern = "#\[list(\=(.*))?\](.*)\[\/list\]#Uis";
+
+	    while (preg_match($pattern, $text, $matches)) {
+	        $points = explode("[*]", $matches[3]);
+	        array_shift($points);
+
+			    switch($matches[2]){
+			      case "a":
+			        	$replace = '<ol style="list-style-type:lower-latin;"><li>' . implode("</li><li>", $points) . '</li></ol>';
+			       break;
+			      case "A":
+			        	$replace = '<ol style="list-style-type:upper-latin;"><li>' . implode("</li><li>", $points) . '</li></ol>';
+			        break;
+			      case "1":
+			        	$replace = '<ol style="list-style-type:decimal;"><li>' . implode("</li><li>", $points) . '</li></ol>';
+			        break;
+			      case "circle":
+			        	$replace = '<ul style="list-style-type:circle;"><li>' . implode("</li><li>", $points) . '</li></ul>';
+			        break;
+			      case "square":
+			        	$replace = '<ul style="list-style-type:square;"><li>' . implode("</li><li>", $points) . '</li></ul>';
+			        break;
+			      case "disc":
+			        	$replace = '<ul style="list-style-type:disc;"><li>' . implode("</li><li>", $points) . '</li></ul>';
+			        break;
+			      default:
+			        	$replace = '<ul><li>' . implode("</li><li>", $points) . '</li></ul>';
+			        break;
+			    }
+
+	        $text = preg_replace($pattern, $replace, $text, 1);
+	    }
+	    return $text;
+	}
+
 	function bbcode_init() {
 		return array(
-			'\[code\](<br />|)(.*)\[/code\]'		=>	'<b>Code:</b><br /><div class="bbcode_box">$2</div>',
-			'\[quote=(.*)\](<br />|)(.*)\[/quote\]'		=>	'<b>Zitat von $1:</b><br /><div class="bbcode_box">$3</div>',
-			'\[quote\](<br />|)(.*)\[/quote\]'		=>	'<b>Zitat:</b><br /><div class="bbcode_box">$2</div>',
+			'\[code\](<br />|)(.*)\[/code\]'				=>	'<b>Code:</b><br /><div class="bbcode_box">$2</div>',
+			'\[quote=(.*)\](<br />|)(.*)\[/quote\]'			=>	'<b>Zitat von $1:</b><br /><div class="bbcode_box">$3</div>',
+			'\[quote\](<br />|)(.*)\[/quote\]'				=>	'<b>Zitat:</b><br /><div class="bbcode_box">$2</div>',
 			'\[url=([a-z]+://?(www.)?\S+)\](.*)\[/url\]'	=>	'<a href="$1" target="_blank"><u>$3</u></a>',
-			'\[url\]([a-z]+://?(www.)?\S+)\[/url\]'		=>	'<a href="$1" target="_blank"><u>$1</u></a>',
-			'\[url=(.*)\](.*)\[/url\]'			=>	'<a href="http://$1" target="_blank"><u>$2</u></a>',
-			'\[url\](.*)\[/url\]'				=>	'<a href="http://$1" target="_blank"><u>$1</u></a>',
-			'\[b\](.*)\[/b\]'				=>	'<b>$1</b>',
-			'\[i\](.*)\[/i\]'				=>	'<i>$1</i>',
-			'\[u\](.*)\[/u\]'				=>	'<u>$1</u>',
-			'\[img\](.*)\[/img\]'				=>	'<img src="$1" border="0" />',
-			'\[color=(.*)\](.*)\[/color\]'			=>	'<font color="$1">$2</font>',
-			'\[size=([0-9]{2,3})\](.*)\[/size\]'		=>	'<font style="font-size:$1%;">$2</font>',
-			'\[s\](.*)\[/s\]'				=>	'<div><span onclick="return Spoiler(this);"><b>Spoiler: </b><a href="#" onclick="return false;" style="font-weight:bold;">Anzeigen</a></span><div style="display:none" class="bbcode_box">$1</div></div>'
+			'\[url\]([a-z]+://?(www.)?\S+)\[/url\]'			=>	'<a href="$1" target="_blank"><u>$1</u></a>',
+			'\[url=(.*)\](.*)\[/url\]'						=>	'<a href="http://$1" target="_blank"><u>$2</u></a>',
+			'\[url\](.*)\[/url\]'							=>	'<a href="http://$1" target="_blank"><u>$1</u></a>',
+			'\[b\](.*)\[/b\]'								=>	'<b>$1</b>',
+			'\[i\](.*)\[/i\]'								=>	'<i>$1</i>',
+			'\[u\](.*)\[/u\]'								=>	'<u>$1</u>',
+			'\[img\](.*)\[/img\]'							=>	'<img src="$1" border="0" />',
+			'\[color=(.*)\](.*)\[/color\]'					=>	'<font color="$1">$2</font>',
+			'\[size=([0-9]{2,3})\](.*)\[/size\]'			=>	'<font style="font-size:$1%;">$2</font>',
+			'\[s\](.*)\[/s\]'								=>	'<div><span onclick="return Spoiler(this);"><b>Spoiler: </b><a href="#" onclick="return false;" style="font-weight:bold;">Anzeigen</a></span><div style="display:none" class="bbcode_box">$1</div></div>'
 		);
 	}
 
@@ -153,6 +189,7 @@
 		$text = nl2br($text);
 
 		if ($bbcodes) {
+			$text = bbcode_list($text);
 			foreach ($bbcodes_array as $key => $value) {
 				while (preg_match('#' . $key . '#Uis', $text)) {
 					$text = preg_replace('#' . $key . '#Uis', $value, $text);
