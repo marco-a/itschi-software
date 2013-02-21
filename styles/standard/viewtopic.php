@@ -66,7 +66,7 @@
 					<td colspan="3" class="text">
 							<div style="word-wrap: break-word;">
 								<?php if (template::getVar('POLL_TITLE')): ?>
-									<div class="fRight" style="padding: 0 5px 5px 15px;">
+									<div class="fRight" style="padding: 0 5px 5px 15px;width: 45%;">
 										<form action="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>" method="post">
 											<h2 class="title" style="margin-top: 0; padding-top: 0;">
 												<b><?=template::getVar('POLL_TITLE'); ?></b>
