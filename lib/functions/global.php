@@ -226,7 +226,7 @@
 		$db->free_result($res);
 
 		if ($row) {
-			return $before . '<span class="grey">@</span><a href="/' . $username . '">' . $username . '</a>' . $after;	
+			return $before . '<span class="grey">@</span><a href="user.php?id=' . $row['user_id']  . '">' . $username . '</a>' . $after;	
 		}
 
 		return '<span>@</span>' . $username;
