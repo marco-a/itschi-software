@@ -14,15 +14,13 @@
 		private $cookie_lifetime = 2678400;
 		public $ranks = false;
 		private $ranks_cache = array();
-		private $session_started = false;
 
 		function __construct() {
-			global $db;
+			global $db, $prefix;
+			
+			$session = $prefix . $session;
 
-			if (!empty($_REQUEST[session_name()])) {
-				$this->session_started = true;
-				session_start();
-			}
+			session_start();
 
 			if (empty($_SESSION[$this->session])) {
 				if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
@@ -70,11 +68,6 @@
 
 			if ($row['user_unlock']) {
 				message_box('Du hast Deine E-Mail noch nicht bestätigt', '/', 'zurück zur Startseite');
-			}
-
-			if (!$this->session_started) {
-				session_start();
-				$this->session_started = true;
 			}
 
 			$_SESSION[$this->session] = $row['user_id'];
