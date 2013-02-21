@@ -48,12 +48,13 @@
 				'dirName'	=>	$row->directory,
 			); */
 
-			$json = json_decode(@file_get_contents('styles/' . $config['theme'] . '/style.json'), true);
+			$json = json_decode(@file_get_contents($root.'/styles/' . $config['theme'] . '/style.json'), true);
 
-			if (!is_array($json)) {
-				$json = json_decode(@file_get_contents('styles/standard/style.json'), true);
+			if ($json == false) {
+				$json = json_decode(@file_get_contents($root.'/styles/standard/style.json'), true);
 
-				if (!is_array($json)) {
+
+				if ($json == false) {
 					self::logError('no template to display');
 				}
 
