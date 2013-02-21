@@ -36,10 +36,8 @@
 
 							<?php
 								if (count($forum['SUBFORUMS']) > 0) {
-									echo '
-										<br /><br />
-										<b class="grey">Unterforen:</b><br />
-									';
+									echo '<div style="font-size: 11px;padding-top: 3px;">';
+									echo '<b class="grey" style=>Unterforen: </b>';
 
 									$subforums = '';
 									foreach ($forum['SUBFORUMS'] as $s) {
@@ -47,6 +45,7 @@
 									}
 
 									echo mb_substr($subforums, 0, mb_strlen($subforums) - 2);
+									echo '</div>';
 								}
 							?>
 						</td>
