@@ -217,7 +217,7 @@
 			('users_num', '1', 1),
 			('title', 'Titel der Seite', 0),
 			('description', 'Ein Text der dein Forum beschreibt', 0),
-			('theme', 'itschi', 0),
+			('theme', 'standard', 0),
 			('email', '" . $email . "', 0),
 			('topics_perpage', '20', 0),
 			('posts_perpage', '10', 0),
