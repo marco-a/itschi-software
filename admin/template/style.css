@@ -431,3 +431,31 @@ input[type=checkbox] {
 			#plugins .item ul li.main li {
 				color: #272727;
 			}
+
+#styles {
+
+}
+
+	#styles .item {
+		padding: 20px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+		#styles .item h2 {
+			margin-top: 0;
+			padding-top: 5px;
+		}
+
+			#styles .item h2 .version {
+				color: #0e85c4;
+				font-weight: 500;
+			}
+
+		#styles .item span.vendor {
+			color: #9b9b9b;
+		}
+
+		#styles .item span.dir {
+			font-size: 11px;
+			color: #9b9b9b;
+		}

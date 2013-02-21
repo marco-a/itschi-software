@@ -35,9 +35,9 @@
 		);
 
 		public static function init() {
-			global $db, $root;
+			global $db, $root, $config;
 
-			$res = $db->query("SELECT * FROM " . STYLES_TABLE . " WHERE active = 1 LIMIT 1");
+			/* $res = $db->query("SELECT * FROM " . STYLES_TABLE . " WHERE active = 1 LIMIT 1");
 			$row = $db->fetch_object($res);
 
 			self::$style = array(
@@ -46,6 +46,16 @@
 				'version'	=>	$row->version,
 				'dir'		=>	$root . 'styles/' . $row->directory . '/',
 				'dirName'	=>	$row->directory,
+			); */
+
+			$json = json_decode(@file_get_contents('styles/' . $config['theme'] . '/style.json'), true);
+
+			self::$style = array(
+				'title'		=>	$json['title'],
+				'author'	=>	$json['author'],
+				'version'	=>	$json['version'],
+				'dir'		=>	$root . 'styles/' . $config['theme'] . '/',
+				'dirName'	=>	$config['theme']
 			);
 
 			if (file_exists(self::$style['dir'] . 'functions.php')) {

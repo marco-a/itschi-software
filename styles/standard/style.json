@@ -2,5 +2,6 @@
 	"title": "Standard",
 	"author": "Itschi",
 	"URL": "http://www.itschi.net/",
-	"version": "1.0.0"
+	"version": "1.0.0",
+	"minVersion": "3.0.0"
 }

@@ -42,7 +42,6 @@
 	if (isset($_POST['submit'])) {
 		config_set('title', strip($_POST['title']));
 		config_set('description', strip($_POST['description']));
-		config_set('theme', strip($_POST['theme']));
 		config_set('enable', (int)$_POST['enable']);
 		config_set('enable_text', strip($_POST['enable_text']));
 		config_set('topics_perpage', max($_POST['topics_perpage'], 1));
@@ -86,7 +85,6 @@
 	template::assign(array(
 		'MENU_BUTTON'		=>	2,
 		'ERROR'			=>	$error,
-		'THEME'			=>	$config['theme'],
 		'TITLE'			=>	htmlspecialchars($config['title']),
 		'DESCRIPTION'		=>	htmlspecialchars($config['description']),
 		'EMAIL'			=>	htmlspecialchars($config['email']),

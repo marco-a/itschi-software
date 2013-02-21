@@ -43,23 +43,6 @@
 		</tr>
 
 		<tr>
-			<td>Design:</td>
-			<td>
-				<select name="theme">
-				<?php
-					if (isset(template::$blocks['themes'])):
-						foreach(template::$blocks['themes'] as $themes):
-				?>
-							<option value="<?=$themes['NAME']; ?>"<?php if ($themes['NAME'] == 'THEME'): ?> selected<?php endif; ?>><?=$themes['NAME']; ?></option>
-				<?php
-						endforeach;
-					endif;
-				?>
-				</select>
-			</td>
-		</tr>
-
-		<tr>
 			<td>Bots anzeigen in <i>Wer ist online<i>:</td>
 			<td><input type="radio" value="1" id="enable_bots1" name="enable_bots"<?php if (template::getVar('ENABLE_BOTS')): ?> checked<?php endif; ?> /> <label for="enable_bots1">Ja</label> &nbsp; <input type="radio" value="0" id="enable_bots2" name="enable_bots"<?php if (!template::getVar('ENABLE_BOTS')): ?> checked<?php endif; ?> /> <label for="enable_bots2">Nein</label></td>
 		</tr>
