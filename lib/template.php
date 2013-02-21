@@ -50,6 +50,10 @@
 
 			$json = json_decode(@file_get_contents('styles/' . $config['theme'] . '/style.json'), true);
 
+			if (!$json) {
+				$json = json_decode(@file_get_contents('styles/standard/style.json'), true);
+			}
+
 			self::$style = array(
 				'title'		=>	$json['title'],
 				'author'	=>	$json['author'],
