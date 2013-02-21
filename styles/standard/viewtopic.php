@@ -64,79 +64,75 @@
 
 				<tr>
 					<td colspan="3" class="text">
-						<?php if (template::getVar('POLL_TITLE')): ?>
-							<div style="float: left; width: 45%; padding-right: 20px; word-wrap: break-word;">
-								<?=$posts['TEXT']; ?>
-							</div>
-						<?php
-							else:
-								echo $posts['TEXT'];
-							endif;
-						?>
+							<div style="word-wrap: break-word;">
+								<?php if (template::getVar('POLL_TITLE')): ?>
+									<div class="fRight" style="padding: 0 5px 5px 15px;">
+										<form action="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>" method="post">
+											<h2 class="title" style="margin-top: 0; padding-top: 0;">
+												<b><?=template::getVar('POLL_TITLE'); ?></b>
+											</h2>
 
-						<?php if (template::getVar('POLL_TITLE')): ?>
-							<div class="fRight" style="width: 50%;">
-								<form action="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>" method="post">
-									<h2 class="title" style="margin-top: 0; padding-top: 0;">
-										<b><?=template::getVar('POLL_TITLE'); ?></b>
-									</h2>
+											<div class="clear"></div>
 
-									<div class="clear"></div>
+											<?php if (template::getVar('USER_VOTED')): ?>
+												<?php foreach (template::$blocks['options'] as $options): ?>
+													<table width="100%">
+														<tr>
+															<td>
+																<?=$options['TEXT']; ?><br />
+																<small class="Grey"><?=$options['PRO']; ?>%</small>
+															</td>
 
-									<?php if (template::getVar('USER_VOTED')): ?>
-										<?php foreach (template::$blocks['options'] as $options): ?>
-											<table width="100%">
-												<tr>
-													<td>
-														<?=$options['TEXT']; ?><br />
-														<small class="Grey"><?=$options['PRO']; ?>%</small>
-													</td>
+															<td align="right">
+																<div style="height: 30px;
+																			line-height: 30px;
+																			padding-left: 5px;
+																			padding-right: 5px;
+																			background: #82323e;
+																			width:<?=$options['PIXEL']; ?>px;
+																			color:white;
+																			margin-bottom: 5px;
+																">
+																	<b><?=$options['VOTES']; ?></b>
+																</div>
 
-													<td align="right">
-														<div style="height: 30px;
-																	line-height: 30px;
-																	padding-left: 5px;
-																	padding-right: 5px;
-																	background: #82323e;
-																	width:<?=$options['PIXEL']; ?>px;
-																	color:white;
-																	margin-bottom: 5px;
-														">
-															<b><?=$options['VOTES']; ?></b>
+																<small class="grey"></small>
+															</td>
+														</tr>
+													</table>
+												<?php endforeach; ?>
+
+												<div style="margin-top: 20px;">
+													<small class="grey">Stimmen gesamt: <b><?=template::getVar('POLL_VOTES'); ?></b></small>
+												</div>
+											<?php else: ?>
+
+												<?php foreach (template::$blocks['options'] as $options): ?>
+													<div style="padding: 10px;">
+													<label for="option_<?=$options['ID']; ?>" style="cursor:pointer">
+														<div style="float:left;width:30px">
+															<input type="radio" id="option_<?=$options['ID']; ?>" value="<?=$options['ID']; ?>" name="option" />
 														</div>
 
-														<small class="grey"></small>
-													</td>
-												</tr>
-											</table>
-										<?php endforeach; ?>
-
-										<div style="margin-top: 20px;">
-											<small class="grey">Stimmen gesamt: <b><?=template::getVar('POLL_VOTES'); ?></b></small>
-										</div>
-									<?php else: ?>
-
-										<?php foreach (template::$blocks['options'] as $options): ?>
-											<div style="padding: 10px;">
-											<label for="option_<?=$options['ID']; ?>" style="cursor:pointer">
-												<div style="float:left;width:30px">
-													<input type="radio" id="option_<?=$options['ID']; ?>" value="<?=$options['ID']; ?>" name="option" />
+														<?=$options['TEXT']; ?>
+													</label>
 												</div>
+												<?php endforeach; ?>
 
-												<?=$options['TEXT']; ?>
-											</label>
-										</div>
-										<?php endforeach; ?>
+												<br />
 
-										<br />
+												<input type="submit" name="submit" value="Voten" />
+												<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&result=1" class="button greyB">Ergebnis anzeigen</a>
 
-										<input type="submit" name="submit" value="Voten" />
-										<a href="viewtopic.php?id=<?=template::getVar('TOPIC_ID'); ?>&result=1" class="button greyB">Ergebnis anzeigen</a>
+											<?php endif; ?>
+										</form>
+									</div>
 
-									<?php endif; ?>
-								</form>
+								<?php endif; ?>
+
+								<?=$posts['TEXT']; ?>
+								<div class="clear"></div>
 							</div>
-						<?php endif; ?>
 					</td>
 				</tr>
 			</table>
