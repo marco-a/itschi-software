@@ -43,9 +43,8 @@
 				<span class="package"><?=$plugins['PACKAGE']; ?></span>
 				<h2><?=$plugins['NAME']; ?> <span class="version"><?=$plugins['VERSION']; ?></span></h2>
 
-				<a href="javascript:void(0);" data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Rechte &amp; Abhängigkeiten einblenden &rsaquo;</a><br /><br />
-
-				<div class="permissionBox" data-id="<?=$plugins['ID']; ?>" style="display: none;">
+				<span onclick="return Spoiler(this);"><b>Rechte &amp; Abhängigkeiten</b> <a href="#" onclick="return false;" style="font-weight:bold;"data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Anzeigen</a></span>
+				<div style="display:none" class="permissionBox" data-id="<?=$plugins['ID']; ?>" style="display: none;">
 					<div class="fLeft" style="width: 48%;">
 						<div class="permissions">
 							<?php if (!$plugins['PERMISSIONS']): ?>
@@ -148,10 +147,25 @@
 			foreach(template::$blocks['available'] as $available):
 	?>
 				<div class="item">
-					<div class="fLeft" style="width: 59%;">
+					<div class="fLeft" style="width: 69%;">
 						<span class="package"><?=$available['PACKAGE']; ?></span>
 						<h2><?=$available['NAME']; ?> <span class="version"><?=$available['VERSION']; ?></span></h2>
+					</div>
+					<div class="fRight" style="width: 29%; text-align: right;">
+						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB" onclick="return confirm('Willst du dieses Plugin (<?=$available['NAME']; ?>) wirklich löschen?');">löschen</a>
 
+						<?php if ($available['COMPATIBLE']): ?>
+							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
+						<?php else: ?>
+							<br /><br />
+
+							<small class="red">Nicht kompatibel.</small><br />
+							<small class="grey">
+								min. Version: <?=$available['MINVERSION']; ?><br />
+								max. Version: <?=$available['MAXVERSION']; ?>
+							</small>
+						<?php endif; ?>
+					</div>
 						<div class="fLeft" style="width: 48%;">
 							<div class="permissions">
 								<?php if (!$available['PERMISSIONS']): ?>
@@ -178,23 +192,6 @@
 
 							<?php endif; ?>
 						</div>
-					</div>
-
-					<div class="fRight" style="width: 39%; text-align: right;">
-						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB" onclick="return confirm('Willst du dieses Plugin (<?=$available['NAME']; ?>) wirklich löschen?');">löschen</a>
-
-						<?php if ($available['COMPATIBLE']): ?>
-							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
-						<?php else: ?>
-							<br /><br />
-
-							<small class="red">Nicht kompatibel.</small><br />
-							<small class="grey">
-								min. Version: <?=$available['MINVERSION']; ?><br />
-								max. Version: <?=$available['MAXVERSION']; ?>
-							</small>
-						<?php endif; ?>
-					</div>
 
 					<div class="clear"></div>
 				</div>
