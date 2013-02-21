@@ -43,8 +43,8 @@
 				<span class="package"><?=$plugins['PACKAGE']; ?></span>
 				<h2><?=$plugins['NAME']; ?> <span class="version"><?=$plugins['VERSION']; ?></span></h2>
 
-				<span onclick="return Spoiler(this);"><b>Rechte &amp; Abhängigkeiten</b> <a href="#" onclick="return false;" style="font-weight:bold;"data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Anzeigen</a></span>
-				<div style="display:none" class="permissionBox" data-id="<?=$plugins['ID']; ?>" style="display: none;">
+				<span onclick="return Spoiler(this);"><b>Rechte &amp; Abhängigkeiten: </b> <a href="#" onclick="return false;" style="font-weight:bold;" data-id="<?=$plugins['ID']; ?>" class="permissionToggle">Anzeigen</a></span>
+				<div class="permissionBox" data-id="<?=$plugins['ID']; ?>" style="display: none; margin-top: 15px;">
 					<div class="fLeft" style="width: 48%;">
 						<div class="permissions">
 							<?php if (!$plugins['PERMISSIONS']): ?>
