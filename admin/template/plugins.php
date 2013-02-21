@@ -1,22 +1,5 @@
 <?php template::display('header'); ?>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('.permissionToggle').click(function() {
-			var href = $(this).attr('data-id');
-			var container = $('.permissionBox[data-id=' + href + ']');
-
-			if (container.is(':hidden')) {
-				container.slideDown();
-				$(this).text('‹ Rechte & Abhängigkeiten ausblenden');
-			} else {
-				container.slideUp();
-				$(this).text('Rechte & Abhängigkeiten einblenden ›');
-			}
-		});
-	});
-</script>
-
 <div id="plugins">
 	<div class="h2box" style="margin-bottom: 0;">
 		<div class="fLeft" style="width: 40%">
