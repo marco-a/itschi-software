@@ -37,7 +37,7 @@
 		$res = $db->query('
 			SELECT package
 			FROM ' . PLUGINS_TABLE . '
-			WHERE id = ' . $id . '
+			WHERE id = ' . $id . ' AND installed = 0
 		');
 
 		$row = $db->fetch_object($res);
@@ -52,7 +52,7 @@
 				$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
 			}
 		} else {
-				message_box('Diese aktion ist nicht möglich.', './plugins.php', 'zurück');
+				message_box('Diese Aktion ist nicht möglich.', './plugins.php', 'zurück');
 		}
 	}
 
