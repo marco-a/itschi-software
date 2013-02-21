@@ -49,25 +49,6 @@
 			$db->free_result($res);
 		}
 
-		public static function removeFolder($dir) {
-			if (!is_dir($dir) || is_link($dir)) {
-				return unlink($dir);
-			}
-			foreach (scandir($dir) as $file) {
-				if ($file == '.' || $file == '..') {
-					continue;
-				}
-				if (!self::removeFolder($dir . DIRECTORY_SEPARATOR . $file)) {
-					chmod($dir . DIRECTORY_SEPARATOR . $file, 0777);
-					if (!self::removeFolder($dir . DIRECTORY_SEPARATOR . $file)) {
-						return false;
-					}
-				};
-			}
-
-			return rmdir($dir);
-		}
-
 		/**
 		 * get all plugins from directory for available plugins
 		 */
@@ -117,6 +98,40 @@
 					}
 				}
 			}
+		}
+
+		public static function removeFolder($dir) {
+			if (!is_dir($dir) || is_link($dir)) {
+				return unlink($dir);
+			}
+			foreach (scandir($dir) as $file) {
+				if ($file == '.' || $file == '..') {
+					continue;
+				}
+				if (!self::removeFolder($dir . DIRECTORY_SEPARATOR . $file)) {
+					chmod($dir . DIRECTORY_SEPARATOR . $file, 0777);
+					if (!self::removeFolder($dir . DIRECTORY_SEPARATOR . $file)) {
+						return false;
+					}
+				};
+			}
+
+			return rmdir($dir);
+		}
+
+		public static function isPluginInstalled($package) {
+			global $db;
+
+			$res = $db->query('
+				SELECT id
+				FROM ' . PLUGINS_TABLE . '
+				WHERE package = \'' . $db->chars($package) . '\' and installed = 1
+			');
+
+			$result = (bool)$db->num_rows($res);
+			$db->free_result($res);
+
+			return $result;
 		}
 	}
 ?>
