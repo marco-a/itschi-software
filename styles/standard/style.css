@@ -570,46 +570,30 @@ input[type=checkbox] {
 }
 
 /* itschi special stuff */
-div.boxlink {
-	float: left;
-	margin: 2px 0;
-	padding: 10px 10px;
-	border-top: 1px solid #dddddd;
-	border-bottom: 1px solid #dddddd;
-}
-
-div.boxlink_active a {
-	color: #555555;
-	font-weight: bold;
-	padding-bottom: 1px;
-	border-bottom: 1px dotted #bbbbbb;
-}
-
-div.boxlink_active a:hover {
-	text-decoration: none;
-}
-
-div.solid {
-	border-bottom: 1px solid #dddddd;
-	padding: 6px 0px;
-}
-
-div.dotted {
-	border-bottom: 1px dotted #cccccc;
-	padding: 4px 0px;
-}
-
 div.bbcode_box {
 	margin-top: 5px;
 	border: 1px solid #eaeaea;
-	padding: 10px;
-	background: #f6f6f6;
+	padding: 20px;
+	background: #fff;
 	overflow: hidden;
+	border-radius: 5px;
 }
 
-table.form {
-	width: 100%;
-}
+	div.bbcode_box::before {
+		content: attr(data-type);
+		display: block;
+		margin-top: -20px;
+		margin-left: -20px;
+		margin-right: -20px;
+		margin-bottom: 20px;
+		padding: 10px;
+		border-bottom: 1px solid #eee;
+		background: #f6f6f6;
+		color: #9b9b9b;
+		font-size: 11px;
+		text-transform: uppercase;
+		text-shadow: 0px 1px 0px #fff;
+	}
 
 table:not(.bb) {
 	border: 0;
@@ -635,14 +619,6 @@ td.title, th {
 	color: #778f9c;
 }
 
-td.side {
-	padding: 20px;
-}
-
-td.side_left {
-	padding: 10px 4px 10px 10px;
-}
-
 td.top {
 	vertical-align: top;
 }
@@ -651,9 +627,9 @@ td.center {
 	text-align: center;
 }
 
-#short { float:right;height:23px;margin:4px 70px 4px 0; }
-#short div { float:right;margin-right:30px; }
-#short a { float:left;margin:0 10px;font-size:11px;text-align:center; }
+#short { float: right; height:23px;margin:4px 70px 4px 0; }
+#short div { float: right; margin-right:30px; }
+#short a { float: left; margin: 0 10px; font-size: 11px; text-align: center; }
 
 /* sidebar navigation */
 ul.sidebarNav {

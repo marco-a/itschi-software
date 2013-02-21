@@ -154,9 +154,9 @@
 
 	function bbcode_init() {
 		return array(
-			'\[code\](<br />|)(.*)\[/code\]'				=>	'<div class="code_box"><b>Code:</b><br /><div class="bbcode_box">$2</div></div>',
-			'\[quote=(.*)\](<br />|)(.*)\[/quote\]'			=>	'<div class="quote_box"><b>Zitat von $1:</b><br /><div class="bbcode_box">$3</div></div>',
-			'\[quote\](<br />|)(.*)\[/quote\]'				=>	'<div class="quote_box"><b>Zitat:</b><br /><div class="bbcode_box">$2</div></div>',
+			'\[code\](<br />|)(.*)\[/code\]'				=>	'<div class="bbcode_box" data-type="Code">$2</div>',
+			'\[quote=(.*)\](<br />|)(.*)\[/quote\]'			=>	'<div class="bbcode_box" data-type="Zitat von $1">$3</div>',
+			'\[quote\](<br />|)(.*)\[/quote\]'				=>	'<div class="bbcode_box" data-type="Zitat">$2</div>',
 			'\[url=([a-z]+://?(www.)?\S+)\](.*)\[/url\]'	=>	'<a href="$1" target="_blank"><u>$3</u></a>',
 			'\[url\]([a-z]+://?(www.)?\S+)\[/url\]'			=>	'<a href="$1" target="_blank"><u>$1</u></a>',
 			'\[url=(.*)\](.*)\[/url\]'						=>	'<a href="http://$1" target="_blank"><u>$2</u></a>',
