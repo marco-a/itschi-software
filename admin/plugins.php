@@ -44,11 +44,15 @@
 		$db->free_result($res);
 
 		$plugin_dir = '../plugins/' . $row->package;
-		if (!lib\plugins::removeFolder($plugin_dir)) {
-			message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden.', './plugins.php', 'zurück');
-			exit;
+		if(isset($row->package)) {
+			if (!lib\plugins::removeFolder($plugin_dir)) {
+				message_box('Der Plugin Ordner \'' . $plugin_dir . '\' konnte nicht gelöscht werden.', './plugins.php', 'zurück');
+				exit;
+			} else {
+				$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
+			}
 		} else {
-			$db->unbuffered_query(sprintf('DELETE FROM `%s` WHERE `id` = %d', PLUGINS_TABLE, $id));
+				message_box('Diese aktion ist nicht möglich.', './plugins.php', 'zurück');
 		}
 	}
 

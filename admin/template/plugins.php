@@ -115,7 +115,7 @@
 							<a href="plugins.php?list=<?=$server['ID']; ?>" class="button greyB">Plugin Liste</a>
 						<?php endif; ?>
 							<a href="server-new.php?id=<?=$server['ID']; ?>" class="button greyB">bearbeiten</a>
-							<a href="plugins.php?removeServer=<?=$server['ID'];?>" class="button redB">entfernen</a>
+							<a href="plugins.php?removeServer=<?=$server['ID'];?>" class="button redB" onclick="return confirm('Willst du das diesen Server (<?=$server['NAME']; ?>) wirklich entfernen?');">entfernen</a>
 					</div>
 
 					<div class="clear"></div>
@@ -181,7 +181,7 @@
 					</div>
 
 					<div class="fRight" style="width: 39%; text-align: right;">
-						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB">Löschen</a>
+						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB" onclick="return confirm('Willst du das dieses Plugin (<?=$available['NAME']; ?>) wirklich löschen?');">löschen</a>
 
 						<?php if ($available['COMPATIBLE']): ?>
 							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
