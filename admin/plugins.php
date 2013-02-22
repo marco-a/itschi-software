@@ -146,6 +146,8 @@
 
 						$plugins->synchronizeLocalPlugins();
 
+						@unlink($pluginFile);
+
 						return 'Plugin “'.htmlspecialchars($_GET['download']).'” wurde heruntergeladen';
 					} else {
 						return 'HTTP Status Code '.$response->getResponseCode();
