@@ -133,5 +133,13 @@
 
 			return $result;
 		}
+
+		public static function checkDependency($package, $dependencyPackage) {
+			if ($package == $dependencyPackage) {
+				return true;
+			}
+
+			return self::isPluginInstalled($dependencyPackage);
+		}
 	}
 ?>
