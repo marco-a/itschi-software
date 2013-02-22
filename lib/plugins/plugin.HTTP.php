@@ -34,8 +34,14 @@
 	require_once($_root.'HTTPRequestData.class.php');
 	require_once($_root.'HTTPResponse.class.php');
 
+	// init HTTP
 	HTTP::init(NULL);
 
+	/*
+		+---------+
+		| example |
+		+---------+
+	*/
 	$HTTPRequest = HTTP::alloc();
 
 	HTTP::init($HTTPRequest);
