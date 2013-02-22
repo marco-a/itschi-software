@@ -37,9 +37,9 @@
 		const OPT_METHOD_POST = 0x03;
 
 		/*
-			@name	RAW
+			@name	MULTIPART
 		*/
-		const OPT_RAW = 0x10;
+		const OPT_MULTIPART = 0x10;
 
 		/*
 			@name	USE_UTF
@@ -62,9 +62,14 @@
 		const OPT_REQ_FILE = 0xF2;
 
 		/*
+			@name	OPT_TIMEOUT
+		*/
+		const OPT_TIMEOUT = 0xF3;
+
+		/*
 			@name	OPT_DATA
 		*/
-		const OPT_DATA = 0xF3;
+		const OPT_DATA = 0xF4;
 
 		/*
 			@name	CR
@@ -98,13 +103,19 @@
 			@name	init
 			initializes instance
 		*/
-		public static function init(HTTPRequest $obj);
+		public static function init($obj);
 
 		/*
 			@name	dealloc
 			deallocates HTTPRequest instance
 		*/
 		public static function dealloc(HTTPRequest $obj);
+
+		/*
+			@name	getMimeType
+			gets mime type for a file by its extension
+		*/
+		public static function getMimeType($path);
 
 	}
 
@@ -125,6 +136,12 @@
 			adds a field
 		*/
 		public function add($name, $value);
+
+		/*
+			@name	addFile
+			adds a file
+		*/
+		public function addFile($name, $path);
 
 		/*
 			@name	remove
@@ -171,6 +188,21 @@
 			if (isset($this->fields[$name])) return false;
 
 			$this->fields[$name] = $value;
+
+			return true;
+		}
+
+		/*
+			@name	addFile
+			adds a file
+		*/
+		public function addFile($name, $path) {
+			if (isset($this->fields[$name]) || !is_file($path)) return false;
+
+			$this->fields[$name] = array(
+				'name' => $name,
+				'path' => realpath($path)
+			);
 
 			return true;
 		}
@@ -356,9 +388,9 @@
 		private $method = NULL;
 
 		/*
-			@name	use_raw
+			@name	use_multipart
 		*/
-		private $use_raw = NULL;
+		private $use_multipart = NULL;
 
 		/*
 			@name	use_utf
@@ -417,10 +449,10 @@
 				METHOD_GET				0000 0001 -> 0x 0 1
 				METHOD_POST				0000 0011 -> 0x 0 3
 
-				METHOD_GET | RAW		0001 0001 -> 0x 1 1
+				METHOD_GET | MULTIPART		0001 0001 -> 0x 1 1
 				METHOD_GET | USE_UTF    0011 0001 -> 0x 3 1
 
-				METHOD_POST | RAW		0001 0011 -> 0x 1 3
+				METHOD_POST | MULTIPART		0001 0011 -> 0x 1 3
 				METHOD_POST | USE_UTF   0011 0011 -> 0x 3 3
 			*/
 
@@ -439,7 +471,7 @@
 			}
 
 			$this->method = $lowTetrad;
-			$this->use_raw = ($highTetrad == 0x10);
+			$this->use_multipart = ($highTetrad == 0x10);
 			$this->use_utf = ($highTetrad == 0x30);
 
 			return true;
@@ -480,7 +512,7 @@
 		public function send($callback) {
 			if (!is_callable($callback)) return false;
 
-			$host = $port = $reqFile = $data = NULL;
+			$host = $port = $reqFile = $timeout = $data = NULL;
 
 			if (($host = $this->getOpt(HTTP::OPT_HOST)) == NULL) return false;
 
@@ -488,8 +520,12 @@
 				$port = 80;
 			}
 
-			if (($reqFile = $this->getOpt(HTTP::OPT_REQ_FILE)) != NULL) {
+			if (($reqFile = $this->getOpt(HTTP::OPT_REQ_FILE)) == NULL) {
+				$reqFile = '';
+			}
 
+			if (($timeout = $this->getOpt(HTTP::OPT_TIMEOUT)) == NULL) {
+				$timeout = 10;
 			}
 
 			$this->addHeader('Host', $host);
@@ -497,6 +533,11 @@
 			$reqFile = sprintf('/%s', $reqFile);
 
 			$CRLF = sprintf('%c%c', HTTP::CR, HTTP::LF);
+
+			if ($this->use_multipart) {
+				$boundary = strtoupper(substr(sha1(uniqid('', true)), 0, 12));
+				$boundary = 'boundary';
+			}
 
 			if (($data = $this->getOpt(HTTP::OPT_DATA)) != NULL) {
 				if (!($data instanceof HTTPRequestDataInterface)) return false;
@@ -506,14 +547,43 @@
 				$fieldsPayload = ($this->method == HTTP::OPT_METHOD_POST ? sprintf('%s%s', $CRLF, $CRLF) : '');
 
 				foreach ($fields as $fieldName => $fieldValue) {
-					$fieldsPayload .= sprintf('%s=%s&', $fieldName, $fieldValue);
+					if ($this->use_multipart && $this->method == HTTP::OPT_METHOD_POST) {
+						if (is_array($fieldValue)) {
+							$fieldsPayload .= sprintf('--%s%sContent-Disposition: form-data; name="%s"; filename="%s"%sContent-Type: %s%sContent-Transfer-Encoding: binary%s%s%s%s',
+														$boundary,
+														$CRLF,
+														$fieldName,
+														$fieldValue['path'],
+														$CRLF,
+														HTTP::getMimeType($fieldValue['path']),
+														$CRLF,
+														$CRLF,
+														$CRLF,
+														file_get_contents($fieldValue['path']),
+														$CRLF
+														);
+						} else {
+							$fieldsPayload .= sprintf('--%s%sContent-Disposition: form-data; name="%s"%s%s%s%s', $boundary, $CRLF, $fieldName, $CRLF, $CRLF, $fieldValue, $CRLF);
+						}
+					} else {
+						$fieldsPayload .= sprintf('%s=%s&', $fieldName, $fieldValue);
+					}
 				}
 
-				$fieldsPayload = mb_substr($fieldsPayload, 0, mb_strlen($fieldsPayload, 'UTF-8') - 1, 'UTF-8');
+				if ($this->use_multipart) {
+					$fieldsPayload .= sprintf('--%s--', $boundary);
+				} else {
+					$fieldsPayload = mb_substr($fieldsPayload, 0, mb_strlen($fieldsPayload, 'UTF-8') - 1, 'UTF-8');
+				}
 
 				if ($this->method == HTTP::OPT_METHOD_POST) {
-					$this->addHeader('Content-Length', mb_strlen($fieldsPayload, 'UTF-8'));
-					$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+					$this->addHeader('Content-Length', strlen($fieldsPayload)); // utf8 is evil
+
+					if ($this->use_multipart) {
+						$this->addHeader('Content-Type', 'multipart/form-data; boundary='.$boundary);
+					} else {
+						$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+					}
 
 					$fieldsPayload .= sprintf('%s', $CRLF);
 				}
@@ -521,7 +591,6 @@
 			}
 
 			$plainHeaders = $this->getHeaders(true);
-
 			if (isset($fieldsPayload)) {
 				if ($this->method == HTTP::OPT_METHOD_POST) {
 					$plainHeaders .= $fieldsPayload;
@@ -538,10 +607,20 @@
 
 			$plainHeaders = sprintf('%s %s HTTP/1.1%s%s', ($this->method == HTTP::OPT_METHOD_GET ? 'GET' : ($this->method == HTTP::OPT_METHOD_POST ? 'POST' : 'GET')), $reqFile, $CRLF, $plainHeaders);
 
-			$handle = fsockopen($host, $port);
+			$this->response = new HTTPResponse();
+
+			$_errno = 0;
+			$_errstr = '';
+
+			$handle = @fsockopen($host, $port, $_errno, $_errstr, $timeout);
+
+			$this->response->setItem('errorCode', ($handle == false && $_errno == 0) ? -1 : $_errno);
+			$this->response->setItem('errorString', $_errstr);
 
 			if ($handle == false) {
-				return $callback(NULL);
+				$this->response->lock();
+
+				return $callback($this->response);
 			}
 
 			if ($this->method == HTTP::OPT_METHOD_GET) {
@@ -584,7 +663,6 @@
 			/*
 				build response
 			*/
-			$this->response = new HTTPResponse();
 			$this->response->setItem('responseCode', (int)$GLOBALS['responseCode']);
 			$this->response->setItem('response', $response);
 			$this->response->setItem('mimeType', $GLOBALS['mimeType']);
@@ -599,6 +677,11 @@
 	}
 
 	final class HTTP implements HTTPInterface {
+		/*
+			@name	mimeTypes
+		*/
+		private static $mimeTypes = NULL;
+
 		/*
 			@name	alloc
 			allocates HTTPRequest instance
@@ -619,12 +702,73 @@
 			@name	init
 			initializes instance
 		*/
-		public static function init(HTTPRequest $obj) {
-			if ($obj->inited == true) return false;
+		public static function init($obj) {
+			if ($obj instanceof HTTPRequestInterface) {
+				if ($obj->inited == true) return false;
 
-			$obj->init();
+				$obj->init();
 
-			$obj->addHeader('Connection', 'close');
+				$obj->addHeader('Connection', 'close');
+			} else if ($obj == NULL) {
+				self::$mimeTypes = array(
+					// basic
+					'txt'	=> 'text/plain',
+					'htm'	=> 'text/html',
+					'html'	=> 'text/html',
+					'php'	=> 'text/html',
+					'css'	=> 'text/css',
+					'js'	=> 'application/javascript',
+					'json'	=> 'application/json',
+					'xml'	=> 'application/xml',
+					'swf'	=> 'application/x-shockwave-flash',
+					'flv'	=> 'video/x-flv',
+
+					// images
+					'png'	=> 'image/png',
+					'jpe'	=> 'image/jpeg',
+					'jpeg'	=> 'image/jpeg',
+					'jpg'	=> 'image/jpeg',
+					'gif'	=> 'image/gif',
+					'bmp'	=> 'image/bmp',
+					'ico'	=> 'image/vnd.microsoft.icon',
+					'tiff'	=> 'image/tiff',
+					'tif'	=> 'image/tiff',
+					'svg'	=> 'image/svg+xml',
+					'svgz'	=> 'image/svg+xml',
+
+					// archives
+					'zip'	=> 'application/zip',
+					'rar'	=> 'application/x-rar-compressed',
+					'exe'	=> 'application/x-msdownload',
+					'msi'	=> 'application/x-msdownload',
+					'cab'	=> 'application/vnd.ms-cab-compressed',
+
+					// video & audio
+					'mov'	=> 'video/quicktime',
+					'qt'	=> 'video/quicktime',
+					'mp3'	=> 'audio/mpeg',
+
+					// open office
+					'odt'	=> 'application/vnd.oasis.opendocument.text',
+					'ods'	=> 'application/vnd.oasis.opendocument.spreadsheet',
+
+					// ms office
+					'doc'	=> 'application/msword',
+					'rtf'	=> 'application/rtf',
+					'xls'	=> 'application/vnd.ms-excel',
+					'ppt'	=> 'application/vnd.ms-powerpoint',
+					'pptx'	=> 'application/vnd.ms-powerpoint',
+
+					// adobe
+					'pdf'	=> 'application/pdf',
+					'psd'	=> 'image/vnd.adobe.photoshop',
+					'ai'	=> 'application/postscript',
+					'eps'	=> 'application/postscript',
+					'ps'	=> 'application/postscript'
+				);
+			} else {
+				return false;
+			}
 
 			return true;
 		}
@@ -640,27 +784,46 @@
 				TO BE CONTINUED
 			*/
 		}
+
+		/*
+			@name	getMimeType
+			gets mime type for a file by its extension
+		*/
+		public static function getMimeType($path) {
+			$ext = explode('.', $path);
+			$ext = end($ext);
+			$ext = strtolower($ext);
+
+			return (isset(self::$mimeTypes[$ext]) ? self::$mimeTypes[$ext] : 'application/octet-stream');
+		}
 	}
+
+	HTTP::init(NULL);
 
 	$HTTPRequest = HTTP::alloc();
 
 	HTTP::init($HTTPRequest);
 
-	$HTTPRequest->setOpts(HTTP::OPT_METHOD_GET | HTTP::OPT_USE_UTF);
+	$HTTPRequest->setOpts(HTTP::OPT_METHOD_POST | HTTP::OPT_MULTIPART);
 
-	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'gidix.de');
-	$HTTPRequest->setOpt(HTTP::OPT_REQ_FILE, 'index.php');
+	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'site.tld');
+	$HTTPRequest->setOpt(HTTP::OPT_REQ_FILE, 'upload.php');
 
 	$HTTPRequestData = HTTP::allocData();
 	$HTTPRequestData->add('getParam', 'value');
 	$HTTPRequestData->add('anotherGetParam', 'test');
+	$HTTPRequestData->addFile('logo', '../../styles/standard/images/icons/topics/topic.png');
 
 	$HTTPRequest->setOpt(HTTP::OPT_DATA, $HTTPRequestData);
 
 	$HTTPRequest->send(function(HTTPResponse $response) {
-		echo 'responseCode: '.$response->getResponseCode().PHP_EOL;
-		echo 'mimeType: '.$response->getMimeType().PHP_EOL;
-		echo 'response: '.$response->getResponse();
+		if ($response->getErrorCode() == 0) {
+			echo 'responseCode: '.$response->getResponseCode().PHP_EOL;
+			echo 'mimeType: '.$response->getMimeType().PHP_EOL;
+			echo 'response: '.$response->getResponse();
+		} else {
+			echo 'an error occurred: '.$response->getErrorString();
+		}
 	});
 
 	HTTP::dealloc($HTTPRequest);
