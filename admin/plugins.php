@@ -107,31 +107,53 @@
 		 */
 
 		if (isset($_GET['download'])) {
-			$plugin_pack = htmlspecialchars($_GET['download']);
-			$plugin_file = htmlspecialchars(urldecode($_GET['download'].'.zip'));
-			$plugin_url  = htmlspecialchars(urldecode($row->server_url));
+			$URL = explode('/', str_replace('http://', '', $row->server_url));
+			$host = $URL[0];
+			$URL[0] = NULL;
+			unset($URL[0]);
 
-			if (@copy($plugin_url.$plugin_file, $plugin_file)) { // später HTTP klasse nutzen. (lib/plugins/plugin.HTTP.php)
-				$plugin_mess = 'Download von "<em>'.$plugin_url.$plugin_file .'</em>" erfolgreich.<br />
-				Das Plugin kann nun bei den Lokal verfügbare Plugins installiert werden.';
+			$requestFile = implode($URL, '/').$_GET['download'].'.zip';
 
-				$zip = new ZipArchive();
+			$PluginRequest = HTTPRequest::alloc(HTTP::OPT_METHOD_GET | HTTP::OPT_USE_UTF);
 
-				if ($zip->open($plugin_file) === TRUE) {
-					$zip->extractTo('../plugins/'.$plugin_pack.'/');
-					$zip->close();
-					$plugins->synchronizeLocalPlugins();
+			$PluginRequest->setOpt(HTTP::OPT_HOST, $host);
+			$PluginRequest->setOpt(HTTP::OPT_TIMEOUT, 5);
+			$PluginRequest->setOpt(HTTP::OPT_REQ_FILE, $requestFile);
+
+			$plugin_mess = $PluginRequest->send(function(HTTPResponse $response) {
+				global $plugins;
+
+				if ($response->getErrorCode() == 0) {
+					if ($response->getResponseCode() == 200) {
+						/*
+							save & extract & sync
+						*/
+						$plugin = md5($_GET['download']);
+						$pluginFile = '../plugins/'.$plugin.'.zip';
+
+						file_put_contents($pluginFile, $response->getResponse());
+
+						$zip = new ZipArchive();
+
+						if ($zip->open($pluginFile) !== true) {
+							@unlink($pluginFile);
+
+							return 'Konnte ZIP Datei nicht öffnen';
+						}
+
+						$zip->extractTo('../plugins/'.$_GET['download'].'/'); // ziemlich unsicher und kacke, aber vorerst OK
+						$zip->close();
+
+						$plugins->synchronizeLocalPlugins();
+
+						return 'Plugin “'.htmlspecialchars($_GET['download']).'” wurde heruntergeladen';
+					} else {
+						return 'HTTP Status Code '.$response->getResponseCode();
+					}
 				} else {
-					$plugin_mess = '<strong>FEHLER:</strong> Datei konnte nicht entpackt werden.';
-					$zip->close();
+					return htmlspecialchars($response->getErrorString());
 				}
-
-				if (is_file($plugin_file)){
-					unlink($plugin_file);
-				}
-			} else {
-				$plugin_mess = '<strong>FEHLER:</strong> Download von "<em>'.$plugin_url.$plugin_file.'</em>" fehlgeschlagen.';
-			}
+			});
 		}
 
 		$plugincount = 0;
