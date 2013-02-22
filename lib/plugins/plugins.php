@@ -14,7 +14,7 @@
 
 			$id = (int) $id;
 			$res = $db->query('
-				SELECT package
+				SELECT package, dependencies
 				FROM ' . PLUGINS_TABLE . '
 				WHERE id = ' . $id . ' and installed = 0
 			');
@@ -22,8 +22,20 @@
 			if ($db->num_rows($res) != 1) {
 				message_box('Das Plugin konnte nicht installiert werden.', './plugins.php', 'zurück');
 			} else {
-				$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'1\' WHERE id = %d', PLUGINS_TABLE, $id));
-				message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
+				$row = $db->fetch_array($res);
+
+				$dependencies = @json_decode($row['dependencies']);
+				if (is_array($dependencies)) {
+					if (!self::checkWhetherAllDependenciesFulfilled($row['package'], $dependencies)) {
+						message_box('Das Plugin konnte nicht installiert werden.<br>Es wurden nicht alle Abhängigkeit erfüllt.', './plugins.php', 'zurück');
+					} else {
+						$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'1\' WHERE id = %d', PLUGINS_TABLE, $id));
+						message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
+					}
+				} else {
+					$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'1\' WHERE id = %d', PLUGINS_TABLE, $id));
+					message_box('Das Plugin wurde installiert.', './plugins.php', 'weiter');
+				}
 			}
 
 			$db->free_result($res);
@@ -143,6 +155,20 @@
 			}
 
 			return self::isPluginInstalled($dependencyPackage);
+		}
+
+		public static function checkWhetherAllDependenciesFulfilled($package, $dependencyList) {
+			$fulfilled = true;
+			if (is_array($dependencyList)) {
+				foreach($dependencyList as $dependencyPackage) {
+					$value = self::checkDependency($package, $dependencyPackage);
+					if ($fulfilled && !$value) {
+						$fulfilled = false;
+					}
+				}
+			}
+
+			return $fulfilled;
 		}
 	}
 ?>
