@@ -202,7 +202,7 @@
 
 				$fields = $data->getFields();
 
-				$fieldsPayload = ($this->method == HTTP::OPT_METHOD_POST ? sprintf('%s%s', $CRLF, $CRLF) : '');
+				$fieldsPayload = ($this->method == HTTP::OPT_METHOD_POST ? sprintf('%s', $CRLF) : '');
 
 				foreach ($fields as $fieldName => $fieldValue) {
 					if ($this->useMultipart && $this->method == HTTP::OPT_METHOD_POST) {
