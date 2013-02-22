@@ -64,11 +64,15 @@
 			inits request
 		*/
 		public function init() {
+			if ($this->inited) return false;
+
 			$this->inited = true;
 			$this->options = array();
 			$this->headers = array();
 
 			$this->addHeader('Connection', 'close');
+
+			return true;
 		}
 
 		/*
