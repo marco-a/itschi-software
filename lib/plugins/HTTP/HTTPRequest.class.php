@@ -24,14 +24,14 @@
 		private $method = NULL;
 
 		/*
-			@name	use_multipart
+			@name	useMultipart
 		*/
-		private $use_multipart = NULL;
+		private $useMultipart = NULL;
 
 		/*
-			@name	use_utf
+			@name	useUTF
 		*/
-		private $use_utf = NULL;
+		private $useUTF = NULL;
 
 		/*
 			@name	headers
@@ -130,8 +130,8 @@
 			}
 
 			$this->method = $lowTetrad;
-			$this->use_multipart = ($highTetrad == 0x10);
-			$this->use_utf = ($highTetrad == 0x30);
+			$this->useMultipart = ($highTetrad == 0x10);
+			$this->useUTF = ($highTetrad == 0x30);
 
 			return true;
 		}
@@ -193,7 +193,7 @@
 
 			$CRLF = sprintf('%c%c', HTTP::CR, HTTP::LF);
 
-			if ($this->use_multipart) {
+			if ($this->useMultipart) {
 				$boundary = strtoupper(substr(sha1(uniqid('', true)), 0, 12));
 			}
 
@@ -205,7 +205,7 @@
 				$fieldsPayload = ($this->method == HTTP::OPT_METHOD_POST ? sprintf('%s%s', $CRLF, $CRLF) : '');
 
 				foreach ($fields as $fieldName => $fieldValue) {
-					if ($this->use_multipart && $this->method == HTTP::OPT_METHOD_POST) {
+					if ($this->useMultipart && $this->method == HTTP::OPT_METHOD_POST) {
 						if (is_array($fieldValue)) {
 							$fieldsPayload .= sprintf('--%s%sContent-Disposition: form-data; name="%s"; filename="%s"%sContent-Type: %s%sContent-Transfer-Encoding: binary%s%s%s%s',
 														$boundary,
@@ -228,7 +228,7 @@
 					}
 				}
 
-				if ($this->use_multipart) {
+				if ($this->useMultipart) {
 					$fieldsPayload .= sprintf('--%s--', $boundary);
 				} else {
 					$fieldsPayload = mb_substr($fieldsPayload, 0, mb_strlen($fieldsPayload, 'UTF-8') - 1, 'UTF-8');
@@ -237,7 +237,7 @@
 				if ($this->method == HTTP::OPT_METHOD_POST) {
 					$this->addHeader('Content-Length', strlen($fieldsPayload)); // utf8 is evil
 
-					if ($this->use_multipart) {
+					if ($this->useMultipart) {
 						$this->addHeader('Content-Type', 'multipart/form-data; boundary='.$boundary);
 					} else {
 						$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
