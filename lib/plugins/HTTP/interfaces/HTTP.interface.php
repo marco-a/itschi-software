@@ -82,6 +82,18 @@
 		public static function init();
 
 		/*
+			@name	isHex
+			checks for hexadecimal
+		*/
+		public static function isHex($str);
+
+		/*
+			@name	decodeChunks
+			decodes chunked response
+		*/
+		public static function decodeChunks($response);
+
+		/*
 			@name	getMimeType
 			gets mime type for a file by its extension
 		*/

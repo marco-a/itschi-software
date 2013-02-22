@@ -42,7 +42,7 @@
 		| example |
 		+---------+
 	*/
-	/*
+
 	$HTTPRequest = HTTPRequest::alloc(HTTP::OPT_METHOD_POST | HTTP::OPT_MULTIPART);
 
 	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'pro-fusion.ch');
@@ -65,7 +65,7 @@
 		}
 	});
 
-
+	/*
 	EXAMPLE OUTPUT:
 
 

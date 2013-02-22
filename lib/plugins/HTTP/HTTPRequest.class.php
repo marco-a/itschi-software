@@ -306,6 +306,13 @@
 
 			$response = implode($responseSplitted, sprintf('%s%s', $CRLF, $CRLF));
 
+			$tmpHeader = strtolower($headers);
+
+			if (preg_match('~transfer\-encoding\:(\s|)chunked~Ui', $tmpHeader) === 1) {
+				// response is chunked
+				$response = HTTP::decodeChunks($response);
+			}
+
 			$GLOBALS['responseCode'] = 0;
 
 			preg_replace_callback('~HTTP\/1\.1 ([0-5]{3})~Ui', function($match) {

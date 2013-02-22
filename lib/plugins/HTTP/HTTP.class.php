@@ -81,6 +81,46 @@
 		}
 
 		/*
+			@name	isHex
+			checks for hexadecimal
+		*/
+		public static function isHex($str) {
+			$hex = strtolower(trim(ltrim($str, '0')));
+
+			if (empty($hex)) $hex = 0x00;
+
+			$dec = hexdec($hex);
+
+			return ($hex == dechex($dec));
+		}
+
+		/*
+			@name	decodeChunks
+			decodes chunked response
+		*/
+		public static function decodeChunks($response) {
+			$position = 0;
+			$length = strlen($response);
+
+			$result = '';
+
+			while (($position < $length) && $chunkLengthHex = substr($response, $position, ($newLine = strpos($response, sprintf('%c', self::LF), $position + 1)) - $position)) {
+
+				if (!self::isHex($chunkLengthHex)) {
+					return false;
+				}
+
+				$position = $newLine + 1;
+				$chunkLength = hexdec(rtrim($chunkLengthHex, sprintf('%c%c', self::CR, self::LF)));
+				$result .= substr($response, $position, $chunkLength);
+				$position = strpos($response, sprintf('%c', self::LF), $position + $chunkLength) + 1;
+
+			}
+
+			return $result;
+		}
+
+		/*
 			@name	getMimeType
 			gets mime type for a file by its extension
 		*/
