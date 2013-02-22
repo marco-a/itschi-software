@@ -805,8 +805,8 @@
 
 	$HTTPRequest->setOpts(HTTP::OPT_METHOD_POST | HTTP::OPT_MULTIPART);
 
-	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'pro-fusion.ch');
-	$HTTPRequest->setOpt(HTTP::OPT_REQ_FILE, 'martin.php');
+	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'site.tld');
+	$HTTPRequest->setOpt(HTTP::OPT_REQ_FILE, 'upload.php');
 
 	$HTTPRequestData = HTTP::allocData();
 	$HTTPRequestData->add('getParam', 'value');
