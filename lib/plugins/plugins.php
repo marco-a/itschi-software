@@ -76,7 +76,7 @@
 					");
 
 					$row = $db->fetch_object($res);
-					
+
 					if (!isset($row->id)) {
 						$db->query("
 							INSERT INTO " . PLUGINS_TABLE . "
@@ -102,8 +102,11 @@
 
 		public static function removeFolder($dir) {
 			if (!is_dir($dir) || is_link($dir)) {
-				return unlink($dir);
+				@unlink($dir);
+
+				return true;
 			}
+
 			foreach (scandir($dir) as $file) {
 				if ($file == '.' || $file == '..') {
 					continue;
