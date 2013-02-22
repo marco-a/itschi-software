@@ -195,7 +195,6 @@
 		unset($server_content);
 		$server_status = ($server_status == NULL || $server_status == false ? false : true);
 
-
 		// assign
 		template::assignBlock('server', array(
 			'ID'			=>	$server_id,
@@ -219,7 +218,7 @@
 		$title = $row->title;
 		$permissions = @json_decode($row->permissions, true);
 		$p = $permissions;
-		$dependencies = @json_decode($row->dependencies, true);
+		$dependencyList = @json_decode($row->dependencies, true);
 		$minVersion = $row->minVersion;
 		$maxVersion = $row->maxVersion;
 		$package = $row->package;
@@ -331,6 +330,13 @@
 			}
 		}
 
+		$dependencies = array();
+		if (isset($dependencyList)) {
+			foreach($dependencyList as $dependencyPackage) {
+				$dependencies[$dependencyPackage] = $plugins->checkDependency($package, $dependencyPackage);
+			}
+		}
+
 		// assign
 		template::assignBlock(($row->installed) ? 'plugins' : 'available', array(
 			'NAME'			=>	htmlspecialchars($title),
@@ -338,6 +344,7 @@
 			'COMPATIBLE'	=>	$compatible,
 			'VERSION'		=>	$version,
 			'PERMISSIONS'	=>	$pL,
+			'DEPENDENCIES'	=>	$dependencies,
 			'ID'			=>	$row->id,
 			'MINVERSION'	=>	($minVersion) ? htmlspecialchars($row->minVersion) : '-',
 			'MAXVERSION'	=>	($maxVersion) ? htmlspecialchars($row->maxVersion) : '-'
