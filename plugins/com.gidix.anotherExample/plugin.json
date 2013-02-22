@@ -1,0 +1,13 @@
+{
+	"package": "com.gidix.anotherExample",
+	"name": "Another  Plugin",
+	"version": "1.0.9",
+
+	"permissions": {
+		"TPL": 1
+	},
+
+	"minVersion": "3.0.0",
+	"maxVersion": "3.0.0",
+	"URL": "http://www.gidix.de/"
+}
