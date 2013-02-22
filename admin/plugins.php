@@ -356,8 +356,8 @@
 
 		$dependencies = array();
 		if (isset($dependencyList)) {
-			foreach($dependencyList as $dependencyPackage) {
-				$dependencies[$dependencyPackage] = $plugins->checkDependency($package, $dependencyPackage);
+			foreach($dependencyList as $dPackage) {
+				$dependencies[$dPackage] = $plugins->checkDependency($package, $dPackage);
 			}
 		}
 
@@ -369,6 +369,7 @@
 			'VERSION'		=>	$version,
 			'PERMISSIONS'	=>	$pL,
 			'DEPENDENCIES'	=>	$dependencies,
+			'MISSING_DEPENDENCY'	=>	in_array(0, $dependencies),
 			'ID'			=>	$row->id,
 			'MINVERSION'	=>	($minVersion) ? htmlspecialchars($row->minVersion) : '-',
 			'MAXVERSION'	=>	($maxVersion) ? htmlspecialchars($row->maxVersion) : '-'

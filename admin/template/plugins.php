@@ -45,9 +45,17 @@
 						<b>Abhängigkeiten:</b><br /><br />
 
 						<?php if (!$plugins['DEPENDENCIES']): ?>
-							<span class="grey">Keine Abhängigkeiten von anderen Plugins</span>
-						<?php else: ?>
 
+							<span class="grey">Keine Abhängigkeiten von anderen Plugins</span>
+
+						<?php else: ?>
+							<ul>
+								<?php foreach($plugins['DEPENDENCIES'] as $k => $v): ?>
+
+									<li><?=$k; ?></li>
+
+								<?php endforeach; ?>
+							</ul>
 						<?php endif; ?>
 					</div>
 
@@ -137,8 +145,12 @@
 					<div class="fRight" style="width: 29%; text-align: right;">
 						<a href="./plugins.php?removePlugin=<?=$available['ID']; ?>" class="button redB" onclick="return confirm('Willst du dieses Plugin (<?=$available['NAME']; ?>) wirklich löschen?');">löschen</a>
 
-						<?php if ($available['COMPATIBLE']): ?>
+						<?php if ($available['COMPATIBLE'] && !$available['MISSING_DEPENDENCY']): ?>
 							<a href="./plugins.php?install=<?=$available['ID']; ?>" class="button greenB">installieren</a>
+						<?php elseif ($available['MISSING_DEPENDENCY']): ?>
+							<br /><br />
+
+							<small class="grey">Es sind nicht alle Abh&auml;ngigkeiten erf&uuml;llt.</small>
 						<?php else: ?>
 							<br /><br />
 
@@ -172,7 +184,13 @@
 							<?php if (!$available['DEPENDENCIES']): ?>
 								<span class="grey">Keine Abhängigkeiten von anderen Plugins</span>
 							<?php else: ?>
+								<ul>
+									<?php foreach($available['DEPENDENCIES'] as $k => $v): ?>
 
+										<li><?=$k; ?> &minus; <?php if ($v == 1): ?><span class="green">OK</span><?php else: ?><span class="red">Nicht installiert!</span><?php endif; ?></li>
+
+									<?php endforeach; ?>
+								</ul>
 							<?php endif; ?>
 						</div>
 
