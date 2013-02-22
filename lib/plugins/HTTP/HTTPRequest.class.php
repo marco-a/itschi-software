@@ -105,13 +105,13 @@
 			if ($this->inited == false) return false;
 
 			/*
-				METHOD_GET				0000 0001 -> 0x 0 1
-				METHOD_POST				0000 0011 -> 0x 0 3
+				METHOD_GET              0000 0001 -> 0x 0 1
+				METHOD_POST             0000 0011 -> 0x 0 3
 
-				METHOD_GET | MULTIPART	0001 0001 -> 0x 1 1
+				METHOD_GET | MULTIPART  0001 0001 -> 0x 1 1
 				METHOD_GET | USE_UTF    0011 0001 -> 0x 3 1
 
-				METHOD_POST | MULTIPART	0001 0011 -> 0x 1 3
+				METHOD_POST | MULTIPART 0001 0011 -> 0x 1 3
 				METHOD_POST | USE_UTF   0011 0011 -> 0x 3 3
 			*/
 
