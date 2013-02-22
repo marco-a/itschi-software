@@ -9,39 +9,31 @@
 	*	Editing may cause your cat to be eaten by your subwoofer
 	*	or serious frozen air around your head.
 	*	It may also cause headaches.
-	*   Dafuq did I just read?
+	*	Dafuq did I just read?
 	*/
 
-	if (!defined('CRLF')) {
-		define('CRLF', sprintf('%c%c', 0x0D, 0x0A));
-	}
+	$_root = dirname(__FILE__).DIRECTORY_SEPARATOR.'HTTP'.DIRECTORY_SEPARATOR;
 
-	final class HTTP extends plugin {
+	/*
+		+-----------------+
+		| load interfaces |
+		+-----------------+
+	*/
+	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTP.interface.php');
+	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequest.interface.php');
+	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequestData.interface.php');
+	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPResponse.interface.php');
 
-		/*
-			@POST
-		*/
-		const POST = 1;
+	/*
+		+--------------+
+		| load classes |
+		+--------------+
+	*/
+	require_once($_root.'HTTP.class.php');
+	require_once($_root.'HTTPRequest.class.php');
+	require_once($_root.'HTTPRequestData.class.php');
+	require_once($_root.'HTTPResponse.class.php');
 
-		/*
-			@GET
-		*/
-		const GET = 3;
-
-		/*
-			@makeHTTPRequest
-		*/
-		final public function makeHTTPRequest($type, $host, $file, $data = array()) {
-			$type = (int)$type;
-
-			if ($type != self::POST || $type != self::GET) return false;
-
-			$URL = sprintf('http://%s/%s', $host, $file); // set url
-
-
-		}
-
-	}
-
-
+	// init HTTP
+	HTTP::init();
 ?>

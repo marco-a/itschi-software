@@ -49,6 +49,7 @@
 	template::init();
 
 	require $root.'lib/plugins/plugin.php';
+	require $root.'lib/plugins/plugin.HTTP.php';
 	require $root.'lib/plugins/plugin.SQL.php';
 	require $root.'lib/plugins/plugin.TPL.php';
 	require $root.'lib/plugins/plugin.utils.php';

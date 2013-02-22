@@ -103,7 +103,7 @@
 		fclose($file);
 
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "banlist` (
 			  `ban_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `ban_time` int(11) unsigned NOT NULL DEFAULT '0',
@@ -115,7 +115,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `".$prefix."permissions` (
 				`permission_id` int(10) NOT NULL AUTO_INCREMENT,
 				`group_id` int(10) NOT NULL,
@@ -124,7 +124,7 @@
 			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `".$prefix."groups` (
 			  	`group_id` int(10) NOT NULL AUTO_INCREMENT,
 			  	`group_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '--',
@@ -132,7 +132,7 @@
 			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "bots` (
 			  `bot_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `bot_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -141,7 +141,7 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=53 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "bots` (`bot_id`, `bot_name`, `bot_agent`) VALUES
 			(1, 'AdsBot (Google)', 'AdsBot-Google'),
 			(2, 'Alexa (Bot)', 'ia_archiver'),
@@ -197,7 +197,7 @@
 			(52, 'Twiceler (Bot)', 'Twiceler');
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "config` (
 			  `config_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `config_value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -207,7 +207,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "config` (`config_name`, `config_value`, `is_dynamic`) VALUES
 			('newest_user_id', '1', 1),
 			('newest_user_level', '2', 1),
@@ -217,7 +217,7 @@
 			('users_num', '1', 1),
 			('title', 'Titel der Seite', 0),
 			('description', 'Ein Text der dein Forum beschreibt', 0),
-			('theme', 'itschi', 0),
+			('theme', 'standard', 0),
 			('email', '" . $email . "', 0),
 			('topics_perpage', '20', 0),
 			('posts_perpage', '10', 0),
@@ -241,7 +241,7 @@
 			('default_avatar', 'default.png', 0);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `".$prefix."forums` (
 			  `forum_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `forum_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -266,13 +266,13 @@
 			) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "forums` (`forum_id`, `forum_name`, `forum_description`, `forum_order`, `is_category`, `forum_level`, `forum_posts`, `forum_topics`, `forum_closed`, `forum_last_post_id`, `forum_last_post_user_id`, `forum_last_post_time`, `forum_last_post_topic_id`, `forum_last_post_username`, `forum_last_post_user_level`) VALUES
 			(1, 'Erste Kategorie', '', 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, '', 0),
 			(2, 'Erstes Forum', 'Ein Text der das Forum beschreibt', 2, 0, 0, 0, 1, 0, 1, 1, " . time() . ", 1, '" . $username . "', 2);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "forums_track` (
 			  `forum_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -282,12 +282,12 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "forums_track` (`forum_id`, `user_id`, `mark_time`) VALUES
 			(2, 1, " . time() . ");
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "mails` (
 			  `mail_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -307,7 +307,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "online` (
 			  `online_lastvisit` int(11) unsigned NOT NULL DEFAULT '0',
 			  `online_ip` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -319,7 +319,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "plugin_server` (
 			  `server_id` int(5) NOT NULL AUTO_INCREMENT,
 			  `server_name` varchar(30) NOT NULL DEFAULT 'NoName',
@@ -331,7 +331,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `".$prefix."plugins` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
@@ -348,7 +348,7 @@
 			) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "poll_options` (
 			  `topic_id` mediumint(8) unsigned NOT NULL,
 			  `option_text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -360,7 +360,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "poll_votes` (
 			  `topic_id` mediumint(8) unsigned NOT NULL,
 			  `user_id` mediumint(8) unsigned NOT NULL,
@@ -368,7 +368,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "posts` (
 			  `post_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `topic_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -393,12 +393,12 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "posts` (`post_id`, `topic_id`, `forum_id`, `user_id`, `post_text`, `enable_bbcodes`, `enable_smilies`, `enable_urls`, `enable_signatur`, `is_topic`, `post_time`, `post_edit_user_id`, `post_edit_username`, `post_edit_user_level`, `post_edit_time`) VALUES
 			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank für das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "ranks` (
 			  `rank_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `rank_image` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -411,7 +411,7 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "ranks` (`rank_id`, `rank_image`, `rank_title`, `rank_posts`, `rank_special`) VALUES
 			(1, 'gold4.gif', 'Stammgast', 100, 0),
 			(2, 'gold3.gif', 'Stammgast', 90, 0),
@@ -430,7 +430,7 @@
 			(15, '', 'Moderator', 0, 1);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "smilies` (
 			  `smilie_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `smilie_emotion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -439,7 +439,7 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 AUTO_INCREMENT=24 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "smilies` (`smilie_id`, `smilie_emotion`, `smilie_image`) VALUES
 			(1, ':D', 'biggrin.gif'),
 			(2, ':-D', 'biggrin.gif'),
@@ -466,7 +466,7 @@
 			(23, ':|', 'neutral.gif');
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `".$prefix."styles` (
 			  `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
@@ -478,13 +478,13 @@
 			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `".$prefix."styles` (`id`, `title`, `author`, `version`, `directory`, `active`)
 			VALUES
 				(1, 'Standard', 'Itschi', '1.0.0', 'standard', 1);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "topics` (
 			  `topic_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `forum_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -511,12 +511,12 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "topics` (`topic_id`, `forum_id`, `topic_title`, `user_id`, `username`, `user_level`, `topic_time`, `topic_important`, `topic_closed`, `topic_posts`, `topic_views`, `poll_title`, `poll_time`, `poll_votes`, `topic_last_post_user_id`, `topic_last_post_time`, `topic_last_post_post_id`, `topic_last_post_username`, `topic_last_post_user_level`, `topic_last_post_id`) VALUES
 			(1, 2, 'Erstes Thema', 1, '" . $username . "', 2, " . time() . ", 0, 0, 0, 0, '', 0, 0, 1, " . time() . ", 0, '" . $username . "', 2, 1);
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "topics_track` (
 			  `topic_id` int(11) unsigned NOT NULL DEFAULT '0',
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -528,7 +528,7 @@
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "users` (
 			  `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `user_lastvisit` int(11) unsigned NOT NULL DEFAULT '0',
@@ -561,7 +561,7 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=1 AUTO_INCREMENT=2 ;
 		");
 
-		mysql_query("
+		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "users` (`user_id`, `user_lastvisit`, `username`, `user_password`, `user_email`, `user_avatar`, `user_rank`, `user_signatur`, `user_signatur_bbcodes`, `user_signatur_smilies`, `user_signatur_urls`, `user_points`, `user_posts`, `user_ban`, `user_ip`, `user_website`, `user_icq`, `user_skype`, `user_login`, `user_level`, `user_register`, `user_mails`, `user_unlock`) VALUES
 			(1, " . time() . ", '" . $username . "', '" . md5($password) . "', '" . $email . "', '', 14, '', 1, 1, 1, 10, 1, 0, '" . $_SERVER['REMOTE_ADDR'] . "', '', '', '', 0, 2, " . time() . ", 0, '');
 		");

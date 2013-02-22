@@ -48,7 +48,18 @@
 				'dirName'	=>	$row->directory,
 			); */
 
-			$json = json_decode(@file_get_contents('styles/' . $config['theme'] . '/style.json'), true);
+			$json = json_decode(@file_get_contents($root.'/styles/' . $config['theme'] . '/style.json'), true);
+
+			if ($json == false) {
+				$json = json_decode(@file_get_contents($root.'/styles/standard/style.json'), true);
+
+
+				if ($json == false) {
+					self::logError('no template to display');
+				}
+
+				$config['theme'] = 'standard';
+			}
 
 			self::$style = array(
 				'title'		=>	$json['title'],
@@ -66,7 +77,7 @@
 		}
 
 		/**
-		 *	@name 	logError
+		 *	@name 	logError  <- falscher name? müsste printError sein…
 		 *			prints an error
 		 *
 		 *	@param 	string $error
@@ -82,12 +93,12 @@
 
 					<div class="error">
 						<code>
-							<b>TPL:</b> '.$error.'
+							<b>TPL:</b> '.htmlspecialchars($error).'
 						</code>
 					</div>
-					
+
 					<div class="info">
-						<small>Verursacht durch: '.self::$style['title'].'</small>
+						<small>Verursacht durch: '.htmlspecialchars(self::$style['title']).'</small>
 					</div>
 				</div>
 			';
@@ -110,7 +121,7 @@
 					self::$vars[$k] = $v;
 				}
 			} else {
-				self::$vars[$vars] = $value; 
+				self::$vars[$vars] = $value;
 			}
 
 			return true;
@@ -133,7 +144,7 @@
 		/**
 		 *	@name 	getVar
 		 *			Returns the value of a variable assigned with assign.
-		 *	
+		 *
 		 *	@param 	string $var
 		 *	@return string
 		 */
