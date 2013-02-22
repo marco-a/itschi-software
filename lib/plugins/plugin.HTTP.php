@@ -536,7 +536,6 @@
 
 			if ($this->use_multipart) {
 				$boundary = strtoupper(substr(sha1(uniqid('', true)), 0, 12));
-				$boundary = 'boundary';
 			}
 
 			if (($data = $this->getOpt(HTTP::OPT_DATA)) != NULL) {
