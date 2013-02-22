@@ -15,6 +15,12 @@
 		**/
 
 		/*
+			@name	alloc
+			allocates HTTPRequestData instance
+		*/
+		public static function alloc();
+
+		/*
 			@name	__construct
 		*/
 		public function __construct();

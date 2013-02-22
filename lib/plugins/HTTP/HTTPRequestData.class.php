@@ -19,6 +19,14 @@
 		private $fields = NULL;
 
 		/*
+			@name	alloc
+			allocates HTTPRequestData instance
+		*/
+		public static function alloc() {
+			return new self();
+		}
+
+		/*
 			@name	__construct
 		*/
 		public function __construct() {

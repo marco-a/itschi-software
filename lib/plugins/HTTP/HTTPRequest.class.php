@@ -44,6 +44,22 @@
 		private $response = NULL;
 
 		/*
+			@name	alloc
+			allocates HTTPRequest instance
+		*/
+		public static function alloc($options = 0x00) {
+			$obj = new self();
+
+			$obj->init();
+
+			if ($options > 0x00) {
+				$obj->setOpts($options);
+			}
+
+			return $obj;
+		}
+
+		/*
 			@name	init
 			inits request
 		*/
@@ -51,14 +67,8 @@
 			$this->inited = true;
 			$this->options = array();
 			$this->headers = array();
-		}
 
-		/*
-			@name	allocData
-			allocates HTTPRequestData instance
-		*/
-		public static function allocData() {
-			return new HTTPRequestData($obj);
+			$this->addHeader('Connection', 'close');
 		}
 
 		/*
@@ -94,10 +104,10 @@
 				METHOD_GET				0000 0001 -> 0x 0 1
 				METHOD_POST				0000 0011 -> 0x 0 3
 
-				METHOD_GET | MULTIPART		0001 0001 -> 0x 1 1
+				METHOD_GET | MULTIPART	0001 0001 -> 0x 1 1
 				METHOD_GET | USE_UTF    0011 0001 -> 0x 3 1
 
-				METHOD_POST | MULTIPART		0001 0011 -> 0x 1 3
+				METHOD_POST | MULTIPART	0001 0011 -> 0x 1 3
 				METHOD_POST | USE_UTF   0011 0011 -> 0x 3 3
 			*/
 

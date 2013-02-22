@@ -76,22 +76,10 @@
 		**/
 
 		/*
-			@name	alloc
-			allocates HTTPRequest instance
-		*/
-		public static function alloc();
-
-		/*
 			@name	init
-			initializes instance
+			initializes
 		*/
-		public static function init($obj);
-
-		/*
-			@name	dealloc
-			deallocates HTTPRequest instance
-		*/
-		public static function dealloc(HTTPRequest $obj);
+		public static function init();
 
 		/*
 			@name	getMimeType

@@ -35,23 +35,20 @@
 	require_once($_root.'HTTPResponse.class.php');
 
 	// init HTTP
-	HTTP::init(NULL);
+	HTTP::init();
 
 	/*
 		+---------+
 		| example |
 		+---------+
 	*/
-	$HTTPRequest = HTTP::alloc();
 
-	HTTP::init($HTTPRequest);
-
-	$HTTPRequest->setOpts(HTTP::OPT_METHOD_POST | HTTP::OPT_MULTIPART);
+	$HTTPRequest = HTTPRequest::alloc(HTTP::OPT_METHOD_POST | HTTP::OPT_MULTIPART);
 
 	$HTTPRequest->setOpt(HTTP::OPT_HOST, 'pro-fusion.ch');
 	$HTTPRequest->setOpt(HTTP::OPT_REQ_FILE, 'test_http.php');
 
-	$HTTPRequestData = HTTPRequest::allocData();
+	$HTTPRequestData = HTTPRequestData::alloc();
 	$HTTPRequestData->add('getParam', 'value');
 	$HTTPRequestData->add('anotherGetParam', 'test');
 	$HTTPRequestData->addFile('logo', '../../styles/standard/images/icons/topics/topic.png');
@@ -68,10 +65,9 @@
 		}
 	});
 
-	HTTP::dealloc($HTTPRequest);
-
 	/*
 	EXAMPLE OUTPUT:
+
 
 	responseCode: 200
 	mimeType: text/html
@@ -93,7 +89,7 @@
 	        (
 	            [name] => topic.png
 	            [type] => image/png
-	            [tmp_name] => [dir]
+	            [tmp_name] => [tmp dir]
 	            [error] => 0
 	            [size] => 1327
 	        )

@@ -15,16 +15,16 @@
 		**/
 
 		/*
+			@name	alloc
+			allocates HTTPRequest instance
+		*/
+		public static function alloc($options = 0x00);
+
+		/*
 			@name	init
 			inits request
 		*/
 		public function init();
-
-		/*
-			@name	allocData
-			allocates HTTPRequestData instance
-		*/
-		public static function allocData();
 
 		/*
 			@name	setOpt

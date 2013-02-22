@@ -14,98 +14,70 @@
 		private static $mimeTypes = NULL;
 
 		/*
-			@name	alloc
-			allocates HTTPRequest instance
-		*/
-		public static function alloc() {
-			return new HTTPRequest();
-		}
-
-		/*
 			@name	init
-			initializes instance
+			initializes
 		*/
-		public static function init($obj) {
-			if ($obj instanceof HTTPRequestInterface) {
-				if ($obj->inited == true) return false;
+		public static function init() {
+			if (self::$mimeTypes != NULL) return false;
 
-				$obj->init();
+			self::$mimeTypes = array(
+				// basic
+				'txt'	=> 'text/plain',
+				'htm'	=> 'text/html',
+				'html'	=> 'text/html',
+				'php'	=> 'text/html',
+				'css'	=> 'text/css',
+				'js'	=> 'application/javascript',
+				'json'	=> 'application/json',
+				'xml'	=> 'application/xml',
+				'swf'	=> 'application/x-shockwave-flash',
+				'flv'	=> 'video/x-flv',
 
-				$obj->addHeader('Connection', 'close');
-			} else if ($obj == NULL && self::$mimeTypes == NULL) {
-				self::$mimeTypes = array(
-					// basic
-					'txt'	=> 'text/plain',
-					'htm'	=> 'text/html',
-					'html'	=> 'text/html',
-					'php'	=> 'text/html',
-					'css'	=> 'text/css',
-					'js'	=> 'application/javascript',
-					'json'	=> 'application/json',
-					'xml'	=> 'application/xml',
-					'swf'	=> 'application/x-shockwave-flash',
-					'flv'	=> 'video/x-flv',
+				// images
+				'png'	=> 'image/png',
+				'jpe'	=> 'image/jpeg',
+				'jpeg'	=> 'image/jpeg',
+				'jpg'	=> 'image/jpeg',
+				'gif'	=> 'image/gif',
+				'bmp'	=> 'image/bmp',
+				'ico'	=> 'image/vnd.microsoft.icon',
+				'tiff'	=> 'image/tiff',
+				'tif'	=> 'image/tiff',
+				'svg'	=> 'image/svg+xml',
+				'svgz'	=> 'image/svg+xml',
 
-					// images
-					'png'	=> 'image/png',
-					'jpe'	=> 'image/jpeg',
-					'jpeg'	=> 'image/jpeg',
-					'jpg'	=> 'image/jpeg',
-					'gif'	=> 'image/gif',
-					'bmp'	=> 'image/bmp',
-					'ico'	=> 'image/vnd.microsoft.icon',
-					'tiff'	=> 'image/tiff',
-					'tif'	=> 'image/tiff',
-					'svg'	=> 'image/svg+xml',
-					'svgz'	=> 'image/svg+xml',
+				// archives
+				'zip'	=> 'application/zip',
+				'rar'	=> 'application/x-rar-compressed',
+				'exe'	=> 'application/x-msdownload',
+				'msi'	=> 'application/x-msdownload',
+				'cab'	=> 'application/vnd.ms-cab-compressed',
 
-					// archives
-					'zip'	=> 'application/zip',
-					'rar'	=> 'application/x-rar-compressed',
-					'exe'	=> 'application/x-msdownload',
-					'msi'	=> 'application/x-msdownload',
-					'cab'	=> 'application/vnd.ms-cab-compressed',
+				// video & audio
+				'mov'	=> 'video/quicktime',
+				'qt'	=> 'video/quicktime',
+				'mp3'	=> 'audio/mpeg',
 
-					// video & audio
-					'mov'	=> 'video/quicktime',
-					'qt'	=> 'video/quicktime',
-					'mp3'	=> 'audio/mpeg',
+				// open office
+				'odt'	=> 'application/vnd.oasis.opendocument.text',
+				'ods'	=> 'application/vnd.oasis.opendocument.spreadsheet',
 
-					// open office
-					'odt'	=> 'application/vnd.oasis.opendocument.text',
-					'ods'	=> 'application/vnd.oasis.opendocument.spreadsheet',
+				// ms office
+				'doc'	=> 'application/msword',
+				'rtf'	=> 'application/rtf',
+				'xls'	=> 'application/vnd.ms-excel',
+				'ppt'	=> 'application/vnd.ms-powerpoint',
+				'pptx'	=> 'application/vnd.ms-powerpoint',
 
-					// ms office
-					'doc'	=> 'application/msword',
-					'rtf'	=> 'application/rtf',
-					'xls'	=> 'application/vnd.ms-excel',
-					'ppt'	=> 'application/vnd.ms-powerpoint',
-					'pptx'	=> 'application/vnd.ms-powerpoint',
-
-					// adobe
-					'pdf'	=> 'application/pdf',
-					'psd'	=> 'image/vnd.adobe.photoshop',
-					'ai'	=> 'application/postscript',
-					'eps'	=> 'application/postscript',
-					'ps'	=> 'application/postscript'
-				);
-			} else {
-				return false;
-			}
+				// adobe
+				'pdf'	=> 'application/pdf',
+				'psd'	=> 'image/vnd.adobe.photoshop',
+				'ai'	=> 'application/postscript',
+				'eps'	=> 'application/postscript',
+				'ps'	=> 'application/postscript'
+			);
 
 			return true;
-		}
-
-		/*
-			@name	dealloc
-			deallocates HTTPRequest instance
-		*/
-		public static function dealloc(HTTPRequest $obj) {
-			$obj->inited = false;
-
-			/*
-				TO BE CONTINUED
-			*/
 		}
 
 		/*
