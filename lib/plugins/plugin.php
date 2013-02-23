@@ -60,7 +60,7 @@
 
 					<div class="error">
 						<code>
-							'.$type.''.htmlspecialchars($error).'
+							'.$type.''.$error.'
 						</code>
 					</div>
 
