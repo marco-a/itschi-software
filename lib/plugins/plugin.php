@@ -47,9 +47,9 @@
 		 *	@return void
 		 */
 
-		protected static function logError($error, $type = NULL) {
-			if (isset($type)) {
-				$type = '<b>'.$type.'</b>: ';
+		protected static function logError($error, $type = '') {
+			if (!empty($type)) {
+				$type = '<b>'.htmlspecialchars($type).'</b>: ';
 			}
 
 			echo '
@@ -60,12 +60,12 @@
 
 					<div class="error">
 						<code>
-							'.$type.''.$error.'
+							'.$type.''.htmlspecialchars($error).'
 						</code>
 					</div>
 
 					<div class="info">
-						<small>Verursacht durch: '.self::$package.'</small>
+						<small>Verursacht durch: '.htmlspecialchars(self::$package).'</small>
 					</div>
 				</div>
 			';
@@ -86,7 +86,9 @@
 			$row = $db->fetch_object($res);
 
 			if (isset($row->permissions)) {
-				return json_decode($row->permissions, true);
+				$json = @json_decode($row->permissions, true);
+
+				return (is_array($json) ? $json : array());
 			} else {
 				return array();
 			}
@@ -146,16 +148,16 @@
 		 */
 
 		public static function run() {
-			$pluginFile = './plugins/'.self::$package.'/files/main.php';
+			$pluginFile = './plugins/'.self::$package.'/files/main.php'; // <- evil
 
-			if (@file_exists($pluginFile)) {
+			if (is_file($pluginFile)) {
 
 				// to be changed
 				include $pluginFile;
 
 			} else {
 				echo '
-					<div class="pluginInfo"><b>Warnung:</b> Plugin "'.self::$package.'" ist unvollständig. (<i>main.php missing</i>)</div>
+					<div class="pluginInfo"><b>Warnung:</b> Plugin "'.htmlspecialchars(self::$package).'" ist unvollständig. (<i>main.php missing</i>)</div>
 				';
 			}
 		}

@@ -74,6 +74,8 @@
 			plugin::init($pRow->package);
 			plugin::run();
 		}
+
+		$db->free_result($pRes);
 	}
 
 	template::assign('admin', ($user->row['user_level'] == ADMIN));
