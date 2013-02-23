@@ -47,13 +47,14 @@
 	 */
 
 	template::init();
-	HTTP::init();
 
 	require_once $root.'lib/plugins/plugin.php';
 	require_once $root.'lib/plugins/plugin.HTTP.php';
 	require_once $root.'lib/plugins/plugin.SQL.php';
 	require_once $root.'lib/plugins/plugin.TPL.php';
 	require_once $root.'lib/plugins/plugin.utils.php';
+
+	HTTP::init();
 
 	unset($password);
 
@@ -66,7 +67,7 @@
 	/** initiate plugins **/
 	$self = $_SERVER['PHP_SELF'];
 
-	if (!preg_match('^\/admin\/^', $self)) {
+	if ($token->env == USER) {
 		$pRes = $db->query("SELECT package FROM " . PLUGINS_TABLE . " WHERE installed = 1");
 
 		plugin::init_classes();
