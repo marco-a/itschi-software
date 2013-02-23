@@ -93,7 +93,7 @@
 			'REFRESH'	=>	$refresh
 		));
 
-		template::display('message', preg_match('^/admin/^', $_SERVER['SCRIPT_NAME']));
+		template::display('message');
 		exit;
 	}
 
@@ -226,7 +226,7 @@
 		$db->free_result($res);
 
 		if ($row) {
-			return $before . '<span class="grey">@</span><a href="user.php?id=' . $row['user_id']  . '">' . $username . '</a>' . $after;	
+			return $before . '<span class="grey">@</span><a href="user.php?id=' . $row['user_id']  . '">' . $username . '</a>' . $after;
 		}
 
 		return '<span>@</span>' . $username;
@@ -234,7 +234,7 @@
 
 	function getTimeDifference($old, $new) {
 		global $phpdate;
-		
+
 		$timeDiff = $phpdate->StringTimeDifference(date('d.m.Y', $old), date('d.m.Y', $new), false);
 		if ($timeDiff == 0) {
 			$time = date('H:i', $old);
@@ -243,7 +243,7 @@
 		} else {
 			$time = 'Vor '.$timeDiff.' Tagen, '.date('H:i', $old);
 		}
-		
+
 		return $time;
 	}
 

@@ -48,13 +48,13 @@
 				'dirName'	=>	$row->directory,
 			); */
 
-			$json = json_decode(@file_get_contents($root.'/styles/' . $config['theme'] . '/style.json'), true);
+			$json = @json_decode(@file_get_contents($root.'/styles/' . $config['theme'] . '/style.json'), true);
 
-			if ($json == false) {
-				$json = json_decode(@file_get_contents($root.'/styles/standard/style.json'), true);
+			if (!is_array($json)) {
+				$json = @json_decode(@file_get_contents($root.'/styles/standard/style.json'), true);
 
 
-				if ($json == false) {
+				if (!is_array($json)) {
 					self::logError('no template to display');
 				}
 
@@ -250,7 +250,7 @@
 
 				$file = (preg_match('^/admin/^', $_SERVER['SCRIPT_NAME'])) ? './template/' . $section . '.php' : self::$style['dir'] . $section . '.php';
 
-				if (!file_exists($file)) {
+				if (!is_file($file)) {
 					self::logError('File "'.$section.'.php" does not exist.');
 				} else {
 					include $file;
@@ -259,7 +259,8 @@
 				$content = ob_get_contents();
 				ob_end_clean();
 
-				if (gettype($token) == 'object') $content = $token->auto_append($content);
+				if (is_object($token)) $content = $token->auto_append($content);
+
 				echo $content;
 			}
 		}
