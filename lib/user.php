@@ -19,6 +19,7 @@
 			global $db, $prefix;
 			
 			$session = $prefix . $session;
+			$this->session = $session;
 
 			session_start();
 

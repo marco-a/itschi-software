@@ -235,7 +235,7 @@
 		 */
 
 		public static function fetch($section) {
-			global $token;
+			global $token, $user, $db, $root;
 
 			if (!self::$end) {
 				page_vars();
