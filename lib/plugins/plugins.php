@@ -26,7 +26,7 @@
 
 				$dependencies = @json_decode($row['dependencies']);
 				if (is_array($dependencies)) {
-					if (!self::checkWhetherAllDependenciesFulfilled($row['package'], $dependencies)) {
+					if (!self::checkAllDependencies($row['package'], $dependencies)) {
 						message_box('Das Plugin konnte nicht installiert werden.<br>Es wurden nicht alle Abhängigkeit erfüllt.', './plugins.php', 'zurück');
 					} else {
 						$db->unbuffered_query(sprintf('UPDATE %s SET installed = \'1\' WHERE id = %d', PLUGINS_TABLE, $id));
@@ -157,7 +157,7 @@
 			return self::isPluginInstalled($dependencyPackage);
 		}
 
-		public static function checkWhetherAllDependenciesFulfilled($package, $dependencyList) {
+		public static function checkAllDependencies($package, $dependencyList) {
 			$fulfilled = true;
 			if (is_array($dependencyList)) {
 				foreach($dependencyList as $dependencyPackage) {
