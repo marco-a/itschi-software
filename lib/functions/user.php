@@ -81,16 +81,16 @@
 			return false;
 		}
 
-		$db->query('DELETE FROM ' . USERS_TABLE . ' WHERE user_id = ' . $row['user_id']);
-		$db->query('DELETE FROM ' . MAILS_TABLE . ' WHERE to_user_id = ' . $row['user_id']);
-		$db->query('DELETE FROM ' . TOPICS_TRACK_TABLE . ' WHERE user_id = ' . $row['user_id']);
-		$db->query('DELETE FROM ' . FORUMS_TRACK_TABLE . ' WHERE user_id = ' . $row['user_id']);
-		$db->query('DELETE FROM ' . BANLIST_TABLE . ' WHERE user_id = ' . $row['user_id']);
+		$db->unbuffered_query('DELETE FROM ' . USERS_TABLE . ' WHERE user_id = ' . $row['user_id']);
+		$db->unbuffered_query('DELETE FROM ' . MAILS_TABLE . ' WHERE to_user_id = ' . $row['user_id']);
+		$db->unbuffered_query('DELETE FROM ' . TOPICS_TRACK_TABLE . ' WHERE user_id = ' . $row['user_id']);
+		$db->unbuffered_query('DELETE FROM ' . FORUMS_TRACK_TABLE . ' WHERE user_id = ' . $row['user_id']);
+		$db->unbuffered_query('DELETE FROM ' . BANLIST_TABLE . ' WHERE user_id = ' . $row['user_id']);
 
-		$db->query('UPDATE ' . FORUMS_TABLE . " SET forum_last_post_username = '', forum_last_post_user_id = 0, forum_last_post_user_level = 0 WHERE forum_last_post_user_id = " . $row['user_id']);
-		$db->query('UPDATE ' . TOPICS_TABLE . " SET username = '', user_id = 0, user_level = 0 WHERE user_id = " . $row['user_id']);
-		$db->query('UPDATE ' . TOPICS_TABLE . " SET topic_last_post_username = '', topic_last_post_user_id = 0, topic_last_post_user_level = 0 WHERE topic_last_post_user_id = " . $row['user_id']);
-		$db->query('UPDATE ' . POSTS_TABLE . " SET post_edit_username = '', post_edit_user_id = 0, post_edit_user_level = 0 WHERE post_edit_user_id = " . $row['user_id']);
+		$db->unbuffered_query('UPDATE ' . FORUMS_TABLE . " SET forum_last_post_username = '', forum_last_post_user_id = 0, forum_last_post_user_level = 0 WHERE forum_last_post_user_id = " . $row['user_id']);
+		$db->unbuffered_query('UPDATE ' . TOPICS_TABLE . " SET username = '', user_id = 0, user_level = 0 WHERE user_id = " . $row['user_id']);
+		$db->unbuffered_query('UPDATE ' . TOPICS_TABLE . " SET topic_last_post_username = '', topic_last_post_user_id = 0, topic_last_post_user_level = 0 WHERE topic_last_post_user_id = " . $row['user_id']);
+		$db->unbuffered_query('UPDATE ' . POSTS_TABLE . " SET post_edit_username = '', post_edit_user_id = 0, post_edit_user_level = 0 WHERE post_edit_user_id = " . $row['user_id']);
 
 		if ($row['user_avatar']) {
 			@unlink('/images/avatar/' . $row['user_avatar']);
