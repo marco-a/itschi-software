@@ -227,15 +227,15 @@
 		}
 
 		/**
-		 *	@name 	display
-		 *			Displays a template-file.
+		 *	@name 	fetch
+		 *			fetch a template-file.
 		 *
 		 *	@param 	string $section
-		 * 	@return void
+		 * 	@return string
 		 */
 
-		public static function display($section) {
-			global $db, $user, $config, $token;
+		public static function fetch($section) {
+			global $token;
 
 			if (!self::$end) {
 				page_vars();
@@ -259,9 +259,28 @@
 				$content = ob_get_contents();
 				ob_end_clean();
 
-				if (is_object($token)) $content = $token->auto_append($content);
+				if (is_object($token)) {
+					$content = $token->auto_append($content);
+				}
 
-				echo $content;
+				return $content;
+			}
+		}
+
+		/**
+		 *	@name 	display
+		 *			Displays a template-file.
+		 *
+		 *	@param 	string $section
+		 * 	@return void
+		 */
+
+		public static function display($section) {
+			if (!self::$end) {
+				$content = self::fetch($section);
+				if (!is_null($content)) {
+					echo $content;
+				}
 			}
 		}
 	}
