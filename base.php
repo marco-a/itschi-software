@@ -47,6 +47,7 @@
 	 */
 
 	template::init();
+	HTTP::init();
 
 	require_once $root.'lib/plugins/plugin.php';
 	require_once $root.'lib/plugins/plugin.HTTP.php';

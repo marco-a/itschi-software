@@ -33,7 +33,4 @@
 	require_once $_root.'HTTPRequest.class.php';
 	require_once $_root.'HTTPRequestData.class.php';
 	require_once $_root.'HTTPResponse.class.php';
-
-	// init HTTP
-	HTTP::init();
 ?>
