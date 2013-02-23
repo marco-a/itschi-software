@@ -85,7 +85,9 @@
 	$token->_('user.php', 'GET', USER);
 	$token->_('search.php', 'GET, POST', USER);
 	$token->_('viewforum.php', 'GET', USER);
+	/*
 	$token->_('viewtopic.php', 'GET', USER);
+	*/
 	$token->_('status.php', 'POST', USER);
 
 	$token->check('POST', $_POST);

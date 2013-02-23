@@ -93,7 +93,7 @@
 
 				// $file = str_replace('./', '', $file);
 
-				if ($this->check_exception($file, 'GET', $this->env)) {
+				if ($this->check_exception(str_replace('./', '', $file), 'GET', $this->env)) {
 					return $matches[0];
 				}
 
