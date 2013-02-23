@@ -19,20 +19,20 @@
 		| load interfaces |
 		+-----------------+
 	*/
-	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTP.interface.php');
-	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequest.interface.php');
-	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequestData.interface.php');
-	require_once($_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPResponse.interface.php');
+	require_once $_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTP.interface.php';
+	require_once $_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequest.interface.php';
+	require_once $_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPRequestData.interface.php';
+	require_once $_root.'interfaces'.DIRECTORY_SEPARATOR.'HTTPResponse.interface.php';
 
 	/*
 		+--------------+
 		| load classes |
 		+--------------+
 	*/
-	require_once($_root.'HTTP.class.php');
-	require_once($_root.'HTTPRequest.class.php');
-	require_once($_root.'HTTPRequestData.class.php');
-	require_once($_root.'HTTPResponse.class.php');
+	require_once $_root.'HTTP.class.php';
+	require_once $_root.'HTTPRequest.class.php';
+	require_once $_root.'HTTPRequestData.class.php';
+	require_once $_root.'HTTPResponse.class.php';
 
 	// init HTTP
 	HTTP::init();

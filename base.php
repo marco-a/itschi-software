@@ -16,16 +16,16 @@
 
 	$root = dirname(__FILE__) . '/';
 
-	require $root.'config.php';
-	require $root.'lib/user.php';
-	require $root.'lib/mysql.php';
-	require $root.'lib/token.php';
-	require $root.'lib/cache.php';
-	require $root.'lib/template.php';
-	require $root.'lib/functions/global.php';
-	require $root.'lib/constants.php';
-	require $root.'lib/functions/date.php';
-	require $root.'lib/plugins/plugins.php';
+	require_once $root.'config.php';
+	require_once $root.'lib/user.php';
+	require_once $root.'lib/mysql.php';
+	require_once $root.'lib/token.php';
+	require_once $root.'lib/cache.php';
+	require_once $root.'lib/template.php';
+	require_once $root.'lib/functions/global.php';
+	require_once $root.'lib/constants.php';
+	require_once $root.'lib/functions/date.php';
+	require_once $root.'lib/plugins/plugins.php';
 
 	if (empty($prefix)) {
 		header('Location: install.php');
@@ -48,11 +48,11 @@
 
 	template::init();
 
-	require $root.'lib/plugins/plugin.php';
-	require $root.'lib/plugins/plugin.HTTP.php';
-	require $root.'lib/plugins/plugin.SQL.php';
-	require $root.'lib/plugins/plugin.TPL.php';
-	require $root.'lib/plugins/plugin.utils.php';
+	require_once $root.'lib/plugins/plugin.php';
+	require_once $root.'lib/plugins/plugin.HTTP.php';
+	require_once $root.'lib/plugins/plugin.SQL.php';
+	require_once $root.'lib/plugins/plugin.TPL.php';
+	require_once $root.'lib/plugins/plugin.utils.php';
 
 	unset($password);
 
