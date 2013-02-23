@@ -2,6 +2,8 @@ config.php
 
 .DS_Store
 
+*/.DS_Store
+
 lib/cache/*.php
 
 images/avatar/*
