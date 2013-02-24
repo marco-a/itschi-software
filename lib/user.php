@@ -21,9 +21,9 @@
 		public function __construct() {
 			global $db, $prefix;
 
-			$this->session 			= $prefix . $session;
-			$this->cookie_auto_username	= $prefix . $cookie_auto_username;
-			$this->cookie_auto_password	= $prefix . $cookie_auto_password;
+			$this->session 			= $prefix . $this->session;
+			$this->cookie_auto_username	= $prefix . $this->cookie_auto_username;
+			$this->cookie_auto_password	= $prefix . $this->cookie_auto_password;
 
 			$session_user_id = $this->getSession();
 
@@ -41,8 +41,11 @@
 					$this->check_ban();
 				}
 			} else {
-				if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
-					$this->login($_COOKIE['username'], $_COOKIE['password']);
+				if (isset($_COOKIE[$this->cookie_auto_username]) && isset($_COOKIE[$this->cookie_auto_password])) {
+					$this->login(
+						$_COOKIE[$this->cookie_auto_username],
+						$_COOKIE[$this->cookie_auto_password]
+					);
 				}
 			}
 
