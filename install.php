@@ -22,6 +22,15 @@
 		}
 	}
 
+	function read_ini($key) {
+		$read = ini_get($key);
+
+		if ($read == '1' || $read == 1 || $read == 'On' || $read == 'on') return true;
+		if ($read == '0' || $read == 0 || $read == 'Off' || $read == 'off') return false;
+
+		return $read;
+	}
+
 	$submit = (isset($_POST['submit'])) ? true : false;
 	$db_host = (isset($_POST['db_host'])) ? $_POST['db_host'] : 'localhost';
 	$db_username = (isset($_POST['db_username'])) ? $_POST['db_username'] : '';
@@ -41,8 +50,12 @@
 	$php_version = ($php_v >= 5.3);
 	$imagecreatefromgif = function_exists('imagecreatefromgif');
 
+	@ini_set('allow_url_fopen', 1);
+
+	$allow_url_fopen = read_ini('allow_url_fopen') == true ? true : false;
+
 	if ($submit) {
-		if ($chmod && $config_writable && $imagecreatefromgif) {
+		if ($chmod && $config_writable && $imagecreatefromgif && $allow_url_fopen) {
 			$error = install();
 		} else {
 			$error = 10;
@@ -88,7 +101,6 @@
 		if ($password != $password2) {
 			return 8;
 		}
-
 
 		@chmod(dirname(__FILE__) . '/', 0755);
 		@chmod('images/avatar/', 0755);
@@ -623,23 +635,28 @@
 
 						<table cellspacing="0" cellpadding="0" width="100%" border="0">
 							<tr>
-								<td width="25%">CHMOD 0777</td>
+								<td width="40%">CHMOD 0777</td>
 								<td class="textStatus<?php echo ($chmod ? 'OK' : 'NotOK'); ?>">ist <?php echo ($chmod ? 'gesetzt' : 'nicht gesetzt');?></td>
 							</tr>
 
 							<tr>
-								<td width="25%">config.php</td>
+								<td>config.php</td>
 								<td class="textStatus<?php echo ($config_writable ? 'OK' : 'NotOK'); ?>">ist <?php echo ($config_writable ? 'beschreibbar' : 'nicht beschreibbar');?></td>
 							</tr>
 
 							<tr>
-								<td width="25%">PHP Version (<?php echo $php_v;?>)</td>
+								<td>PHP Version (<?php echo $php_v;?>)</td>
 								<td class="textStatus<?php echo ($php_version ? 'OK' : 'NotOK'); ?>">ist <?php echo ($php_version ? 'ausreichend' : 'nicht ausreichend');?></td>
 							</tr>
 
 							<tr>
-								<td width="25%">imagecreatefromgif()</td>
+								<td>imagecreatefromgif()</td>
 								<td class="textStatus<?php echo ($imagecreatefromgif ? 'OK' : 'NotOK'); ?>">ist <?php echo ($imagecreatefromgif ? 'vorhanden' : 'nicht vorhanden');?></td>
+							</tr>
+
+							<tr>
+								<td>allow_url_fopen [php.ini]</td>
+								<td class="textStatus<?php echo ($allow_url_fopen ? 'OK' : 'NotOK'); ?>">ist <?php echo ($allow_url_fopen ? 'aktiviert' : 'nicht aktiviert');?></td>
 							</tr>
 						</table>
 					</section>
