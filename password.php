@@ -3,6 +3,8 @@
 	*
 	* @package com.Itschi.passwordRecovery
 	* @since 2007/05/25
+	* 
+	* TODO: Sicherer machen
 	*
 	*/
 
