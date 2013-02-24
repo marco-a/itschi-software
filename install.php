@@ -123,6 +123,7 @@
 			  `ban_time` int(11) unsigned NOT NULL DEFAULT '0',
 			  `ban_reason` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+			  `by_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
 			  PRIMARY KEY (`ban_id`),
 			  KEY `ban_time` (`ban_time`),
 			  KEY `user_id` (`user_id`)
