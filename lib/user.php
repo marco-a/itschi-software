@@ -55,30 +55,25 @@
 			);
 		}
 
-		private function setSession($user_id)
-		{
+		private function setSession($user_id) {
 			global $db;
 
 			$res = $db->query('
-
 				DELETE FROM ' . SESSIONS_TABLE . '
 				WHERE session_expire < ' . time()
 			);
 
-			do
-			{
+			do {
 				$length = 20;
 				$chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 				$chars_num = strlen($chars) - 1;
 				$session_id = '';
-				while ($length--)
-				{
+				while ($length--) {
 					srand((double)microtime() * 1000000);
 
 					$session_id .= $chars{rand(0, $chars_num)};
 				}
-			}
-			while ($this->getSession($session_id) !== false);
+			} while ($this->getSession($session_id) !== false);
 
 			$res = $db->query('
 				INSERT INTO ' . SESSIONS_TABLE . "
@@ -90,14 +85,11 @@
 			setCookie($this->session, $session_id, 0, '/');
 		}
 
-		private function getSession($session_id = false)
-		{
-			if (!$session_id)
-			{
+		private function getSession($session_id = false) {
+			if (!$session_id) {
 				$session_id = (isset($_COOKIE[$this->session])) ? $_COOKIE[$this->session] : '';
 
-				if (!$session_id)
-				{
+				if (!$session_id) {
 					return false;
 				}
 			}
@@ -112,8 +104,7 @@
 			$row = $db->fetch_array($res);
 			$db->free_result($res);
 
-			if (!$row)
-			{
+			if (!$row) {
 				return false;
 			}
 
@@ -247,7 +238,6 @@
 
 				if ($row) {
 					$db->query('
-
 						UPDATE ' . ONLINE_TABLE . '
 						SET	online_lastvisit = ' . time() . ",
 							online_agent = '" . $agent . "'
@@ -314,8 +304,7 @@
 			$row = $db->fetch_array($res);
 			$db->free_result($res);
 
-			if ($row && $row['ban_time'] > time())
-			{
+			if ($row && $row['ban_time'] > time()) {
 				$this->logout();
 
 				message_box('Du wurdest gesperrt bis: ' . date('d.m.Y H:i', $row['ban_time']) . ' Uhr<br />Grund: <i>' . htmlspecialchars($row['ban_reason']) . '</i>', '/', 'zurück zur Startseite');
@@ -332,8 +321,7 @@
 		}
 
 		public function legend($level) {
-			switch ($level)
-			{
+			switch ($level) {
 				case USER:	return '';
 				case MOD:	return 'mod';
 				case ADMIN:	return 'admin';
@@ -341,23 +329,17 @@
 		}
 
 		public function set_rank($user_id, $rank_id, $posts) {
-			if (!$this->ranks)
-			{
+			if (!$this->ranks) {
 				global $cache;
 
 				$this->ranks = $cache->get('ranks');
 			}
 
-			if ($rank_id)
-			{
+			if ($rank_id) {
 				$this->ranks_cache[$user_id] = array($this->ranks[$rank_id]['rank_title'], $this->ranks[$rank_id]['rank_image']);
-			}
-			else
-			{
-				foreach ($this->ranks[0] as $p => $rank)
-				{
-					if ($posts >= $p)
-					{
+			} else {
+				foreach ($this->ranks[0] as $p => $rank) {
+					if ($posts >= $p) {
 						$this->ranks_cache[$user_id] = array($rank['rank_title'], $rank['rank_image']);
 						return;
 					}
@@ -368,8 +350,7 @@
 		}
 
 		public function rank($user_id, $rank_id, $posts) {
-			if (!isset($this->ranks_cache[$user_id]))
-			{
+			if (!isset($this->ranks_cache[$user_id])) {
 				$this->set_rank($user_id, $rank_id, $posts);
 			}
 
@@ -377,8 +358,7 @@
 		}
 
 		public function rank_icon($user_id, $rank_id, $posts) {
-			if (!isset($this->ranks_cache[$user_id]))
-			{
+			if (!isset($this->ranks_cache[$user_id])) {
 				$this->set_rank($user_id, $rank_id, $posts);
 			}
 
@@ -389,7 +369,6 @@
 			global $db;
 
 			$res = $db->query('
-
 				SELECT COUNT(*)
 				FROM ' . ONLINE_TABLE
 			);
