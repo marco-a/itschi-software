@@ -9,25 +9,26 @@
 	namespace Itschi\lib;
 
 	class user {
-		public $row = false;
-		private $session = 'forum_user_id';
-		private $cookie_lifetime = 2678400;
-		public $ranks = false;
+		public  $row = false;
+		private $session = 'forum_sid';
+		private $session_max_lifetime = 7200;
+		private $cookie_auto_username = 'auto_username';
+		private $cookie_auto_password = 'auto_password';
+		private $cookie_auto_lifetime = 2678400;
+		private $ranks = false;
 		private $ranks_cache = array();
 
-		function __construct() {
+		public function __construct() {
 			global $db, $prefix;
-			
-			$session = $prefix . $session;
-			$this->session = $session;
 
-			session_start();
+			$this->session 			= $prefix . $session;
+			$this->cookie_auto_username	= $prefix . $cookie_auto_username;
+			$this->cookie_auto_password	= $prefix . $cookie_auto_password;
 
-			if (empty($_SESSION[$this->session])) {
-				if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
-					$this->login($_COOKIE['username'], $_COOKIE['password']);
-				}
-			} else {
+			$session_user_id = $this->getSession();
+
+			if ($session_user_id) {
+				$this->row = array('user_id' => $session_user_id);
 				$this->update_vars();
 
 				$db->query('
@@ -38,6 +39,10 @@
 
 				if ($this->row['user_ban']) {
 					$this->check_ban();
+				}
+			} else {
+				if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+					$this->login($_COOKIE['username'], $_COOKIE['password']);
 				}
 			}
 
@@ -50,7 +55,72 @@
 			);
 		}
 
-		function login($username, $password, $autologin = false, $redirect = '') {
+		private function setSession($user_id)
+		{
+			global $db;
+
+			$res = $db->query('
+
+				DELETE FROM ' . SESSIONS_TABLE . '
+				WHERE session_expire < ' . time()
+			);
+
+			do
+			{
+				$length = 20;
+				$chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+				$chars_num = strlen($chars) - 1;
+				$session_id = '';
+				while ($length--)
+				{
+					srand((double)microtime() * 1000000);
+
+					$session_id .= $chars{rand(0, $chars_num)};
+				}
+			}
+			while ($this->getSession($session_id) !== false);
+
+			$res = $db->query('
+				INSERT INTO ' . SESSIONS_TABLE . "
+				SET	session_id = '" . $db->chars($session_id) . "',
+					session_expire = " . (time() + $this->session_max_lifetime) . ",
+					user_id = '" . $user_id . "'
+			");
+
+			setCookie($this->session, $session_id, 0, '/');
+		}
+
+		private function getSession($session_id = false)
+		{
+			if (!$session_id)
+			{
+				$session_id = (isset($_COOKIE[$this->session])) ? $_COOKIE[$this->session] : '';
+
+				if (!$session_id)
+				{
+					return false;
+				}
+			}
+
+			global $db;
+
+			$res = $db->query('
+				SELECT user_id
+				FROM ' . SESSIONS_TABLE . "
+				WHERE session_id = '" . $db->chars($session_id) . "'
+			");
+			$row = $db->fetch_array($res);
+			$db->free_result($res);
+
+			if (!$row)
+			{
+				return false;
+			}
+
+			return $row['user_id'];
+		}
+
+		public function login($username, $password, $autologin = false, $redirect = '') {
 			global $db, $token;
 
 			$res = $db->query('
@@ -71,56 +141,60 @@
 				message_box('Du hast Deine E-Mail noch nicht bestätigt', '/', 'zurück zur Startseite');
 			}
 
-			$_SESSION[$this->session] = $row['user_id'];
 			$this->row = $row;
 
 			if ($row['user_ban']) {
 				$this->check_ban();
 			}
 
+			$this->setSession($row['user_id']);
+
+			$ip = $_SERVER['REMOTE_ADDR'];
+
 			$db->query('
 				UPDATE ' . USERS_TABLE . '
 				SET	user_login = ' . time() . ",
-					user_ip = '" . $_SERVER['REMOTE_ADDR'] . "',
+					user_ip = '" . $ip . "',
 					user_lastvisit = " . time() . '
 				WHERE user_id = ' . $row['user_id']
 			);
 
 			if ($autologin) {
-				setCookie('username', $row['username'], time() + $this->cookie_lifetime, '/');
-				setCookie('password', $row['user_password'], time() + $this->cookie_lifetime, '/');
+				setCookie($this->cookie_auto_username, $row['username'], time() + $this->cookie_auto_lifetime, '/');
+				setCookie($this->cookie_auto_password, $row['user_password'], time() + $this->cookie_auto_lifetime, '/');
 			}
 
 			$db->query('
 				DELETE FROM ' . ONLINE_TABLE . "
-				WHERE online_ip = '" . $_SERVER['REMOTE_ADDR'] . "'
+				WHERE online_ip = '" . $ip . "'
 					AND user_id = " . $row['user_id']
 			);
 
 			$db->query('
 				UPDATE ' . ONLINE_TABLE . '
 				SET user_id = ' . $row['user_id'] . "
-				WHERE online_ip = '" . $_SERVER['REMOTE_ADDR'] . "'
+				WHERE online_ip = '" . $ip . "'
 					AND user_id = 0
 			");
 
 			$this->online_global();
 
-			setCookie('is_user', $this->row['username'], time() + 3600*24*30, '/');
-			
 			# $token->regenerate();
-			
+
 			if ($redirect) {
 				header('Location: ' . $redirect);
+				exit;
 			}
 
 			return true;
 		}
 
-		function logout() {
+		public function logout() {
 			global $db, $token;
 
-			if (empty($_SESSION[$this->session])) {
+			$session_id = (isset($_COOKIE[$this->session])) ? $_COOKIE[$this->session] : '';
+
+			if (!$this->row || !$session_id) {
 				return false;
 			}
 
@@ -129,20 +203,24 @@
 				SET user_id = 0
 				WHERE user_id = ' . $this->row['user_id']
 			);
-		
+
 			$db->query('
 				UPDATE ' . USERS_TABLE . '
 				SET user_lastvisit = 0
 				WHERE user_id = ' . $this->row['user_id']
 			);
 
-			$this->row = false;
-			session_destroy();
-			unset($_SESSION[$this->session]);
+			$db->query('
+				DELETE FROM
+				' . SESSIONS_TABLE . "
+				WHERE session_id = '" . $db->chars($session_id). "'
+			");
 
-			setCookie('username', '', -3600, '/');
-			setCookie('password', '', -3600, '/');
-			setCookie(session_name(), '', -3600, '/');
+			$this->row = false;
+
+			setCookie($this->cookie_auto_username, '', -3600, '/');
+			setCookie($this->cookie_auto_password, '', -3600, '/');
+			setCookie($this->session, '', -3600, '/');
 
 			$this->online_global();
 			$token->regenerate();
@@ -150,7 +228,7 @@
 			return true;
 		}
 
-		function online_global() {
+		public function online_global() {
 			global $db;
 
 			$user_id = (int)$this->row['user_id'];
@@ -207,24 +285,24 @@
 			}
 		}
 
-		function update_vars() {
+		public function update_vars() {
 			global $db;
 
-			if (!isset($_SESSION[$this->session])) {
+			if (!$this->row) {
 				return false;
 			}
 
 			$res = $db->query('
 				SELECT *
 				FROM ' . USERS_TABLE . '
-				WHERE user_id = ' . (int)$_SESSION[$this->session]
+				WHERE user_id = ' . (int)$this->row['user_id']
 			);
 
 			$this->row = $db->fetch_array($res);
 			$db->free_result($res);
 		}
 
-		function check_ban() {
+		public function check_ban() {
 			global $db;
 
 			$res = $db->query('
@@ -253,7 +331,7 @@
 			$this->row['user_ban'] = 0;
 		}
 
-		function legend($level) {
+		public function legend($level) {
 			switch ($level)
 			{
 				case USER:	return '';
@@ -262,7 +340,7 @@
 			}
 		}
 
-		function set_rank($user_id, $rank_id, $posts) {
+		public function set_rank($user_id, $rank_id, $posts) {
 			if (!$this->ranks)
 			{
 				global $cache;
@@ -289,7 +367,7 @@
 			$this->ranks[$user_id] = array('', '');
 		}
 
-		function rank($user_id, $rank_id, $posts) {
+		public function rank($user_id, $rank_id, $posts) {
 			if (!isset($this->ranks_cache[$user_id]))
 			{
 				$this->set_rank($user_id, $rank_id, $posts);
@@ -298,7 +376,7 @@
 			return $this->ranks_cache[$user_id][0];
 		}
 
-		function rank_icon($user_id, $rank_id, $posts) {
+		public function rank_icon($user_id, $rank_id, $posts) {
 			if (!isset($this->ranks_cache[$user_id]))
 			{
 				$this->set_rank($user_id, $rank_id, $posts);
@@ -307,7 +385,7 @@
 			return $this->ranks_cache[$user_id][1];
 		}
 
-		function online() {
+		public function online() {
 			global $db;
 
 			$res = $db->query('
