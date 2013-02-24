@@ -12,7 +12,6 @@
 	$redirect = (isset($_POST['redirect'])) ? strip($_POST['redirect']) : 'index.php';
 
 	if (isset($_GET['logout'])) {
-
 		template::assign(array(
 			'TIME'		=>	round((time() - $user->row['user_login'])/60, 0),
 			'TIME_HI'	=>	date('H:i')
@@ -22,9 +21,7 @@
 			$error = 2;
 		}
 	} else if (!empty($_POST['username']) && !empty($_POST['password'])) {
-
-		if ($user->row)
-		{
+		if ($user->row) {
 			header("Location: ./index.php");
 			exit;
 		}
