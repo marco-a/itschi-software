@@ -102,6 +102,8 @@
 		$bytes = fwrite($file, "<?php\r\n\r\n\$hostname = '" . $db_host . "';\r\n\$username = '" . $db_username . "';\r\n\$password = '" . $db_pw . "';\r\n\$database = '" . $db_database . "';\r\n\$prefix = '" . $prefix . "';\r\n\r\n?>");
 		fclose($file);
 
+		mysql_unbuffered_query('SET NAMES UTF8');
+		mysql_unbuffered_query('BEGIN');
 
 		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "banlist` (
@@ -565,6 +567,8 @@
 			INSERT INTO `" . $prefix . "users` (`user_id`, `user_lastvisit`, `username`, `user_password`, `user_email`, `user_avatar`, `user_rank`, `user_signatur`, `user_signatur_bbcodes`, `user_signatur_smilies`, `user_signatur_urls`, `user_points`, `user_posts`, `user_ban`, `user_ip`, `user_website`, `user_icq`, `user_skype`, `user_login`, `user_level`, `user_register`, `user_mails`, `user_unlock`) VALUES
 			(1, " . time() . ", '" . $username . "', '" . md5($password) . "', '" . $email . "', '', 14, '', 1, 1, 1, 10, 1, 0, '" . $_SERVER['REMOTE_ADDR'] . "', '', '', '', 0, 2, " . time() . ", 0, '');
 		");
+
+		mysql_unbuffered_query('COMMIT');
 
 		return 11;
 	}
