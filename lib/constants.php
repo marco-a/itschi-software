@@ -13,6 +13,7 @@
 	define('ADMIN', 2);
 	define('STRIP', (get_magic_quotes_gpc()) ? true : false);
 
+	define('SESSIONS_TABLE', $prefix . 'sessions');
 	define('BOTS_TABLE', $prefix . 'bots');
 	define('CONFIG_TABLE', $prefix . 'config');
 	define('FORUMS_TABLE', $prefix . 'forums');
