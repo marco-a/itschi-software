@@ -762,6 +762,10 @@ ul.sidebarNav {
 					margin-bottom: -1px;
 				}
 
+				.tabs ul li a.active:hover {
+					color: #3c586b;
+				}
+
 
 
 	.tabs .content {
