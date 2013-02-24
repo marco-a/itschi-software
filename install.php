@@ -118,6 +118,16 @@
 		mysql_unbuffered_query('BEGIN');
 
 		mysql_unbuffered_query("
+			CREATE TABLE IF NOT EXISTS `" . $prefix . "sessions` (
+			  `session_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+			  `session_expire` int(11) unsigned NOT NULL,
+			  `user_id` mediumint(8) unsigned NOT NULL,
+			  PRIMARY KEY (`session_id`),
+			  KEY `session_expire` (`session_expire`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+		");
+
+		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "banlist` (
 			  `ban_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `ban_time` int(11) unsigned NOT NULL DEFAULT '0',
