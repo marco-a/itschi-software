@@ -103,7 +103,7 @@
 					</tr>
 					<tr>
 						<td><span>Skype:</span></td>
-						<td><?php if (template::getVar('MSN')): ?><?=template::getVar('SKYPE'); ?><?php else: ?>Keine Angabe<?php endif; ?></td>
+						<td><?php if (template::getVar('SKYPE')): ?><?=template::getVar('SKYPE'); ?><?php else: ?>Keine Angabe<?php endif; ?></td>
 					</tr>
 				</table>
 			</td>
