@@ -12,7 +12,6 @@
 
 	if (!$user->row) {
 		login_box();
-		exit;
 	}
 
 	$dir =	(isset($_GET['dir']) && $_GET['dir'] == 2) ? 2 : 1;
