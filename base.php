@@ -86,9 +86,13 @@
 	$token->_('search.php', 'GET, POST', USER);
 	$token->_('viewforum.php', 'GET', USER);
 	/*
+	 *	Warum wurde viewtopic auskommentiert? ... bzw 
+	 *  Kommentar: https://github.com/bluefirex/itschi-software/issues/42
+	 */
 	$token->_('viewtopic.php', 'GET', USER);
-	*/
+	
 	$token->_('status.php', 'POST', USER);
+	
 
 	$token->check('POST', $_POST);
 	$token->check('GET', $_GET);
