@@ -199,7 +199,7 @@
 	<?php if (template::getVar('FORUM_CLOSED')): ?>
 		Geschlossen
 	<?php else: ?>
-		<a href="newtopic.php?id={FORUM_ID}" class="button">Neues Thema</a>
+		<a href="newtopic.php?id=<?=template::getVar('FORUM_ID'); ?>" class="button">Neues Thema</a>
 	<?php endif; ?>
 </div>
 
