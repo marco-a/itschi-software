@@ -41,15 +41,15 @@
 
 			functions::topic()->delete_topic_post($_GET['delete']);
 		} else if (isset($_POST['option'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
 			functions::topic()->poll_vote($row, $_POST['option']);
 		} else if (isset($_GET['close'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
 			functions::topic()->close_topic($row);
 		} else if (isset($_GET['important'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
 			functions::topic()->important_topic($row);
 		}
