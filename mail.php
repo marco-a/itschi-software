@@ -12,6 +12,7 @@
 
 	if (!$user->row) {
 		login_box();
+		exit;
 	}
 
 	$dir =	(isset($_GET['dir']) && $_GET['dir'] == 2) ? 2 : 1;
@@ -25,7 +26,6 @@
 
 	$mail_num = $db->result($res, 0);
 	$db->free_result($res);
-
 
 	switch ($mode) {
 		case 'view':
