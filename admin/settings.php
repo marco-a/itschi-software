@@ -64,9 +64,9 @@
 
 		$error = 1;
 
-		require_once '../lib/functions/user.php';
+		// require_once '../lib/functions/user.php';
 
-		if (valid_email($_POST['email'])) {
+		if (functions::user()->valid_email($_POST['email'])) {
 			config_set('email', $_POST['email']);
 		} else {
 			$error = 2;

@@ -18,9 +18,7 @@
 			message_box('Willst du das Mitglied wirklich löschen?', 'users.php?delete=' . (int)$_GET['delete'] . '&ok=1', 'Mitglied löschen', 'users.php', 'Abbrechen');
 			exit;
 		} else {
-			include '../includes/functions_user.php';
-
-			delete_user($_GET['delete']);
+			functions::user()->delete_user($_GET['delete']);
 		}
 	}
 

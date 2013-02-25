@@ -43,14 +43,15 @@
 	}
 
 	if (isset($_POST['submit'])) {
-		require_once '../lib/functions/user.php';
+		// require_once '../lib/functions/user.php';
+		$fUser = functions::user();
 
 		if ($_POST['username'] != $row['username']) {
-			if (!valid_username($_POST['username'])) {
+			if (!$fUser->valid_username($_POST['username'])) {
 				$error = 1;
 			} else if (strlen($_POST['username']) < 3 || strlen($_POST['username']) > 15) {
 				$error = 2;
-			} else if (username_exists($_POST['username'])) {
+			} else if ($fUser->username_exists($_POST['username'])) {
 				$error = 3;
 			} else {
 				if ($config['newest_user_id'] == $row['user_id']) {
@@ -67,10 +68,10 @@
 		}
 
 		if ($_POST['email'] != $row['user_email']) {
-			if (!valid_email($_POST['email'])) {
+			if (!$fUser->valid_email($_POST['email'])) {
 				$error = 4;
 			}
-			else if (email_exists($_POST['email'])) {
+			else if ($fUser->email_exists($_POST['email'])) {
 				$error = 5;
 			} else {
 				$update_data['user_email'] = $_POST['email'];
@@ -165,5 +166,5 @@
 		'RANK'		=>	$row['user_rank']
 	));
 
-	template::display('user', true);
+	template::display('user');
 ?>
