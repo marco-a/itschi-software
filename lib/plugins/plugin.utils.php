@@ -125,6 +125,45 @@
 		}
 
 		/*
+			@name	miscScanDir
+
+			@author	marco.a
+
+			@param	string	$directory	directory path
+			@param	callback	$callback	callback function
+			@param	bool	$dirAfterFiles	call callback with directory after files (<- kack englisch? ka wie man das schreiben soll)
+
+			@return	false or return value of callback
+		*/
+		public static function miscScanDir($directory, $callback, $dirAfterFiles = TRUE) {
+			if (!is_dir($directory) || !is_callable($callback)) return FALSE;
+
+			$handle = opendir($directory);
+
+			if ($handle == FALSE) return FALSE;
+
+			while (($file = readdir($handle)) !== FALSE) {
+				if ($file == '.' || $file == '..') continue;
+
+				$absolutePath = $directory.DIRECTORY_SEPARATOR.$file;
+
+				if (is_file($absolutePath)) {
+					$callback($file, $absolutePath, false);
+				} else if (is_dir($absolutePath)) {
+					if ($dirAfterFiles == FALSE) $callback($file, $absolutePath, true);
+
+					self::miscScanDir($absolutePath, $callback, $dirAfterFiles);
+
+					if ($dirAfterFiles) $callback($file, $absolutePath, true);
+				}
+			}
+
+			closedir($handle);
+
+			return $callback;
+		}
+
+		/*
 			site functions
 		*/
 
