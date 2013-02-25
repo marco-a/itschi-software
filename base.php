@@ -22,10 +22,23 @@
 	require_once $root.'lib/token.php';
 	require_once $root.'lib/cache.php';
 	require_once $root.'lib/template.php';
-	require_once $root.'lib/functions/global.php';
 	require_once $root.'lib/constants.php';
-	require_once $root.'lib/functions/date.php';
 	require_once $root.'lib/plugins/plugins.php';
+
+	/**
+	 *	@description 	Important functions for the system.
+	 *					Do NOT delete these lines!
+	 */
+
+	require_once $root.'lib/functions/functions.php';
+	require_once $root.'lib/functions/functions.user.php';
+	require_once $root.'lib/functions/functions.topic.php';
+	require_once $root.'lib/functions/functions.date.php';
+	require_once $root.'lib/functions/functions.upload.php';
+
+	functions::init();
+
+	require_once $root.'lib/functions/global.php';
 
 	if (empty($prefix)) {
 		header('Location: install.php');
@@ -38,7 +51,6 @@
 	$token = new lib\token();
 	$plugins = new lib\plugins();
 	$config = config_vars();
-	$phpdate = new PHPDateTime();
 	$page = basename($_SERVER['SCRIPT_FILENAME']);
 
 	/**

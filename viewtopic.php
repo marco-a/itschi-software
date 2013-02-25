@@ -37,21 +37,21 @@
 
 	if ($user->row) {
 		if (isset($_GET['delete'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
-			delete_topic_post($_GET['delete']);
+			functions::topic()->delete_topic_post($_GET['delete']);
 		} else if (isset($_POST['option'])) {
 			include 'lib/functions/topic.php';
 
-			poll_vote($row, $_POST['option']);
+			functions::topic()->poll_vote($row, $_POST['option']);
 		} else if (isset($_GET['close'])) {
 			include 'lib/functions/topic.php';
 
-			close_topic($row);
+			functions::topic()->close_topic($row);
 		} else if (isset($_GET['important'])) {
 			include 'lib/functions/topic.php';
 
-			important_topic($row);
+			functions::topic()->important_topic($row);
 		}
 	}
 
@@ -186,9 +186,9 @@
 	$db->free_result($res2);
 
 	if ($user->row && max($user->row['user_register'], $row['forum_mark_time'], $row['mark_time']) < $last_time) {
-		include 'lib/functions/topic.php';
+		// include 'lib/functions/topic.php';
 
-		mark_topic($row['topic_id'], $row['forum_id'], $row['forum_last_post_time'], $row['forum_mark_time'], $last_time);
+		functions::topic()->mark_topic($row['topic_id'], $row['forum_id'], $row['forum_last_post_time'], $row['forum_mark_time'], $last_time);
 	}
 
 	template::assign(array(

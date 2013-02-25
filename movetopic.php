@@ -155,8 +155,6 @@
 
 	$db->free_result($res2);
 
-
-
 	$res2 = $db->query('
 		SELECT forum_id, forum_name
 		FROM ' . FORUMS_TABLE . '
@@ -164,8 +162,7 @@
 		ORDER BY forum_order ASC
 	');
 
-	while ($row2 = $db->fetch_array($res2))
-	{
+	while ($row2 = $db->fetch_array($res2)) {
 		template::assignBlock('forums', array(
 			'ID'	=>	$row2['forum_id'],
 			'NAME'	=>	$row2['forum_name']

@@ -233,9 +233,8 @@
 	}
 
 	function getTimeDifference($old, $new) {
-		global $phpdate;
+		$timeDiff = functions::date()->strTimeDifference(date('d.m.Y', $old), date('d.m.Y', $new), false);
 
-		$timeDiff = $phpdate->StringTimeDifference(date('d.m.Y', $old), date('d.m.Y', $new), false);
 		if ($timeDiff == 0) {
 			$time = date('H:i', $old);
 		} elseif ($timeDiff == 1) {

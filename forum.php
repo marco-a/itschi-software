@@ -9,9 +9,9 @@
 	require 'base.php';
 
 	if ($user->row && isset($_GET['mark'])) {
-		include 'lib/functions/topic.php';
+		// include 'lib/functions/topic.php';
 
-		mark_forum();
+		functions::topic()->mark_forum();
 	}
 
 	if ($config['enable_bots']) {

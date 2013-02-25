@@ -10,13 +10,13 @@
 
 	if ($user->row) {
 		if (isset($_GET['delete'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
-			delete_topic_post($_GET['delete']);
+			functions::topic()->delete_topic_post($_GET['delete']);
 		} else if (isset($_GET['mark'])) {
-			include 'lib/functions/topic.php';
+			// include 'lib/functions/topic.php';
 
-			mark_forum($_GET['id']);
+			functions::topic()->mark_forum($_GET['id']);
 		}
 	}
 

@@ -105,9 +105,9 @@
 
 				config_set_count('posts_num', +1);
 
-				include 'lib/functions/topic.php';
+				// include 'lib/functions/topic.php';
 
-				mark_topic($row['topic_id'], $row['forum_id'], time(), $row['mark_time'], time());
+				functions::topic()->mark_topic($row['topic_id'], $row['forum_id'], time(), $row['mark_time'], time());
 
 				header('Location: viewtopic.php?id=' . $row['topic_id'] . '&page=' . ceil(($row['topic_posts']+2)/$config['posts_perpage']) . '#' . $post_id);
 			}

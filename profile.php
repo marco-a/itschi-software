@@ -42,7 +42,7 @@
 			}
 
 			if (!empty($_FILES['file']['name'])) {
-				include 'lib/functions/upload.php';
+				// include 'lib/functions/upload.php';
 
 				$size = @getimagesize($_FILES['file']['tmp_name']);
 				$ex = strtolower(end(explode('.', $_FILES['file']['name'])));
@@ -55,7 +55,7 @@
 					$error = 2;
 				} else {
 					if ($size[0] > $config['avatar_max_width'] OR $size[1] > $config['avatar_max_height']) {
-						resize($_FILES['file']['tmp_name'], 'images/avatar/' .  $newfile, $config['avatar_max_width'], $config['avatar_max_height'], false);
+						functions::upload()->resize($_FILES['file']['tmp_name'], 'images/avatar/' .  $newfile, $config['avatar_max_width'], $config['avatar_max_height'], false);
 					} else {
 						move_uploaded_file($_FILES['file']['tmp_name'], 'images/avatar/' . $newfile);
 					}
@@ -91,13 +91,14 @@
 		case 'account':
 
 			if (isset($_POST['form_email'])) {
-				include 'lib/functions/user.php';
+				// include 'lib/functions/user.php';
+				$fUser = functions::user();
 
 				if (md5($_POST['password']) != $user->row['user_password']) {
 					$error = 1;
-				} else if (!valid_email($_POST['email'])) {
+				} else if (!$fUser->valid_email($_POST['email'])) {
 					$error = 2;
-				} else if (email_exists($_POST['email'])) {
+				} else if ($fUser->email_exists($_POST['email'])) {
 					$error = 3;
 				} else {
 					$db->query('
@@ -131,10 +132,11 @@
 
 			template::assign(array(
 				'USER_EMAIL'	=>	preg_replace_callback('^([a-zA-Z0-9\.\_\-\+]+)\@^', function($r) {
+					$sL = mb_strlen($r[0]);
 					$firstChar = mb_substr($r[0], 0, 1);
-					$lastChar = mb_substr($r[0], mb_strlen($r[0]) - 2, mb_strlen($r[0]) - 1);
+					$lastChar = mb_substr($r[0], $sL - 2, $sL - 1);
 
-					$max = mb_strlen($r[0] - 2);
+					$max = $sL - 3;
 					$ret = '';
 
 					for ($i = 1; $i <= $max; $i++) {
@@ -161,9 +163,9 @@
 				} else if ($user->row['user_id'] == 1) {
 					$error = 3;
 				} else {
-					include 'lib/functions/user.php';
+					// include 'lib/functions/user.php';
 
-					delete_user($user->row['user_id']);
+					functions::user()->delete_user($user->row['user_id']);
 				}
 			}
 

@@ -13,26 +13,27 @@
 	$error = '';
 	$deny =	array();
 	$username =	(isset($_POST['username'])) ? $_POST['username'] : '';
-	$email =	(isset($_POST['email'])) ? $_POST['email'] : '';
+	$email = (isset($_POST['email'])) ? $_POST['email'] : '';
 	$password =	(isset($_POST['password'])) ? $_POST['password'] : '';
-	$password2 =	(isset($_POST['password2'])) ? $_POST['password2'] : '';
+	$password2 = (isset($_POST['password2'])) ? $_POST['password2'] : '';
 
 	if (isset($_POST['submit'])) {
-		include 'lib/functions/user.php';
+		// include 'lib/functions/user.php';
+		$fUser = functions::user();
 
 		if (!$username) {
 			$error = 1;
-		} else if (!valid_username($username)) {
+		} else if (!$fUser->valid_username($username)) {
 			$error = 2;
 		} else if (strlen($username) < 3 || strlen($username) > 15) {
 			$error = 3;
 		} else if (in_array(strtolower($username), $deny)) {
 			$error = 4;
-		} else if (username_exists($username)) {
+		} else if ($fUser->username_exists($username)) {
 			$error = 5;
-		} else if (!valid_email($email)) {
+		} else if (!$fUser->valid_email($email)) {
 			$error = 6;
-		} else if (email_exists($email)) {
+		} else if ($fUser->email_exists($email)) {
 			$error = 7;
 		} else if (strlen($password) < 6) {
 			$error = 8;

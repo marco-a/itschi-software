@@ -127,9 +127,9 @@
 
 				config_set_count('topics_num', +1);
 
-				include 'lib/functions/topic.php';
+				// include 'lib/functions/topic.php';
 
-				mark_topic($topic_id, $row['forum_id'], time(), $row['mark_time'], time());
+				functions::topic()->mark_topic($topic_id, $row['forum_id'], time(), $row['mark_time'], time());
 
 				header('Location: viewtopic.php?id=' . $topic_id);
 			}
