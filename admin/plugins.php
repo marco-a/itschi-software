@@ -144,7 +144,7 @@
 						$zip->extractTo('../plugins/'.$_GET['download'].'/'); // ziemlich unsicher und kacke, aber vorerst OK
 						$zip->close();
 
-						$plugins->synchronizeLocalPlugins();
+						$plugins->syncLocal();
 
 						@unlink($pluginFile);
 
@@ -197,7 +197,7 @@
 
 	#endregion Options
 
-	$plugins->synchronizeLocalPlugins();
+	$plugins->syncLocal();
 
 	// get plugin server from database
 	$res = $db->query("

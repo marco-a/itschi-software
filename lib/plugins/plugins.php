@@ -9,6 +9,14 @@
 	namespace Itschi\lib;
 
 	class plugins {
+		/**
+		 *	@name 	install
+		 *			Installs a plugin.
+		 *
+		 *	@param 	integer $id
+		 *	@return void
+		 */
+
 		public function install($id) {
 			global $db;
 
@@ -41,6 +49,14 @@
 			$db->free_result($res);
 		}
 
+		/**
+		 *	@name 	uninstall
+		 *			Uninstalls a plugin.
+		 *
+		 *	@param 	integer $id
+		 *	@return void
+		 */
+
 		public function uninstall($id) {
 			global $db;
 
@@ -62,10 +78,13 @@
 		}
 
 		/**
-		 * get all plugins from directory for available plugins
+		 *	@name 	syncLocal
+		 *			Scans the plugins-folder ans updates them in the database.
+		 *
+		 *	@return void
 		 */
 
-		public function synchronizeLocalPlugins() {
+		public function syncLocal() {
 			global $db;
 
 			$files = glob('../plugins/*', GLOB_ONLYDIR);
@@ -112,6 +131,17 @@
 			}
 		}
 
+		/**
+		 *	@name 	removeFolder
+		 *			Removes a folder recursively.
+		 *
+		 *	@param 	string $dir
+		 *	@return boolean
+		 *
+		 *	-- @todo	Move this function to a global space so it can be used everywhere.
+		 *	--			Itschi needs a global utils class instead of single functions.
+		 */
+
 		public static function removeFolder($dir) {
 			if (!is_dir($dir) || is_link($dir)) {
 				@unlink($dir);
@@ -134,7 +164,15 @@
 			return rmdir($dir);
 		}
 
-		public static function isPluginInstalled($package) {
+		/**
+		 *	@name 	isInstalled
+		 *			Checks whether a plugin is installed or not.
+		 *
+		 *	@param 	string $package
+		 *	@return bool
+		 */
+
+		public static function isInstalled($package) {
 			global $db;
 
 			$res = $db->query('
@@ -149,13 +187,31 @@
 			return $result;
 		}
 
+		/**
+		 *	@name 	checkDependency
+		 *			Returns true when a dependency-package is installed.
+		 *
+		 *	@param 	string $package
+		 *	@param 	string $dependencyPackage
+		 *	@return boolean
+		 */
+
 		public static function checkDependency($package, $dependencyPackage) {
 			if ($package == $dependencyPackage) {
 				return true;
 			}
 
-			return self::isPluginInstalled($dependencyPackage);
+			return self::isInstalled($dependencyPackage);
 		}
+
+		/**
+		 *	@name 	checkAppDependencies
+		 *			Loops through $dependencyList and looks for unfulfilled dependencies.
+		 *
+		 *	@param 	string $package
+		 *	@param 	array $dependencyList
+		 *	@return boolean
+		 */
 
 		public static function checkAllDependencies($package, $dependencyList) {
 			$fulfilled = true;
