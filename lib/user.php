@@ -63,7 +63,7 @@
 
 			$res = $db->query('
 				DELETE FROM ' . SESSIONS_TABLE . '
-				WHERE session_expire < ' . time()
+				WHERE session_time < ' . (time() - $this->session_max_lifetime)
 			);
 
 			do {
@@ -76,19 +76,19 @@
 
 					$session_id .= $chars{rand(0, $chars_num)};
 				}
-			} while ($this->getSession($session_id) !== false);
+			} while ($this->getSession($session_id, false) !== false);
 
 			$res = $db->query('
 				INSERT INTO ' . SESSIONS_TABLE . "
 				SET	session_id = '" . $db->chars($session_id) . "',
-					session_expire = " . (time() + $this->session_max_lifetime) . ",
-					user_id = '" . $user_id . "'
-			");
+					session_time = " . time() . ',
+					user_id = ' . $user_id
+			);
 
 			setCookie($this->session, $session_id, 0, '/');
 		}
 
-		private function getSession($session_id = false) {
+		private function getSession($session_id = false, $update_time = true) {
 			if (!$session_id) {
 				$session_id = (isset($_COOKIE[$this->session])) ? $_COOKIE[$this->session] : '';
 
@@ -109,6 +109,14 @@
 
 			if (!$row) {
 				return false;
+			}
+			
+			if ($update_time) {
+				$db->query('
+					UPDATE ' . SESSIONS_TABLE . '
+					SET session_time = ' . time() . "
+					WHERE session_id = '" . $db->chars($session_id) . "'
+				");	
 			}
 
 			return $row['user_id'];
