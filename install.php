@@ -114,16 +114,16 @@
 		$bytes = fwrite($file, "<?php\r\n\r\n\$hostname = '" . $db_host . "';\r\n\$username = '" . $db_username . "';\r\n\$password = '" . $db_pw . "';\r\n\$database = '" . $db_database . "';\r\n\$prefix = '" . $prefix . "';\r\n\r\n?>");
 		fclose($file);
 
-		mysql_unbuffered_query('SET NAMES UTF8');
+		mysql_unbuffered_query('SET NAMES UTF8');s
 		mysql_unbuffered_query('BEGIN');
 
 		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "sessions` (
 			  `session_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-			  `session_expire` int(11) unsigned NOT NULL DEFAULT '0',
+			  `session_time` int(11) unsigned NOT NULL DEFAULT '0',
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
 			  PRIMARY KEY (`session_id`),
-			  KEY `session_expire` (`session_expire`)
+			  KEY `session_time` (`session_time`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		");
 
