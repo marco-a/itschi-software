@@ -114,7 +114,7 @@
 		$bytes = fwrite($file, "<?php\r\n\r\n\$hostname = '" . $db_host . "';\r\n\$username = '" . $db_username . "';\r\n\$password = '" . $db_pw . "';\r\n\$database = '" . $db_database . "';\r\n\$prefix = '" . $prefix . "';\r\n\r\n?>");
 		fclose($file);
 
-		mysql_unbuffered_query('SET NAMES UTF8');s
+		mysql_unbuffered_query('SET NAMES UTF8');
 		mysql_unbuffered_query('BEGIN');
 
 		mysql_unbuffered_query("
