@@ -8,6 +8,11 @@
 
 	require 'base.php';
 
+	/**
+	* Session is required for the Captcha
+	*/
+	session_start();
+
 	if ($user->row) header("Location: ./index.php");
 
 	$error = '';
@@ -53,7 +58,7 @@
 			$unlock_id = unlock_id();
 			
 			if ($config['enable_unlock']) {
-				@mail($email, 'Bestätige Deine E-Mail', "Hallo " . $username . ", \n \n Du musst Deine E-Mail bestätigen, um die Registrierung abzuschließen. \n \n Klicke dazu auf folgenden Link: \n \n http://" . $_SERVER['HTTP_HOST'] . (dirname($_SERVER['PHP_SELF']) == '/' ? '' : dirname($_SERVER['PHP_SELF'])) . "/register.php?u=" . $user_id . "&token=" . $unlock_id . " \n \n \n Viel Spaß weiterhin! \n \n ", 'from:' . $config['email']);
+				@mail($email, 'Bestï¿½tige Deine E-Mail', "Hallo " . $username . ", \n \n Du musst Deine E-Mail bestï¿½tigen, um die Registrierung abzuschlieï¿½en. \n \n Klicke dazu auf folgenden Link: \n \n http://" . $_SERVER['HTTP_HOST'] . (dirname($_SERVER['PHP_SELF']) == '/' ? '' : dirname($_SERVER['PHP_SELF'])) . "/register.php?u=" . $user_id . "&token=" . $unlock_id . " \n \n \n Viel Spaï¿½ weiterhin! \n \n ", 'from:' . $config['email']);
 			} else {
 				config_vars();
 				config_set('users_num', $config['users_num']+1);
@@ -126,7 +131,7 @@
 				config_set('newest_user_level', 0);
 				config_set_count('users_num', +1);
 
-				@mail($row['user_email'], $row['username'] . ' -  Du bist jetzt ein Mitglied!', "Hallo " . $row['username'] . "! \n \n Du bist jetzt ein Mitglied der Community. \n \n \n \n Viel Spaß weiterhin! \n \n ", 'from:' . $config['email']);
+				@mail($row['user_email'], $row['username'] . ' -  Du bist jetzt ein Mitglied!', "Hallo " . $row['username'] . "! \n \n Du bist jetzt ein Mitglied der Community. \n \n \n \n Viel Spaï¿½ weiterhin! \n \n ", 'from:' . $config['email']);
 
 				message_box('Du hast dich erfolgreich registriert', 'login.php', 'weiter zum Login');
 			} else {
