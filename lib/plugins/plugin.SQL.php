@@ -130,7 +130,6 @@
 				return !empty($v);
 			}));
 
-			print_r($arr);
 			$mode = strtolower($arr[0]);
 
 			if ($mode == 'select') {

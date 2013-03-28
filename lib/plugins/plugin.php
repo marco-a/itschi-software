@@ -9,7 +9,7 @@
 	require 'plugin.interface.php';
 
 	abstract class plugin implements pluginInterface {
-		protected static $package = 'com.gidix.examplePlugin';
+		protected static $package;
 		protected static $permissions = array();
 
 		private static $objs = NULL;
