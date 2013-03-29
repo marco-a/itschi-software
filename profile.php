@@ -45,7 +45,8 @@
 				// include 'lib/functions/upload.php';
 
 				$size = @getimagesize($_FILES['file']['tmp_name']);
-				$ex = strtolower(end(explode('.', $_FILES['file']['name'])));
+				$exArr = explode('.', $_FILES['file']['name']);
+				$ex = strtolower(end($exArr));
 
 				$newfile = $user->row['user_id'] . '_' . time() . '.' . $ex;
 
