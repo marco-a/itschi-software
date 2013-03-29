@@ -61,7 +61,7 @@
 						move_uploaded_file($_FILES['file']['tmp_name'], 'images/avatar/' . $newfile);
 					}
 
-					resize('images/avatar/' . $newfile, 'images/avatar/mini/' .  $newfile, 50, 50, true);
+					functions::upload()->resize('images/avatar/' . $newfile, 'images/avatar/mini/' .  $newfile, 50, 50, true);
 
 					if ($user->row['user_avatar'] != $newfile && $user->row['user_avatar']) {
 						@unlink('images/avatar/' . $user->row['user_avatar']);
