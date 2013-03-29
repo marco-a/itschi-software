@@ -14,9 +14,9 @@
 	require 'base.php';
 	include 'lib/feed.php';
 
-	if (!$config['index_news']) {
-		\Itschi\lib\feed(5);
-	} else {
+	\Itschi\lib\feed(5);
+
+	if ($config['index_news']) {
 		$cRes = $db->query("
 			SELECT p.*, t.topic_title, u.username, t.topic_time, f.forum_name AS forum_title
 			FROM " . POSTS_TABLE . " AS p

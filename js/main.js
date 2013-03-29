@@ -1,9 +1,11 @@
 var feed = {
-	more: function(limit) {
+	more: function(limit, sidebar) {
+		if (sidebar === undefined) sidebar = 0;
+
 		$.ajax({
 			url: 'lib/feed_ajax.php',
 			type: 'POST',
-			data: 'limit=' + limit + '&token=' + token,
+			data: 'limit=' + limit + '&sidebar=' + sidebar + '&token=' + token,
 			success: function(a) {
 				$('#feed').html(a);
 			}

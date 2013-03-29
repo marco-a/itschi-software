@@ -40,7 +40,9 @@
 	</div>
 
 	<div class="fRight" style="width: 24%;">
-		Test
+		<?php
+			template::display('feed_sidebar');
+		?>
 	</div>
 
 	<div class="clear"></div>
