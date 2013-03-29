@@ -864,6 +864,7 @@ ul.sidebarNav {
 			padding: 20px;
 			background: #fff;
 			border: 1px solid #eee;
+			line-height: 20px;
 		}
 
 			#posts .post .user {
@@ -884,6 +885,7 @@ ul.sidebarNav {
 		#posts .firstPost .text {
 			padding: 20px;
 			font-size: 14px;
+			line-height: 20px;
 		}
 
 #writePost {
@@ -962,6 +964,52 @@ ul.sidebarNav {
 		max-height: 200px;
 		overflow: auto;
 	}
+
+/* NEWS */
+#news {
+
+}
+
+	#news .entry {
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+
+		#news .entry .title {
+			border-bottom: 1px solid #e0e0e0;
+			padding: 20px;
+		}
+
+			#news .entry .title h2 {
+				margin: 0;
+				padding: 0;
+			}
+
+			#news .entry .title span.date {
+				color: #7b7b7b;
+			}
+
+			#news .entry .title span.category a {
+				color: #7b7b7b;
+			}
+
+		#news .entry .content {
+			padding: 20px;
+			line-height: 20px;
+		}
+
+		#news .entry .meta {
+			background: #f6f6f6;
+			border-top: 1px solid #e0e0e0;
+			border-bottom: 1px solid #e0e0e0;
+			margin-bottom: -20px;
+			margin-top: 20px;
+			padding: 7.5px;
+			padding-left: 20px;
+			padding-right: 20px;
+			text-align: right;
+			color: #7b7b7b;
+		}
 
 .bbcodes {
 

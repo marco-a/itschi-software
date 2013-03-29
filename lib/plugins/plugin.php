@@ -148,7 +148,9 @@
 		 */
 
 		public static function run() {
-			$pluginFile = './plugins/'.self::$package.'/files/main.php'; // <- evil
+			global $root;
+			
+			$pluginFile = $root.'/plugins/'.self::$package.'/files/main.php'; // <- evil
 
 			if (is_file($pluginFile)) {
 

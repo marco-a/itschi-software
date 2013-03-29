@@ -393,6 +393,19 @@ input[type=checkbox] {
 }
 
 /** specific **/
+ul.third {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+
+	ul.third li {
+		float: left;
+		width: 33%;
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+
 #plugins {
 
 }

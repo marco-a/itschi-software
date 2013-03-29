@@ -47,6 +47,7 @@
 							<li><a href="users.php"<?php if (template::getVar('PAGE') == 'users' ||template::getVar('PAGE') == 'user'): ?>class="active"<?php endif; ?>>Mitglieder</a></li>
 							<li><a href="banlist.php"<?php if (template::getVar('PAGE') == 'banlist' ||template::getVar('PAGE') == 'banlist-new'): ?>class="active"<?php endif; ?>>Sperrungen</a></li>
 							<li><a href="forums.php"<?php if (template::getVar('PAGE') == 'forums' ||template::getVar('PAGE') == 'forum-new'): ?>class="active"<?php endif; ?>>Foren</a></li>
+							<li><a href="news.php"<?php if (template::getVar('PAGE') == 'news'): ?>class="active"<?php endif; ?>>News</a></li>
 							<li><a href="bots.php"<?php if (template::getVar('PAGE') == 'bots' ||template::getVar('PAGE') == 'bot-new'): ?>class="active"<?php endif; ?>>Bots</a></li>
 							<li><a href="smilies.php"<?php if (template::getVar('PAGE') == 'smilies' ||template::getVar('PAGE') == 'smilie-new'): ?>class="active"<?php endif; ?>>Smilies</a></li>
 							<li><a href="ranks.php"<?php if (template::getVar('PAGE') == 'ranks' ||template::getVar('PAGE') == 'rank-new'): ?>class="active"<?php endif; ?>>Ränge</a></li>

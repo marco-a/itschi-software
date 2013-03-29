@@ -8,8 +8,7 @@
 
 	namespace Itschi\lib;
 
-	function feed($limit)
-	{
+	function feed($limit) {
 		global $db, $user, $tpl, $config, $phpdate;
 
 		$i = 0;
@@ -17,7 +16,6 @@
 		$user_level = ($user->row) ? $user->row['user_level'] + 1 : 0;
 
 		$res = $db->query('
-
 			SELECT p.post_id, p.post_time, p.enable_bbcodes, p.enable_smilies, u.user_id, u.username, u.user_level, u.user_avatar, p.post_text, p.forum_id, f.forum_name, t.topic_id, t.topic_title
 			FROM ' . POSTS_TABLE . ' p
 			LEFT JOIN ' . TOPICS_TABLE . ' t ON t.topic_id = p.topic_id
@@ -27,17 +25,15 @@
 			ORDER BY p.post_id DESC LIMIT ' . ($limit + 1)
 		);
 
-		while ($row = $db->fetch_array($res))
-		{
-			if ($i == $limit)
-			{
+		while ($row = $db->fetch_array($res)) {
+			if ($i == $limit) {
 				$more = true;
 				continue;
 			}
 			
 			$postTime = getTimeDifference($row['post_time'], time());
 			
-			$tpl->block_assign('feed', array(
+			\template::assignBlock('feed', array(
 				'AVATAR'	=>	($row['user_avatar']) ? $row['user_avatar'] : $config['default_avatar'],
 				'POST_ID'	=>	$row['post_id'],
 				'TOPIC_ID'	=>	$row['topic_id'],
@@ -57,7 +53,7 @@
 
 		$db->free_result($res);
 
-		$tpl->assign(array(
+		\template::assign(array(
 			'MORE'	=>	$more,
 			'LIMIT'	=>	$limit
 		));

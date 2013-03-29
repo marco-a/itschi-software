@@ -1,18 +1,15 @@
 <?php
+	header('cache-control: no-cache');
+	header('pragma: no-cache');
 
-header('cache-control: no-cache');
-header('pragma: no-cache');
+	require '../base.php';
+	include 'feed.php';
 
-require '../base.php';
-include '../includes/feed.php';
+	if (empty($_POST['limit'])) {
+		exit;
+	}
 
-if (empty($_POST['limit']))
-{
-	exit;
-}
+	Itschi\lib\feed(min(200, (int)$_POST['limit'] + 5));
 
-feed(min(200, (int)$_POST['limit']+5));
-
-$tpl->display('feed.tpl');
-
+	template::display('feed');
 ?>

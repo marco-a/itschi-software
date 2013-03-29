@@ -20,4 +20,4 @@ Bitte alle auftretenden Bugs im [Issues-Bereich](https://github.com/bluefirex/it
 
 ### Aktuelle Hinweise und ToDo
 ---
-1. Bitte keine Updates oder Entwicklungen am News-System für die Startseite einsenden. Das System wird zuerst von bluefirex umgesetzt, bevor Updates eingesendet werden.
+--nichts

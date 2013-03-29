@@ -1,7 +1,7 @@
 var feed = {
 	more: function(limit) {
 		$.ajax({
-			url: 'includes/feed_ajax.php',
+			url: 'lib/feed_ajax.php',
 			type: 'POST',
 			data: 'limit=' + limit + '&token=' + token,
 			success: function(a) {
@@ -17,7 +17,7 @@ var user = {
 	statusUpdate: function() {
 		status = $('#statusInput').val();
 		$.ajax({
-			url: '../../includes/status.php',
+			url: '../../lib/status.php',
 			type: 'POST',
 			data: 'status=' + status + '&token=' + token,
 			success: function(a) {

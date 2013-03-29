@@ -134,7 +134,9 @@
 		'PAGES_NUM'	=>	$pages_num,
 		'PAGE'		=>	$page,
 		'PAGES'		=>	($pages_num > 1) ? pages($pages_num, $page, 'viewforum.php?id=' . $row['forum_id'] . '&page=') : '',
-		'SUBFORUMS'	=>	$subforums
+		'SUBFORUMS'	=>	$subforums,
+		'IS_MOD'	=>	$user->row['user_legend'] == ADMIN || $user->row['user_legend'] == MOD,
+		'IS_NEWS'	=>	$row['is_news']
 	));
 
 	template::display('viewforum');

@@ -10,6 +10,8 @@
 
 	<?php if (template::getVar('FORUM_CLOSED')): ?>
 		Geschlossen
+	<?php elseif  (template::getVar('IS_NEWS') && !template::getVar('IS_MOD')): ?>
+		
 	<?php else: ?>
 		<a href="newtopic.php?id=<?=template::getVar('FORUM_ID'); ?>" class="button">Neues Thema</a>
 	<?php endif; ?>
@@ -198,6 +200,8 @@
 	
 	<?php if (template::getVar('FORUM_CLOSED')): ?>
 		Geschlossen
+	<?php elseif  (template::getVar('IS_NEWS') && !template::getVar('IS_MOD')): ?>
+		
 	<?php else: ?>
 		<a href="newtopic.php?id=<?=template::getVar('FORUM_ID'); ?>" class="button">Neues Thema</a>
 	<?php endif; ?>
