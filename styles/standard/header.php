@@ -4,10 +4,12 @@
 		<title><?=template::getVar('TITLE_TAG'); ?><?=template::getVar('PAGE_TITLE'); ?></title>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="styles/standard/style.css" />
+		<link rel="stylesheet" href="js/dropdown/jquery.dropdown.css" />
 		<script type="text/javascript">
 			token = '<?=$_SESSION['forum_token']; ?>';
 		</script>
 		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/dropdown/jquery.dropdown.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<!--[if gte IE 9]>
 			<style type="text/css">
