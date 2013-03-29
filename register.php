@@ -55,7 +55,7 @@
 				");
 			}
 
-			$unlock_id = unlock_id();
+			$unlock_id = $fUser->unlock_id();
 			
 			if ($config['enable_unlock']) {
 				@mail($email, 'Best�tige Deine E-Mail', "Hallo " . $username . ", \n \n Du musst Deine E-Mail best�tigen, um die Registrierung abzuschlie�en. \n \n Klicke dazu auf folgenden Link: \n \n http://" . $_SERVER['HTTP_HOST'] . (dirname($_SERVER['PHP_SELF']) == '/' ? '' : dirname($_SERVER['PHP_SELF'])) . "/register.php?u=" . $user_id . "&token=" . $unlock_id . " \n \n \n Viel Spa� weiterhin! \n \n ", 'from:' . $config['email']);
