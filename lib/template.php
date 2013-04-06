@@ -34,25 +34,22 @@
 			'dirName'	=>	'standard',
 		);
 
+		/**
+		 *	@name 	areas
+		 *			Holds all available (registered) areas.
+		 */
+
+		private static $areas = array(
+			
+		);
+
 		public static function init() {
 			global $db, $root, $config;
-
-			/* $res = $db->query("SELECT * FROM " . STYLES_TABLE . " WHERE active = 1 LIMIT 1");
-			$row = $db->fetch_object($res);
-
-			self::$style = array(
-				'title'		=>	$row->title,
-				'author'	=>	$row->author,
-				'version'	=>	$row->version,
-				'dir'		=>	$root . 'styles/' . $row->directory . '/',
-				'dirName'	=>	$row->directory,
-			); */
 
 			$json = @json_decode(@file_get_contents($root.'/styles/' . $config['theme'] . '/style.json'), true);
 
 			if (!is_array($json)) {
 				$json = @json_decode(@file_get_contents($root.'/styles/standard/style.json'), true);
-
 
 				if (!is_array($json)) {
 					self::logError('no template to display');
@@ -69,15 +66,23 @@
 				'dirName'	=>	$config['theme']
 			);
 
-			if (file_exists(self::$style['dir'] . 'functions.php')) {
+			if (!file_exists(self::$style['dir'] . 'functions.php')) {
+				self::logError('functions.php missing.', 'TPL');
+			} else {
 				include self::$style['dir'] . 'functions.php';
+
+				if (!function_exists('initializeStyle')) {
+					self::logError('function initializeStyle() missing.', 'TPL');
+				} else {
+					initializeStyle();
+				}
 			}
 
 			self::$root = $root;
 		}
 
 		/**
-		 *	@name 	logError  <- falscher name? müsste printError sein…
+		 *	@name 	logError
 		 *			prints an error
 		 *
 		 *	@param 	string $error
@@ -173,6 +178,69 @@
 
 		public static function getStyleDirName() {
 			return self::$style['dirName'];
+		}
+
+		/**
+		 *	@name 	areaAvailable
+		 *			Checks whether an area is avaialble (registered) or not.
+		 *
+		 *	@return boolean
+		 */
+
+		public static function areaAvailable($area) {
+			foreach (self::$areas as $a => $c) {
+				if ($a == $area) return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 *	@name 	registerArea
+		 *			Registers an area and marks it as available for plugins.
+		 *
+		 *	@return void
+		 */
+
+		public static function registerArea($area) {
+			if (is_array($area)) {
+				foreach ($area as $a) {
+					self::$areas[$a] = '';
+				}
+			} else {
+				self::$areas[$area] = '';
+			}
+		}
+
+		/**
+		 *	@name 	displayArea
+		 *			Displays an area's content in a template.
+		 *
+		 *	@return mixed
+		 */
+
+		public static function displayArea($area) {
+			if (!self::areaAvailable($area)) {
+				return self::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
+			}
+
+			echo self::$areas[$area];
+			return self::$areas[$area];
+		}
+
+		/**
+		 *	@name 	addToArea
+		 *			Adds content to a registered and available area.
+		 *
+		 *	@return mixed
+		 */
+
+		public static function addToArea($area, $content) {
+			if (!self::areaAvailable($area)) {
+				return self::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
+			}
+
+			self::$areas[$area] .= $content;
 		}
 
 		/**

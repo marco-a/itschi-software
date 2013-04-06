@@ -7,6 +7,16 @@
 	*/
 
 	final class TPL extends plugin {
-		/** functions to follow */
+		public function addToArea($area, $content) {
+			if (!$this->areaAvailable($area)) {
+				parent::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
+			} else {
+				template::addToArea($area, $content);
+			}
+		}
+
+		public function areaAvailable($area) {
+			return template::areaAvailable($area);
+		}
 	}
 ?>

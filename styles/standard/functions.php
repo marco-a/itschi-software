@@ -24,4 +24,17 @@
 			}
 		}
 	}
+
+	/**
+	 *	This function must be available in EVERY style. It gets called while initializing the style.
+	 */
+
+	function initializeStyle() {
+		template::registerArea(array(
+			'footer',
+			'header',
+			'aboveContent',
+			'underneathContent'
+		));
+	}
 ?>

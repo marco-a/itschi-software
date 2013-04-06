@@ -69,6 +69,8 @@
 				<div class="logo">
 					<a href="./"><img src="./styles/standard/images/logo.png" alt="Logo" /></a>
 				</div>
+
+				<?php echo template::displayArea('header'); ?>
 			</header>
 		</div>
 
@@ -86,3 +88,4 @@
 		<div class="clear"></div>
 
 		<section id="content">
+			<?php echo template::displayArea('aboveContent'); ?>
