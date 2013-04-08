@@ -12,6 +12,7 @@
 		protected static $blocks = array();
 		private static $end = false;
 		private static $debug = false;
+		private static $areasChecked = false;
 
 		/**
 		 *	@name 	menu
@@ -41,6 +42,11 @@
 
 		private static $areas = array(
 			
+		);
+
+		private static $importantAreas = array(
+			'header' => 0,
+			'footer' => 0
 		);
 
 		public static function init() {
@@ -210,6 +216,35 @@
 			} else {
 				self::$areas[$area] = '';
 			}
+
+			self::checkRegisteredAreas();
+		}
+
+		/**
+		 *	@name 	checkRegisteredAreas
+		 *			Checks once (!) whether important areas are defined.
+		 *
+		 *	@return void
+		 */
+
+		private static function checkRegisteredAreas() {
+			if (!self::$areasChecked) {
+				foreach (self::$areas as $k => $v) {
+					if (isset(self::$importantAreas[$k])) {
+						self::$importantAreas[$k] = 1;
+					}
+				}
+
+				foreach (self::$importantAreas as $k => $v) {
+					if ($v === 0) {
+						self::logError('Area "'.$k.'" is not implemented.', 'TPL');
+					}
+				}
+
+				self::$areasChecked = true;
+			}
+
+			return true;
 		}
 
 		/**
@@ -221,7 +256,7 @@
 
 		public static function displayArea($area) {
 			if (!self::areaAvailable($area)) {
-				return self::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
+				return self::logError('Area *' . htmlspecialchars($area) . '* not registered.', 'TPL');
 			}
 
 			echo self::$areas[$area];
@@ -237,7 +272,7 @@
 
 		public static function addToArea($area, $content) {
 			if (!self::areaAvailable($area)) {
-				return self::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
+				return self::logError('Area *' . htmlspecialchars($area) . '* not registered.', 'TPL');
 			}
 
 			self::$areas[$area] .= $content;
