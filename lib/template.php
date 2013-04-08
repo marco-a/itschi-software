@@ -96,6 +96,8 @@
 		 */
 
 		public static function logError($error) {
+			$error = preg_replace('^\*([\S]+)\*^m', '<b>$1</b>', htmlspecialchars($error));
+
 			echo '
 				<link rel="stylesheet" href="styles/error.css" />
 
@@ -104,7 +106,7 @@
 
 					<div class="error">
 						<code>
-							<b>TPL:</b> '.htmlspecialchars($error).'
+							<b>TPL:</b> '.$error.'
 						</code>
 					</div>
 
@@ -243,8 +245,6 @@
 
 				self::$areasChecked = true;
 			}
-
-			return true;
 		}
 
 		/**

@@ -52,6 +52,8 @@
 				$type = '<b>'.htmlspecialchars($type).'</b>: ';
 			}
 
+			$error = preg_replace('^\*([\S]+)\*^m', '<b>$1</b>', $error);
+
 			echo '
 				<link rel="stylesheet" href="styles/error.css" />
 
