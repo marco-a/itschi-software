@@ -44,18 +44,30 @@
 			if (!empty($_FILES['file']['name'])) {
 				// include 'lib/functions/upload.php';
 
-				$size = @getimagesize($_FILES['file']['tmp_name']);
-				$exArr = explode('.', $_FILES['file']['name']);
-				$ex = strtolower(end($exArr));
+				$file = $_FILES['file']['tmp_name'];
+			$filename = $_FILES['file']['name'];
+			$info = @getimagesize($file);
+			$mime = $info['mime'];
 
-				$newfile = $user->row['user_id'] . '_' . time() . '.' . $ex;
+			if ($mime == 'image/jpeg' || $mime == 'image/jpg') {
+				$ext = 'jpg';
+			} elseif ($mime == 'image/png') {
+				$ext = 'png';
+			} else {
+				$ext = 'gif';
+			}
 
-				if (!in_array($_FILES['file']['type'], array('image/jpg', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png'))) {
-					$error = 1;
-				} else if ($size[0] < $config['avatar_min_width'] || $size[1] < $config['avatar_min_height']) {
+			$i = 0;
+
+			do {
+				$newfile = $user->row['user_id'] . '_' . $i . '.' . $ext;
+				$i++;
+			} while (file_exists('images/avatar/' . $newfile));
+
+				if ($info[0] < $config['avatar_min_width'] || $info[1] < $config['avatar_min_height']) {
 					$error = 2;
 				} else {
-					if ($size[0] > $config['avatar_max_width'] OR $size[1] > $config['avatar_max_height']) {
+					if ($info[0] > $config['avatar_max_width'] OR $info[1] > $config['avatar_max_height']) {
 						functions::upload()->resize($_FILES['file']['tmp_name'], 'images/avatar/' .  $newfile, $config['avatar_max_width'], $config['avatar_max_height'], false);
 					} else {
 						move_uploaded_file($_FILES['file']['tmp_name'], 'images/avatar/' . $newfile);
