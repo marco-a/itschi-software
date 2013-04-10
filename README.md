@@ -20,4 +20,4 @@ Bitte alle auftretenden Bugs im [Issues-Bereich](https://github.com/bluefirex/it
 
 ### Aktuelle Hinweise und ToDo
 ---
---nichts
+Bitte die Hinweise für die demnächst kommende Passwortverschlüsseung beachten! Siehe df45981
