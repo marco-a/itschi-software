@@ -73,12 +73,15 @@
 			);
 		}
 
+		$uniqID = uniqid();
+
 		$configFile = '<?php
 	$hostname = "'.$host.'";
 	$username = "'.$username.'";
 	$password = "'.$password.'";
 	$database = "'.$database.'";
 	$prefix = "'.$prefix.'";
+	$uniqID = "'.$uniqID.'";
 ?>';
 
 		$file = fopen('config.php', 'w');
