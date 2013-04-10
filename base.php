@@ -40,7 +40,7 @@
 
 	require_once $root.'lib/functions/global.php';
 
-	if (empty($prefix)) {
+	if (empty($prefix) || is_file('config.incomplete.php')) {
 		header('Location: install.php');
 		exit;
 	}

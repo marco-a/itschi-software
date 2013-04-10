@@ -2,116 +2,87 @@
 	/**
 	*
 	* @package com.Itschi.base.install
-	* @since 2007/05/25
+	* @since 2013/04/09
 	*
 	*/
 
-	if (is_file('config.php')) {
-		require_once 'config.php';
+	if (!is_writable(dirname(__FILE__) . '/')) chmod(dirname(__FILE__) . '/', 0755);
 
-		if (!empty($prefix)) {
-			header('Location: index.php');
-			exit;
+	if (is_file('config.incomplete.php')) {
+		include 'config.incomplete.php';
+
+		if ($mysql_installed && !$admin_installed && $_GET['step'] != 3 && $_GET['step'] != 4) {
+			header("Location: ./install.php?step=3");
+		} else if ($mysql_installed && $admin_installed) {
+			header("Location: ./");
 		}
 	} else {
-		$fd = @fopen('config.php', 'w+');
+		if (is_file('config.php')) {
+			header("Location: ./");
+		} else {
+			$file = fopen('config.incomplete.php', 'w');
+			$bytes = fwrite($file, '<?php /* Itschi.installer - do not delete */ $mysql_installed = false; $admin_installed = false; ?>');
+			fclose($file);
 
-		if ($fd !== false) {
-			fwrite($fd, '');
-			fclose($fd);
+			header("Location: ./install.php");
 		}
 	}
 
 	function read_ini($key) {
 		$read = ini_get($key);
 
-		if ($read == '1' || $read == 1 || $read == 'On' || $read == 'on') return true;
-		if ($read == '0' || $read == 0 || $read == 'Off' || $read == 'off') return false;
+		if ($read == '1' || $read == 1 || strtolower($read) == 'on') return true;
+		if ($read == '0' || $read == 0 || strtolower($read) == 'off') return false;
 
 		return $read;
 	}
 
-	$submit = (isset($_POST['submit'])) ? true : false;
-	$db_host = (isset($_POST['db_host'])) ? $_POST['db_host'] : 'localhost';
-	$db_username = (isset($_POST['db_username'])) ? $_POST['db_username'] : '';
-	$db_pw = (isset($_POST['db_pw'])) ? $_POST['db_pw'] : '';
-	$db_database = (isset($_POST['db_database'])) ? $_POST['db_database'] : '';
-	$prefix = (isset($_POST['prefix'])) ? $_POST['prefix'] : 'itschi_';
-	$username = (isset($_POST['username'])) ? $_POST['username'] : '';
-	$email = (isset($_POST['email'])) ? $_POST['email'] : '';
-	$password =	(isset($_POST['password'])) ? $_POST['password'] : '';
-	$password2 = (isset($_POST['password2'])) ? $_POST['password2'] : '';
-	$settings_title = (isset($_POST['settings_title']) ? $_POST['settings_title'] : '');
-	$error = 0;
-	$chmod = substr(sprintf('%o', fileperms(dirname(__FILE__))), -4);
-	$chmod = ($chmod == '0777');
-	$config_writable = is_writable('config.php');
-	$php_v = sprintf('%.1lf', phpversion()); // SPRINTF FTW :3
-	$php_version = ($php_v >= 5.3);
-	$imagecreatefromgif = function_exists('imagecreatefromgif');
-
-	@ini_set('allow_url_fopen', 1);
-
-	$allow_url_fopen = read_ini('allow_url_fopen') == true ? true : false;
-
-	if ($submit) {
-		if ($chmod && $config_writable && $imagecreatefromgif && $allow_url_fopen) {
-			$error = install();
-		} else {
-			$error = 10;
-		}
+	function dbChars($str) {
+		return mysql_real_escape_string($str);
 	}
 
-	function install() {
-		global $username, $email, $password, $password2, $db_host, $db_username, $db_pw, $db_database, $prefix;
+	/**
+	 *	@name 	insertMySQLData
+	 *			Establishes a MySQL-connection, inserts data and writes the config-file.
+	 *
+	 *	@param 	string $host
+	 *	@param 	string $username
+	 * 	@param 	string $password
+	 * 	@param 	string $database
+	 *	@param 	string $prefix
+	 *
+	 *	@return array
+	 */
 
+	function insertMySQLData($host, $username, $password, $database, $prefix) {
 		$error = 0;
 
-		$connect = @mysql_connect($db_host, $db_username, $db_pw) or ($error = 1);
-		@mysql_select_db($db_database, $connect) or ($error = 1);
+		$connect = @mysql_connect($host, $username, $password) or ($error = 1 and $message = mysql_error());
+		@mysql_select_db($database, $connect) or ($error = 1 and $message = mysql_error());
 
 		if ($error == 1) {
-			return 1;
+			return array(
+				'code'		=>	$error,
+				'message'	=>	$message
+			);
 		}
 
 		if (!preg_match('#[a-z_-]+$#i', $prefix)) {
-			return 2;
+			return array(
+				'code'	=>	$error
+			);
 		}
 
-		if (!$username || !$email || !$password) {
-			return 3;
-		}
-
-		if (!preg_match('#^[a-z]{1,2}[a-z0-9-_]+$#i', $username)) {
-			return 4;
-		}
-
-		if (mb_strlen($username) < 3 || mb_strlen($username) > 15) {
-			return 5;
-		}
-
-		if (!preg_match('#^[a-z0-9_.-]+@([a-z0-9_.-]+\.)+[a-z]{2,4}$#si', $email)) {
-			return 6;
-		}
-
-		if (mb_strlen($password) < 6) {
-			return 7;
-		}
-
-		if ($password != $password2) {
-			return 8;
-		}
-
-		@chmod(dirname(__FILE__) . '/', 0755);
-		@chmod('images/avatar/', 0755);
-		@chmod('lib/cache/', 0755);
-
-		if (!is_writable('config.php')) {
-			return 9;
-		}
+		$configFile = '<?php
+	$hostname = "'.$host.'";
+	$username = "'.$username.'";
+	$password = "'.$password.'";
+	$database = "'.$database.'";
+	$prefix = "'.$prefix.'";
+?>';
 
 		$file = fopen('config.php', 'w');
-		$bytes = fwrite($file, "<?php\r\n\r\n\$hostname = '" . $db_host . "';\r\n\$username = '" . $db_username . "';\r\n\$password = '" . $db_pw . "';\r\n\$database = '" . $db_database . "';\r\n\$prefix = '" . $prefix . "';\r\n\r\n?>");
+		$bytes = fwrite($file, $configFile);
 		fclose($file);
 
 		mysql_unbuffered_query('SET NAMES UTF8');
@@ -586,170 +557,438 @@
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=1 AUTO_INCREMENT=2 ;
 		");
 
+		mysql_unbuffered_query('COMMIT');
+
+		incompleteFile('update', true, false);
+
+		return array(
+			'code'	=>	0
+		);
+	}
+
+	function incompleteFile($mode, $mysqlInstalled = false, $adminInstalled = false) {
+		if ($mode == 'update') {
+			@unlink('config.incomplete.php');
+
+			$file = fopen('config.incomplete.php', 'w');
+			$bytes = fwrite($file, '<?php /* Itschi.installer - do not delete */ $mysql_installed = '.($mysqlInstalled ? 'true' : 'false').'; $admin_installed = '.($adminInstalled ? 'true' : 'false').'; ?>');
+			fclose($file);
+		} else if ($mode == 'delete') {
+			@unlink('config.incomplete.php');
+		}
+	}
+
+	function createAdmin($username, $email, $password, $password2) {
+		if (empty($username) || empty($email) || empty($password) || empty($password2)) {
+			return array(
+				'code'	=>	1,
+				'message'	=>	'Du hast nicht alle Felder ausgef&uuml;llt.'
+			);
+		}
+
+		if (!preg_match('#^[a-z]{1,2}[a-z0-9-_]+$#i', $username)) {
+			return array(
+				'code'	=>	2,
+				'message'	=>	'Es d&uuml;rfen nur Buchstaben, Zahlen, Minuszeichen und Unterstriche im Benutzernamen verwendet werden.'
+			);
+		}
+
+		if (mb_strlen($username) < 3 || mb_strlen($username) > 15) {
+			return array(
+				'code'	=>	3,
+				'message'	=>	'Der Benutzername darf nur zwischen 3 und 15 Zeichen lang sein.'
+			);
+		}
+
+		if (!preg_match('^([a-zA-Z0-9\.\-_]+)\@([a-zA-Z0-9]+)\.([a-zA-Z]{1,6})^i', $email)) {
+			return array(
+				'code'	=>	4,
+				'message'	=>	'Die E-Mail-Adresse ist ung&uuml;ltig.'
+			);
+		}
+
+		if (mb_strlen($password) < 6) {
+			return array(
+				'code'	=>	5,
+				'message'	=>	'Das Passwort ist zu kurz.'
+			);
+		}
+
+		if ($password != $password2) {
+			return array(
+				'code'	=>	6,
+				'message'	=>	'Die beiden Passw&ouml;rter stimmen nicht &uuml;berein.'
+			);
+		}
+
 		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "users` (`user_id`, `user_lastvisit`, `username`, `user_password`, `user_email`, `user_avatar`, `user_rank`, `user_signatur`, `user_signatur_bbcodes`, `user_signatur_smilies`, `user_signatur_urls`, `user_points`, `user_posts`, `user_ban`, `user_ip`, `user_website`, `user_icq`, `user_skype`, `user_login`, `user_level`, `user_register`, `user_mails`, `user_unlock`) VALUES
 			(1, " . time() . ", '" . $username . "', '" . md5($password) . "', '" . $email . "', '', 14, '', 1, 1, 1, 10, 1, 0, '" . $_SERVER['REMOTE_ADDR'] . "', '', '', '', 0, 2, " . time() . ", 0, '');
 		");
 
-		mysql_unbuffered_query('COMMIT');
+		incompleteFile('delete');
 
-		return 11;
+		return array(
+			'code'	=>	0
+		);
 	}
 
-	?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Itschi &rsaquo; Installation</title>
-		<link rel="stylesheet" href="styles/standard/style.css" />
-		<link rel="stylesheet" href="styles/installer.css" />
+	if ($_GET['step'] == 3 && is_file('config.php')) {
+		include 'config.php';
+		mysql_connect($hostname, $username, $password) or die(mysql_error());
+		mysql_select_db($database) or die(mysql_error());
+	}
 
-		<style>
-		.textStatusOK {
-			color: #0c7f09;
-		}
+	echo '
+		<!DOCTYPE html>
+			<html>
+				<head>
+					<meta charset="utf-8" />
+					<title>Itschi &rsaquo; Installation</title>
+					<link rel="stylesheet" href="styles/standard/style.css" />
+					<link rel="stylesheet" href="styles/installer.css" />
+				</head>
 
-		.textStatusNotOK {
-			color: #a00000;
-		}
-		</style>
-	</head>
+				<body>
+					<div id="wrapper">
+						<div class="content">
+							<img src="./images/logo.png" alt="Itschi - Setup" style="margin-bottom: 40px;" />
+	';
 
-	<body>
-		<div id="wrapper">
-			<div class="content">
-				<form action="install.php" method="post">
-					<img src="./images/logo.png" alt="Itschi - Setup" style="margin-bottom: 40px;" />
+	define('STATUS_OK', '<span style="color: green;">&#10003;</span>');
+	define('STATUS_ERROR', '<b style="color: red;">&#9587;</b>');
 
-					<?php if ($error): ?>
-					<div class="info">
-						<?php if ($error == 1): ?>		Verbindung zur Datenbank fehlgeschlagen - Überprüfe die MySQL-Daten
-						<?php elseif ($error == 2): ?>		Der Prefix darf nur aus folgenden Zeichen bestehen: A-Za-z_
-						<?php elseif ($error == 3): ?>		Bitte Username, Email und Passwort eingeben!
-						<?php elseif ($error == 4): ?>		Der Username darf keine Sonderzeichen, Umlaute oder Leerzeichen enthalten
-						<?php elseif ($error == 5): ?>		Der Username muss 3 - 15 Zeichen lang sein!
-						<?php elseif ($error == 6): ?>		Die Email ist ungültig!
-						<?php elseif ($error == 7): ?>		Das Passwort muss mindestens 6 Zeichen lang sein!
-						<?php elseif ($error == 8): ?>		Die Passwörter sind nicht gleich!
-						<?php elseif ($error == 9): ?>		“config.php” ist nicht beschreibbar!
-						<?php elseif ($error == 10): ?>		Es sind nicht alle Voraussetzungen erfüllt!
-						<?php elseif ($error == 11): ?>		Das Forum wurde erfolgreich installiert! Lösche die Datei install.php! <a href="index.php">zum Forum</a>
-						<?php endif; ?>
-					</div>
-					<div class="info_a"></div>
-					<br /><br />
-					<?php endif; ?>
+	$error = 0;
 
-					<section>
-						<h2>Voraussetzungen</h2>
+	if (!is_dir('./lib/cache/')) mkdir('./lib/cache/', 0777);
+	if (!is_dir('./images/avatar/')) mkdir('./images/avatar/', 0777);
+	clearstatcache();
 
-						<table cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr>
-								<td width="40%">CHMOD 0777</td>
-								<td class="textStatus<?php echo ($chmod ? 'OK' : 'NotOK'); ?>">ist <?php echo ($chmod ? 'gesetzt' : 'nicht gesetzt');?></td>
-							</tr>
+	$requires = array(
+		'cache_writable'	=>	is_writable('./lib/cache/') && is_readable('./lib/cache/'),
+		'config_writeable'	=>	is_writable('./'),
+		'avatars_writeable'	=>	is_writable('./images/avatar/'),
+		'php_version'		=>	phpversion() >= '5.3.0.0',
+		'image_functions'	=>	function_exists('imagecreatefromgif') && function_exists('imagecreatefromjpeg') && function_exists('imagecreatefrompng'),
+		'short_open_tag'	=>	read_ini('short_open_tag') == 1 || phpversion() >= '5.4.0.0',
+		'mysql'				=>	function_exists('mysql_connect')
+	);
 
-							<tr>
-								<td>config.php</td>
-								<td class="textStatus<?php echo ($config_writable ? 'OK' : 'NotOK'); ?>">ist <?php echo ($config_writable ? 'beschreibbar' : 'nicht beschreibbar');?></td>
-							</tr>
+	$optional = array(
+		'allow_url_fopen'	=>	read_ini('allow_url_fopen')
+	);
 
-							<tr>
-								<td>PHP Version (<?php echo $php_v;?>)</td>
-								<td class="textStatus<?php echo ($php_version ? 'OK' : 'NotOK'); ?>">ist <?php echo ($php_version ? 'ausreichend' : 'nicht ausreichend');?></td>
-							</tr>
-
-							<tr>
-								<td>imagecreatefromgif()</td>
-								<td class="textStatus<?php echo ($imagecreatefromgif ? 'OK' : 'NotOK'); ?>">ist <?php echo ($imagecreatefromgif ? 'vorhanden' : 'nicht vorhanden');?></td>
-							</tr>
-
-							<tr>
-								<td>allow_url_fopen [php.ini]</td>
-								<td class="textStatus<?php echo ($allow_url_fopen ? 'OK' : 'NotOK'); ?>">ist <?php echo ($allow_url_fopen ? 'aktiviert' : 'nicht aktiviert');?></td>
-							</tr>
-						</table>
-					</section>
-
-					<section>
-						<h2>MySQL</h2>
-
-						<table cellspacing="0" cellpadding="5" width="100%" border="0">
-							<tr>
-								<td width="25%">Host:</td>
-								<td><input type="text" name="db_host" value="<?php echo htmlspecialchars($db_host); ?>" size="30" /></td>
-							</tr>
-
-							<tr>
-								<td>Username:</td>
-								<td><input type="text" name="db_username" value="<?php echo htmlspecialchars($db_username); ?>" size="30" /></td>
-							</tr>
-
-							<tr>
-								<td>Passwort:</td>
-								<td><input type="password" name="db_pw" value="<?php echo htmlspecialchars($db_pw); ?>" size="30" /></td>
-							</tr>
-
-							<tr>
-								<td>Datenbank:</td>
-								<td><input type="text" name="db_database" value="<?php echo htmlspecialchars($db_database); ?>" size="30" /></td>
-							</tr>
-
-							<tr>
-								<td>Prefix:</td>
-								<td><input type="text" name="prefix" value="<?php echo htmlspecialchars($prefix); ?>" size="30" /></td>
-							</tr>
-						</table>
-					</section>
-
-					<section>
-						<h2>Administrator-Zugang</h2>
-
-						<table cellspacing="0" cellpadding="5" width="100%" border="0">
-							<tr>
-								<td width="25%">Benutzername:</td>
-								<td><input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>" /></td>
-							</tr>
-
-							<tr>
-								<td>E-Mail-Adresse:</td>
-								<td><input type="text" name="email" value="<?php echo htmlspecialchars($email) ?>" /></td>
-							</tr>
-
-							<tr>
-								<td>Passwort:</td>
-								<td><input type="password" name="password" value="<?php echo htmlspecialchars($password); ?>" /></td>
-							</tr>
-
-							<tr>
-								<td>Passwort wiederholen:</td>
-								<td><input type="password" name="password2" value="<?php echo htmlspecialchars($password2); ?>" /></td>
-							</tr>
-						</table>
-					</section>
-
-					<section>
-						<h2>Allgemeine Einstellungen</h2>
-
-						<table cellspacing="0" cellpadding="5" width="100%" border="0">
-							<tr>
-								<td width="25%">
-									Titel des Forums:
-								</td>
-
-								<td>
-									<input type="text" name="settings_title" value="<?=htmlspecialchars($settings_title); ?>" />
-								</td>
-							</tr>
-
-							<tr>
-								<td colspan="2"><input type="submit" name="submit" value="Installieren" /></td>
-							</tr>
-						</table>
-					</section>
-				</form>
+	if ((int)$_GET['step'] > 0 && in_array(false, $requires)) {
+		echo '
+			<div class="info">
+				Dein Webserver erf&uuml;llt nicht alle Bedingungen zur Installation dieser Software.<br />
+				<a href="./install.php" style="color: #fff;">Neu beginnen</a>
 			</div>
-		</div>
-	</body>
-</html>
+		';
+
+		$error = 1;
+	}
+
+	switch ($_GET['step']) {
+		case 2:
+			# Step 2
+			$mysqlInstalled = false;
+
+			if ($error == 0) {
+				if (isset($_POST['submit'])) {
+					$host = $_POST['host'];
+					$username = $_POST['username'];
+					$password = $_POST['password'];
+					$database = $_POST['database'];
+					$prefix = $_POST['prefix'];
+
+					$error = insertMySQLData($host, $username, $password, $database, $prefix);
+
+					if ($error['code'] == 1) {
+						echo '
+							<div class="info">Verbindung zur Datenbank ist fehlgeschlagen.<br /><code>'.$error['message'].'</code></div>
+						';
+					} else if ($error['code'] == 2) {
+						echo '
+							<div class="info">Der Pr&auml;fix darf nur Buchstaben und Unterstriche enthalten.</div>
+						';
+					} else {
+						echo '
+							<section>
+								<h2><small style="font-size: 14px;">Schritt 2:</small> MySQL-Zugang</h2>
+
+								<p>
+									MySQL wurde eingerichtet.<br />
+									<br />
+								</p>
+
+								<a href="./install.php?step=3" class="button">Weiter &rsaquo;</a>
+							</section>
+						';
+
+						$mysqlInstalled = true;
+					}
+
+					$values = array(
+						'host'		=>	htmlspecialchars($host),
+						'username'	=>	htmlspecialchars($username),
+						'password'	=>	htmlspecialchars($password),
+						'database'	=>	htmlspecialchars($database),
+						'prefix'	=>	htmlspecialchars($prefix)
+					);
+				} else {
+					$values = array(
+						'host'	=>	'localhost',
+						'username'	=>	'',
+						'password'	=>	'',
+						'database'	=>	'',
+						'prefix'	=>	'itschi_'
+					);
+				}
+
+				if (!$mysqlInstalled) {
+					echo '
+						<section>
+							<h2><small style="font-size: 14px;">Schritt 2:</small> MySQL-Zugang</h2>
+
+							<p>
+								Gib hier deine MySQL-Zugangsdaten ein.
+							</p>
+
+							<br />
+
+							<form method="post" action="">
+								<input type="text" name="host" placeholder="MySQL-Host" value="'.$values['host'].'" /><br />
+								<input type="text" name="username" placeholder="Benutzername" value="'.$values['username'].'" />
+								<input type="password" name="password" placeholder="Passwort" value="'.$values['password'].'" />
+								<br /><br />
+
+								<input type="text" name="database" placeholder="Datenbank" value="'.$values['database'].'" />
+								<input type="text" name="prefix" placeholder="Pr&auml;fix" value="'.$values['prefix'].'" />
+
+								<br /><br />
+								<input type="submit" value="Weiter &rsaquo;" name="submit" />
+							</form>
+						</section>
+					';
+				}
+			}
+
+			break;
+
+		case 3:
+			# Step 3
+			$adminInstalled = false;
+
+			if ($error == 0) {
+				if (isset($_POST['submit'])) {
+					$username = dbChars($_POST['username']);
+					$password = dbChars($_POST['password']);
+					$password2 = dbChars($_POST['password2']);
+					$email = dbChars($_POST['email']);
+
+					$error = createAdmin($username, $email, $password, $password2);
+
+					if ($error['code'] > 0) {
+						echo '
+							<div class="info">
+								'.$error['message'].'
+							</div>
+						';
+					} else {
+						$adminInstalled = true;
+
+						echo '
+							<section>
+								<h2><small style="font-size: 14px;">Schritt 3:</small> Benutzer anlegen</h2>
+
+								<p>
+									Der Benutzer wurde angelegt.
+								</p>
+
+								<br />
+
+								<a href="./install.php?step=4" class="button">Weiter &rsaquo;</a>
+							</section>
+						';
+					}
+
+					$values = array(
+						'username'	=>	$username,
+						'password'	=>	$password,
+						'password2'	=>	$password2,
+						'email'		=>	$email
+					);
+				}
+
+				if (!$adminInstalled) {
+					echo '
+						<section>
+							<h2><small style="font-size: 14px;">Schritt 3:</small> Benutzer anlegen</h2>
+
+							<p>
+								Den Benutzernamen und das Passwort ben&ouml;tigst du sp&auml;ter zum Einloggen in den
+								Administrationsbereich. Er ist zugleich auch dein Benutzer.
+							</p>
+
+							<br />
+
+							<form method="post" action="">
+								<input type="text" name="username" value="'.$values['username'].'" placeholder="Benutzername" />
+								<input type="password" name="password" value="'.$values['password'].'" placeholder="Passwort" />
+								<input type="password" name="password2" value="'.$values['password2'].'" placeholder="Passwort wiederholen" />
+								<input type="email" name="email" value="'.$values['email'].'" placeholder="E-Mail-Adresse" />
+
+								<br /><br />
+								<input type="submit" value="Weiter &rsaquo;" name="submit" />
+							</form>
+						</section>
+					';
+				}
+			}	
+
+			break;
+
+		case 4:
+			# Finished
+			echo '
+				<section>
+					<h2>Fertig!</h2>
+
+					<p>
+						Itschi ist jetzt fertig installiert und kann benutzt werden.<br />
+						<b>Vergiss nicht, <code>install.php</code> zu l&ouml;schen!</b>
+					</p>
+				</section>
+			';
+
+			break;
+
+		default:
+			# Step 1
+			echo '
+				<section>
+					<h2>Willkommen!</h2>
+
+					<p>
+						<b>Willkommen beim Itschi-Forum.</b><br />
+						Damit sichergestellt werden kann, dass Itschi rund l&auml;uft, muss dein Webserver ein
+						paar Voraussetzungen erf&uuml;llen. Wenn eine der Voraussetzungen nicht erf&uuml;llt wird,
+						spreche mit dem Administrator deines Webservers oder, wenn du selbst der Administrator bist,
+						erf&uuml;lle die Voraussetzungen.
+					</p>
+				</section>
+
+				<section>
+					<h2>Voraussetzungen</h2>
+
+					<table border="0" width="100%">
+						<tr>
+							<td valign="top" width="175px">
+								<b>lib/cache/ beschreibbar</b><br />
+								<small>chmod 0777</small>
+							</td>
+							
+							<td valign="top">
+								'.($requires['cache_writable'] ? STATUS_OK : STATUS_ERROR).'<br />
+
+								<small>wird ben&ouml;tigt, um Daten zwischenzuspeichern</small>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<b>config.php beschreibbar</b>
+							</td>
+
+							<td valign="top">
+								'.($requires['config_writeable'] ? STATUS_OK : STATUS_ERROR).'<br />
+
+								<small>wird ben&ouml;tigt, um die Datenbankverbindung zu speichern</small>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<b>images/avatar/ beschreibbar</b><br />
+								<small>chmod 0777</small>
+							</td>
+
+							<td valign="top">
+								'.($requires['avatars_writeable'] ? STATUS_OK : STATUS_ERROR).'<br />
+
+								<small>wird ben&ouml;tigt, um hochgeladene Avatare zu speichern</small>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<b>PHP-Version</b><br />
+								<small>5.3 oder h&ouml;her</small>
+							</td>
+
+							<td valign="top">
+								'.($requires['php_version'] ? STATUS_OK . '<br /><small>('.phpversion().')</small>' : STATUS_ERROR).'
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<b>MySQL vorhanden</b>
+							</td>
+
+							<td valign="top">
+								'.($requires['mysql'] ? STATUS_OK : STATUS_ERROR).'
+							</td>
+						</td>
+
+						<tr>
+							<td valign="top">
+								<b>Alle wichtigen Bildfunktionen vorhanden</b>
+							</td>
+
+							<td valign="top">
+								'.($requires['image_functions'] ? STATUS_OK : STATUS_ERROR).'<br />
+								<small>gebraucht werden imagecreatefromgif, imagecreatefromjpeg und imagecreatefrompng</small>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<b>short_open_tag</b>
+							</td>
+
+							<td valign="top">
+								'.($requires['short_open_tag'] ? STATUS_OK : STATUS_ERROR).'
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<small>(optional)</small>
+								<b>allow_url_fopen</b>
+							</td>
+
+							<td valign="top">
+								'.($optional['allow_url_fopen'] ? STATUS_OK : STATUS_ERROR).'<br />
+								<small>
+									allow_url_fopen erlaubt das automatische Abfragen von Plugin-Servern. Ohne
+									diese Funktion stehen Plugin-Server nicht zur Verf&uuml;gung.
+								</small>
+							</td>
+						</tr>
+					</table>
+				</section>
+
+				'.(!in_array(false, $requires) ? '<a href="?step=2" class="button">Weiter &rsaquo;</a>' : '').'
+			';
+	}
+
+	echo '
+						</div>
+					</div>
+				</div>
+			</body>
+		</html>
+	';
+?>
