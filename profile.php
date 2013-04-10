@@ -44,51 +44,57 @@
 			if (!empty($_FILES['file']['name'])) {
 				// include 'lib/functions/upload.php';
 
+				$filetypes = array(
+					'image/jpg'		=>	'jpg',
+					'image/jpeg'	=>	'jpg',
+					'image/png'		=>	'png',
+					'image/gif'		=>	'gif',
+					'image/x-png'	=>	'png',
+					'image/x-citrix-png'	=>	'png',
+					'image/x-citrix-jpeg'	=>	'jpg',
+					'image/pjpeg'	=>	'jpg'
+				);
+
 				$file = $_FILES['file']['tmp_name'];
-			$filename = $_FILES['file']['name'];
-			$info = @getimagesize($file);
-			$mime = $info['mime'];
+				$info = @getimagesize($file);
+				$ext = $filetypes[$info['mime']];
 
-			if ($mime == 'image/jpeg' || $mime == 'image/jpg') {
-				$ext = 'jpg';
-			} elseif ($mime == 'image/png') {
-				$ext = 'png';
-			} else {
-				$ext = 'gif';
-			}
-
-			$i = 0;
-
-			do {
-				$newfile = $user->row['user_id'] . '_' . $i . '.' . $ext;
-				$i++;
-			} while (file_exists('images/avatar/' . $newfile));
-
-				if ($info[0] < $config['avatar_min_width'] || $info[1] < $config['avatar_min_height']) {
-					$error = 2;
+				if (!isset($ext)) {
+					$error = 1;
 				} else {
-					if ($info[0] > $config['avatar_max_width'] OR $info[1] > $config['avatar_max_height']) {
-						functions::upload()->resize($_FILES['file']['tmp_name'], 'images/avatar/' .  $newfile, $config['avatar_max_width'], $config['avatar_max_height'], false);
+					$i = 0;
+
+					do {
+						$newfile = $user->row['user_id'] . '_' . $i . '.' . $ext;
+						$i++;
+					} while (file_exists('images/avatar/' . $newfile));
+
+					if ($info[0] < $config['avatar_min_width'] || $info[1] < $config['avatar_min_height']) {
+						$error = 2;
 					} else {
-						move_uploaded_file($_FILES['file']['tmp_name'], 'images/avatar/' . $newfile);
+						if ($info[0] > $config['avatar_max_width'] OR $info[1] > $config['avatar_max_height']) {
+							functions::upload()->resize($_FILES['file']['tmp_name'], 'images/avatar/' .  $newfile, $config['avatar_max_width'], $config['avatar_max_height'], false);
+						} else {
+							move_uploaded_file($_FILES['file']['tmp_name'], 'images/avatar/' . $newfile);
+						}
+
+						functions::upload()->resize('images/avatar/' . $newfile, 'images/avatar/mini/' .  $newfile, 50, 50, true);
+
+						if ($user->row['user_avatar'] != $newfile && $user->row['user_avatar']) {
+							@unlink('images/avatar/' . $user->row['user_avatar']);
+							@unlink('images/avatar/mini/' . $user->row['user_avatar']);
+						}
+
+						$db->query('
+							UPDATE ' . USERS_TABLE . "
+							SET user_avatar = '" . $newfile . "'
+							WHERE user_id = " . $user->row['user_id']
+						);
+
+						$user->row['user_avatar'] = $newfile;
+
+						message_box('Der Avatar wurde hochgeladen', 'profile.php?mode=avatar', 'zurück zur Übersicht');
 					}
-
-					functions::upload()->resize('images/avatar/' . $newfile, 'images/avatar/mini/' .  $newfile, 50, 50, true);
-
-					if ($user->row['user_avatar'] != $newfile && $user->row['user_avatar']) {
-						@unlink('images/avatar/' . $user->row['user_avatar']);
-						@unlink('images/avatar/mini/' . $user->row['user_avatar']);
-					}
-
-					$db->query('
-						UPDATE ' . USERS_TABLE . "
-						SET user_avatar = '" . $newfile . "'
-						WHERE user_id = " . $user->row['user_id']
-					);
-
-					$user->row['user_avatar'] = $newfile;
-
-					message_box('Der Avatar wurde hochgeladen', 'profile.php?mode=avatar', 'zurück zur Übersicht');
 				}
 			}
 
