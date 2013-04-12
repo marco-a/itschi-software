@@ -581,7 +581,7 @@
 		}
 	}
 
-	function createAdmin($username, $email, $password, $password2) {
+	function createAdmin($prefix, $username, $email, $password, $password2) {
 		if (empty($username) || empty($email) || empty($password) || empty($password2)) {
 			return array(
 				'code'	=>	1,
@@ -790,7 +790,7 @@
 					$password2 = dbChars($_POST['password2']);
 					$email = dbChars($_POST['email']);
 
-					$error = createAdmin($username, $email, $password, $password2);
+					$error = createAdmin($prefix, $username, $email, $password, $password2);
 
 					if ($error['code'] > 0) {
 						echo '
