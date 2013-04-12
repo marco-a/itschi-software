@@ -823,6 +823,14 @@
 						'email'		=>	$email
 					);
 				}
+				else {
+					$values = array(
+						'username'	=>	"",
+						'password'	=>	"",
+						'password2'	=>	"",
+						'email'		=>	""
+					);
+				}
 
 				if (!$adminInstalled) {
 					echo '
