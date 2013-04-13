@@ -210,14 +210,12 @@
 			INSERT INTO `" . $prefix . "config` (`config_name`, `config_value`, `is_dynamic`) VALUES
 			('newest_user_id', '1', 1),
 			('newest_user_level', '2', 1),
-			('newest_username', '" . $username . "', 1),
 			('posts_num', '0', 1),
 			('topics_num', '1', 1),
 			('users_num', '1', 1),
 			('title', 'Titel der Seite', 0),
 			('description', 'Ein Text der dein Forum beschreibt', 0),
 			('theme', 'standard', 0),
-			('email', '" . $email . "', 0),
 			('topics_perpage', '20', 0),
 			('posts_perpage', '10', 0),
 			('points_topic', '1', 0),
@@ -237,7 +235,8 @@
 			('enable_delete', '1', 0),
 			('mail_limit', '200', 0),
 			('max_post_chars', '50000', 0),
-			('default_avatar', 'default.png', 0);
+			('default_avatar', 'default.png', 0),
+			('index_news', 0, 0);
 		");
 
 		mysql_unbuffered_query("
@@ -627,6 +626,13 @@
 		mysql_unbuffered_query("
 			INSERT INTO `" . $prefix . "users` (`user_id`, `user_lastvisit`, `username`, `user_password`, `user_email`, `user_avatar`, `user_rank`, `user_signatur`, `user_signatur_bbcodes`, `user_signatur_smilies`, `user_signatur_urls`, `user_points`, `user_posts`, `user_ban`, `user_ip`, `user_website`, `user_icq`, `user_skype`, `user_login`, `user_level`, `user_register`, `user_mails`, `user_unlock`) VALUES
 			(1, " . time() . ", '" . $username . "', '" . md5($password) . "', '" . $email . "', '', 14, '', 1, 1, 1, 10, 1, 0, '" . $_SERVER['REMOTE_ADDR'] . "', '', '', '', 0, 2, " . time() . ", 0, '');
+		");
+ 
+		// Insert the newest User and the board email
+		mysql_unbuffered_query("
+			INSERT INTO `" . $prefix . "config` (`config_name`, `config_value`, `is_dynamic`) VALUES
+				('newest_username', '" . $username . "', 1),
+				('email', '" . $email . "', 0)
 		");
 
 		incompleteFile('delete');
