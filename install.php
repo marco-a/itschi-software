@@ -235,7 +235,8 @@
 			('enable_delete', '1', 0),
 			('mail_limit', '200', 0),
 			('max_post_chars', '50000', 0),
-			('default_avatar', 'default.png', 0);
+			('default_avatar', 'default.png', 0),
+			('index_news', 0, 0);
 		");
 
 		mysql_unbuffered_query("
