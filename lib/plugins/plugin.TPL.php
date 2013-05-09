@@ -8,6 +8,11 @@
 
 	final class TPL extends plugin {
 		public function addToArea($area, $content) {
+			if (!parent::hasPermission('TPL')) {
+				parent::logError('Access to TPL-functions denied.', 'TPL');
+				return false;
+			}
+
 			if (!$this->areaAvailable($area)) {
 				parent::logError('Area <b>' . htmlspecialchars($area) . '</b> not registered.', 'TPL');
 			} else {

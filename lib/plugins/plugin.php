@@ -104,13 +104,12 @@
 
 		protected static function hasPermission($type, $options = array()) {
 			global $prefix;
-
 			$permissions = self::$permissions;
 
 			switch ($type) {
 				case 'TPL':
 				case 'HTTP':
-					return isset($permissions[$type]);
+					return $permissions[$type] != 0 || is_array($permissions[$type]);
 					break;
 
 				case 'SQL':
