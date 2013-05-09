@@ -1,4 +1,4 @@
-				<?php echo template::displayArea('underneathContent'); ?>
+				<?php template::displayArea('underneathContent'); ?>
 			</section>
 			
 			<div class="clear"></div>
