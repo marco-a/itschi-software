@@ -12,8 +12,8 @@
 		public  $row = false;
 		private $session = 'forum_sid';
 		private $session_max_lifetime = 7200;
-		private $cookie_auto_username = 'auto_username';
-		private $cookie_auto_password = 'auto_password';
+		private $cookie_auto_username = 'auto_lo_u';
+		private $cookie_auto_password = 'auto_lo_p';
 		private $cookie_auto_lifetime = 2678400;
 		private $ranks = false;
 		private $ranks_cache = array();
@@ -85,6 +85,7 @@
 					user_id = ' . $user_id
 			);
 
+			setCookie($this->session, null, -1, '/');
 			setCookie($this->session, $session_id, 0, '/');
 		}
 
@@ -220,9 +221,11 @@
 
 			$this->row = false;
 
-			setCookie($this->cookie_auto_username, '', -3600, '/');
-			setCookie($this->cookie_auto_password, '', -3600, '/');
-			setCookie($this->session, '', -3600, '/');
+			setCookie($this->cookie_auto_username, null, -1, '/');
+			setCookie($this->cookie_auto_password, null, -1, '/');
+			setCookie($this->session, null, -1, '/');
+
+			unset($_COOKIE[$this->session], $_COOKIE[$this->cookie_auto_username], $_COOKIE[$this->cookie_auto_password]);
 
 			$this->online_global();
 			$token->regenerate();
