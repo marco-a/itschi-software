@@ -265,12 +265,6 @@
 		");
 
 		mysql_unbuffered_query("
-			INSERT INTO `" . $prefix . "forums` (`forum_id`, `forum_name`, `forum_description`, `forum_order`, `is_category`, `forum_level`, `forum_posts`, `forum_topics`, `forum_closed`, `forum_last_post_id`, `forum_last_post_user_id`, `forum_last_post_time`, `forum_last_post_topic_id`, `forum_last_post_username`, `forum_last_post_user_level`) VALUES
-			(1, 'Erste Kategorie', '', 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, '', 0),
-			(2, 'Erstes Forum', 'Ein Text der das Forum beschreibt', 2, 0, 0, 0, 1, 0, 1, 1, " . time() . ", 1, '" . $username . "', 2);
-		");
-
-		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "forums_track` (
 			  `forum_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
 			  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -392,11 +386,6 @@
 		");
 
 		mysql_unbuffered_query("
-			INSERT INTO `" . $prefix . "posts` (`post_id`, `topic_id`, `forum_id`, `user_id`, `post_text`, `enable_bbcodes`, `enable_smilies`, `enable_urls`, `enable_signatur`, `is_topic`, `post_time`, `post_edit_user_id`, `post_edit_username`, `post_edit_user_level`, `post_edit_time`) VALUES
-			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank für das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
-		");
-
-		mysql_unbuffered_query("
 			CREATE TABLE IF NOT EXISTS `" . $prefix . "ranks` (
 			  `rank_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 			  `rank_image` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -507,11 +496,6 @@
 			  PRIMARY KEY (`topic_id`),
 			  KEY `forum_id` (`forum_id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-		");
-
-		mysql_unbuffered_query("
-			INSERT INTO `" . $prefix . "topics` (`topic_id`, `forum_id`, `topic_title`, `user_id`, `username`, `user_level`, `topic_time`, `topic_important`, `topic_closed`, `topic_posts`, `topic_views`, `poll_title`, `poll_time`, `poll_votes`, `topic_last_post_user_id`, `topic_last_post_time`, `topic_last_post_post_id`, `topic_last_post_username`, `topic_last_post_user_level`, `topic_last_post_id`) VALUES
-			(1, 2, 'Erstes Thema', 1, '" . $username . "', 2, " . time() . ", 0, 0, 0, 0, '', 0, 0, 1, " . time() . ", 0, '" . $username . "', 2, 1);
 		");
 
 		mysql_unbuffered_query("
@@ -633,6 +617,22 @@
 			INSERT INTO `" . $prefix . "config` (`config_name`, `config_value`, `is_dynamic`) VALUES
 				('newest_username', '" . $username . "', 1),
 				('email', '" . $email . "', 0)
+		");
+
+		mysql_unbuffered_query("
+			INSERT INTO `" . $prefix . "forums` (`forum_id`, `forum_name`, `forum_description`, `forum_order`, `is_category`, `forum_level`, `forum_posts`, `forum_topics`, `forum_closed`, `forum_last_post_id`, `forum_last_post_user_id`, `forum_last_post_time`, `forum_last_post_topic_id`, `forum_last_post_username`, `forum_last_post_user_level`) VALUES
+			(1, 'Erste Kategorie', '', 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, '', 0),
+			(2, 'Erstes Forum', 'Ein Text der das Forum beschreibt', 2, 0, 0, 0, 1, 0, 1, 1, " . time() . ", 1, '" . $username . "', 2);
+		");
+
+		mysql_unbuffered_query("
+			INSERT INTO `" . $prefix . "topics` (`topic_id`, `forum_id`, `topic_title`, `user_id`, `username`, `user_level`, `topic_time`, `topic_important`, `topic_closed`, `topic_posts`, `topic_views`, `poll_title`, `poll_time`, `poll_votes`, `topic_last_post_user_id`, `topic_last_post_time`, `topic_last_post_post_id`, `topic_last_post_username`, `topic_last_post_user_level`, `topic_last_post_id`) VALUES
+			(1, 2, 'Erstes Thema', 1, '" . $username . "', 2, " . time() . ", 0, 0, 0, 0, '', 0, 0, 1, " . time() . ", 0, '" . $username . "', 2, 1);
+		");
+
+		mysql_unbuffered_query("
+			INSERT INTO `" . $prefix . "posts` (`post_id`, `topic_id`, `forum_id`, `user_id`, `post_text`, `enable_bbcodes`, `enable_smilies`, `enable_urls`, `enable_signatur`, `is_topic`, `post_time`, `post_edit_user_id`, `post_edit_username`, `post_edit_user_level`, `post_edit_time`) VALUES
+			(1, 1, 2, 1, 'Die Installation war erfolgreich.\r\n\r\nVielen Dank für das Nutzen des Itschi-Forums!', 1, 1, 1, 1, 1, " . time() . ", 0, '', 0, 0);
 		");
 
 		incompleteFile('delete');
