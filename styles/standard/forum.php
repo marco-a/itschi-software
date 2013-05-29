@@ -12,6 +12,8 @@
 <div class="clear"></div>
 
 <div id="forums">
+	<?php template::displayArea('aboveForum'); ?>
+
 	<?php foreach(template::$blocks['forums'] AS $forum): ?>
 		<?php if ($forum['IS_CATEGORY']): ?>
 			<h2 class="title"><?=$forum['NAME']; ?></h2>

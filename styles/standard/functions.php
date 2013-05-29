@@ -34,7 +34,8 @@
 			'footer',
 			'header',
 			'aboveContent',
-			'underneathContent'
+			'underneathContent',
+			'aboveForum'
 		));
 	}
 ?>

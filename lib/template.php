@@ -46,7 +46,8 @@
 
 		private static $importantAreas = array(
 			'header' => 0,
-			'footer' => 0
+			'footer' => 0,
+			'aboveForum' => 0
 		);
 
 		public static function init() {
@@ -381,6 +382,7 @@
 		public static function display($section) {
 			if (!self::$end) {
 				$content = self::fetch($section);
+
 				if (!is_null($content)) {
 					echo $content;
 				}
