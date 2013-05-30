@@ -75,6 +75,8 @@
 
 			$user_id = $db->insert_id();
 
+			unset($_SESSION['sicherheitscode']);
+
 			header('Location: register.php?u=' . $user_id);
 			exit;
 		}
