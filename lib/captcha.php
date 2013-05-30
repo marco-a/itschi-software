@@ -9,7 +9,7 @@
 	session_start();
 	srand ((double)microtime() * 1000000);
 
-	$Z = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	$Z = 'abcdefghijklmnpqrstuvwxyz123456789';
 	$path = '../images/captcha/';
 	$Y = strlen($Z) - 1;
 	$B = array($Z{rand(0,$Y)}, $Z{rand(0,$Y)}, $Z{rand(0,$Y)}, $Z{rand(0,$Y)});
@@ -45,5 +45,7 @@
 	imageline($I, rand(10,30), rand(50,65), rand(150,170), rand(10,30), $X[7]);
 
 	header('Content-type: image/gif');
-	ImageDestroy(ImageGIF($I));
+	ImageGIF($I);
+	ImageDestroy($I);
+
 ?>
