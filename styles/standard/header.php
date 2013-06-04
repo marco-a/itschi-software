@@ -35,6 +35,12 @@
 		<div id="user_wrap">
 			<ul class="user">
 				<?php if ($user->row) { ?>
+					<?php if ($user->row['user_level'] == ADMIN): ?>
+						<li style="float: left;">
+							<a href="./admin/">ACP &rsaquo;</a>
+						</li>
+					<?php endif; ?>
+
 					<li class="user">
 						<a href="./user.php?id=<?=$user->row['user_id']; ?>" <?php if (template::getPage() == 'user' && $_GET['id'] == $user->row['user_id']): ?>class="active"<?php endif; ?>>Hallo, <b><?=$user->row['username']; ?></b>.</a>
 					</li>
