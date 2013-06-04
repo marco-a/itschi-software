@@ -12,8 +12,7 @@ if(jQuery) (function($) {
 	
 	$.extend($.fn, {
 		dropdown: function(method, data) {
-			
-			switch( method ) {
+			switch (method) {
 				case 'hide':
 					hideDropdowns();
 					return $(this);
@@ -28,52 +27,49 @@ if(jQuery) (function($) {
 					hideDropdowns();
 					return $(this).removeClass('dropdown-disabled');
 			}
-			
 		}
 	});
 	
-	function showMenu(event) {
-		
+	function showDropdowns(event) {
 		var trigger = $(this),
 			dropdown = $( $(this).attr('data-dropdown') ),
 			isOpen = trigger.hasClass('dropdown-open');
 		
-		event.preventDefault();
-		event.stopPropagation();
+		if (event != undefined) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
 		
 		hideDropdowns();
 		
-		if( isOpen || trigger.hasClass('dropdown-disabled') ) return;
+		if (isOpen || trigger.hasClass('dropdown-disabled')) return;
 		
 		dropdown
 			.css({
 				left: dropdown.hasClass('anchor-right') ? 
-					trigger.offset().left - (dropdown.outerWidth() - trigger.outerWidth()) : trigger.offset().left,
-				top: trigger.offset().top + trigger.outerHeight()
+					trigger.position().left - (dropdown.outerWidth() - trigger.outerWidth()) : trigger.offset().left,
+				top: trigger.position().top + trigger.height()
 			})
-			.slideDown(75);
+			.slideDown(100);
 		
 		trigger.addClass('dropdown-open');
-		
 	};
 	
 	function hideDropdowns(event) {
 		
-		var targetGroup = event ? $(event.target).parents().andSelf() : null;
+		var targetGroup = event ? $(event.target).parents().addBack() : null;
 		if( targetGroup && targetGroup.is('.dropdown-menu') && !targetGroup.is('A') ) return;
 		
-		$('BODY')
-			.find('.dropdown-menu').slideUp(75).end()
+		$('body')
+			.find('.dropdown-menu').slideUp(100).end()
 			.find('[data-dropdown]').removeClass('dropdown-open');
 	};
 	
 	$(function () {
-		$('BODY').on('click.dropdown', '[data-dropdown]', showMenu);
-		$('HTML').on('click.dropdown', hideDropdowns);
-		// Hide on resize (IE7/8 trigger this when any element is resized...)
-		if( !$.browser.msie || ($.browser.msie && $.browser.version >= 9) ) {
-			$(window).on('resize.dropdown', hideDropdowns);
-		}
+		$('body').on('click.dropdown', '[data-dropdown]', showDropdowns);
+		$('html').on('click.dropdown', hideDropdowns);
+
+		$(window).on('resize.dropdown', hideDropdowns);
 	});
 	
 })(jQuery);
