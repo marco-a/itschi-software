@@ -73,10 +73,12 @@
 			return mysqli_affected_rows($this->connection);
 		}
 
+		// for compatibility reasons. May be removed or replaced in the near future.
 		public function free_result($res) {
 			// return mysqli_free_result($res);
 		}
 
+		// for compatibility reasons. May be removed in the near future.
 		public function result($res, $int) {
 			// return mysqli_data_seek($res, $int);
 			return $this->num_rows($res);
