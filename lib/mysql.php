@@ -1,36 +1,35 @@
 <?php
 	/**
 	*
-	* @package com.Itschi.base.MySQL
-	* @since 2007/05/25
+	* @package com.Itschi.base.MySQL(i)
+	* @since 2013/06/22
 	*
 	*/
 
 	namespace Itschi\lib;
 
 	class mysql {
-		var $debug = false;
-		private $connect = NULL;
+		private $connection;
 
-		function __construct($host, $username, $pw, $database) {
-	//		$this->debug = (isset($_GET['explain'])) ? true : false;
+		public function __construct($host, $user, $pw, $db) {
+			$this->connection = mysqli_connect($host, $user, $pw, $db);
 
-			$this->connect = @mysql_connect($host, $username, $pw) or die('Verbindung zur Datenbank fehlgeschlagen');
-			@mysql_select_db($database, $this->connect) or die('Datenbank konnte nicht ausgewählt werden');
+			if (mysqli_connect_error()) {
+				die(mysqli_connect_error());
+			}
 
-			mysql_unbuffered_query("SET NAMES 'utf8'", $this->connect);
+			mysqli_set_charset($this->connection, 'utf8');
 		}
 
-		function error($sql)
-		{
+		protected function error($sql) {
 			exit('
 				<title>SQL Error</title>
 				<link rel="stylesheet" href="./styles/error.css" />
 				<div id="fatalError">
-					<div class="title"><h2>SQL-Error <span>(' . mysql_errno() . ')</span></h2></div>
+					<div class="title"><h2>SQL-Error <span>(' . mysqli_errno($this->connection) . ')</span></h2></div>
 
 					<div class="error MySQL">
-						' . mysql_error() . '
+						' . mysqli_error($this->connection) . '
 
 						<div class="code"><code>' . htmlspecialchars($sql) . '</code></div>
 					</div>
@@ -38,74 +37,53 @@
 			');
 		}
 
-		function query($sql) {
-
-			$this->unbuffered_query('SET NAMES UTF8');
-
-			if (($result = @mysql_query($sql, $this->connect)) === false) {
-				$this->error($sql);
+		public function query($sql) {
+			if (preg_match('^SELECT COUNT\(([a-zA-Z0-9*]+)\) FROM^', $sql, $matches)) {
+				$sql = "SELECT ".$matches[1]." FROM" . preg_replace('^SELECT COUNT\(([a-zA-Z0-9*]+)\) FROM^', '', $sql);
 			}
 
-			$this->sql = $sql;
+			if (($result = mysqli_query($this->connection, $sql)) == FALSE) {
+				$this->error($sql);
+			}
 
 			return $result;
 		}
 
-		function unbuffered_query($sql) {
-			if (($result = @mysql_unbuffered_query($sql, $this->connect)) === false) {
-				$this->error($sql);
-			}
-
-			$this->sql = $sql;
-
-			return true;
+		public function unbuffered_query($sql) {
+			return $this->query($sql);
 		}
 
-		function debug($sql) {
-			echo '<hr /><pre>' . preg_replace('/	/', '', trim($sql)) . '</pre>';
-
-			$res = @mysql_query('EXPLAIN ' . $sql);
-			while ($row = @mysql_fetch_assoc($res)) {
-				foreach ($row as $k => $v) {
-					echo strtoupper($k) . ': <span>' . $v . '</span> ';
-				}
-
-				echo '<br />';
-			}
-
-			$this->free_result($res);
+		public function fetch_object($res) {
+			return mysqli_fetch_object($res);
 		}
 
-		function fetch_array($result) {
-			return mysql_fetch_assoc($result);
+		public function fetch_array($res) {
+			return mysqli_fetch_assoc($res);
 		}
 
-		function fetch_object($result) {
-			return mysql_fetch_object($result);
+		public function num_rows($res) {
+			return $res->num_rows;
 		}
 
-		function num_rows($result) {
-			return mysql_num_rows($result);
+		public function insert_id() {
+			return mysqli_insert_id($this->connection);
 		}
 
-		function result($result, $int) {
-			return mysql_result($result, $int);
+		public function affected_rows() {
+			return mysqli_affected_rows($this->connection);
 		}
 
-		function insert_id() {
-			return mysql_insert_id($this->connect);
+		public function free_result($res) {
+			// return mysqli_free_result($res);
 		}
 
-		function free_result($res) {
-			@mysql_free_result($res);
+		public function result($res, $int) {
+			// return mysqli_data_seek($res, $int);
+			return $this->num_rows($res);
 		}
 
-		function chars($var) {
-			return mysql_real_escape_string($var, $this->connect);
-		}
-
-		function affected_rows() {
-			return mysql_affected_rows($this->connect);
+		public function chars($str) {
+			return mysqli_real_escape_string($this->connection, $str);
 		}
 	}
 ?>
