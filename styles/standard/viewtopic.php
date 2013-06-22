@@ -211,7 +211,7 @@
 <table width="100%">
 	<tr>
 		<td valign="top">
-			<?=template::getVar('TOPIC_POSTS'); ?> <?php if (template::getVar('TOPIC_POSTS') == '1'): ?>Beitrag<?php else: ?>Beiträge<?php endif; ?>
+			<?=template::getVar('TOPIC_POSTS'); ?> Antwort<?php if (template::getVar('TOPIC_POSTS') != '1'): ?>en<?php endif; ?>
 
 			<?php if (template::getVar('PAGES_NUM') > 1): ?>
 			 | Seite <?=template::getVar('PAGE'); ?> von <?=template::getVar('PAGES_NUM'); ?> | <?=template::getVar('PAGES'); ?>
