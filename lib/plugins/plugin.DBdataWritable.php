@@ -18,7 +18,7 @@
 
 		private function checkPermission() {
 			if (!parent::hasPermission('DATA_WRITABLE')) {
-				parent::logError('Access to dataWritable-functions denied.', 'SQL');
+				parent::logError('Access to dataWritable-functions denied.', 'DATA');
 				return false;
 			}
 

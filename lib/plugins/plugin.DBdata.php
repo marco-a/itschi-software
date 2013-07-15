@@ -17,7 +17,7 @@
 
 		private function checkPermission() {
 			if (!parent::hasPermission('DATA')) {
-				parent::logError('Access to data-functions denied.', 'SQL');
+				parent::logError('Access to data-functions denied.', 'DATA');
 				return false;
 			}
 
