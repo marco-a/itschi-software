@@ -27,6 +27,8 @@
 			self::$objs['SQL'] = new SQL();
 			self::$objs['TPL'] = new TPL();
 			self::$objs['utils'] = new utils();
+			self::$objs['data'] = new DBdata();
+			self::$objs['dataWritable'] = new DBdataWritable();
 		}
 
 		/**
@@ -109,6 +111,8 @@
 			switch ($type) {
 				case 'TPL':
 				case 'HTTP':
+				case 'DATA':
+				case 'DATA_WRITABLE':
 					return $permissions[$type] != 0 || is_array($permissions[$type]);
 					break;
 
@@ -201,6 +205,26 @@
 
 		public static function utils() {
 			return (isset(self::$objs['utils']) ? self::$objs['utils'] : NULL);
+		}
+
+		/**
+		 *	@name data
+		 *
+		 *	@return object
+		 */
+
+		public static function data() {
+			return (isset(self::$objs['data']) ? self::$objs['data'] : NULL);
+		}
+
+		/**
+		 *	@name dataWritable
+		 *
+		 *	@return object
+		 */
+
+		public static function dataWritable() {
+			return (isset(self::$objs['dataWritable']) ? self::$objs['dataWritable'] : NULL);
 		}
 
 	}

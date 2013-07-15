@@ -65,6 +65,8 @@
 	require_once $root.'lib/plugins/plugin.SQL.php';
 	require_once $root.'lib/plugins/plugin.TPL.php';
 	require_once $root.'lib/plugins/plugin.utils.php';
+	require_once $root.'lib/plugins/plugin.DBdata.php';
+	require_once $root.'lib/plugins/plugin.DBdataWritable.php';
 
 	HTTP::init();
 
