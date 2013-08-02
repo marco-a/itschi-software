@@ -188,6 +188,26 @@
 		public function strip($var) {
 			return (STRIP) ? stripslashes($var) : $var;
 		}
+
+		/*
+			global values
+		*/
+
+		public function GET($key) {
+			return $_GET[$key];
+		}
+
+		public function POST($key) {
+			return $_POST[$key];
+		}
+
+		public function SESSION($key) {
+			return $_SESSION[$key];
+		}
+
+		public function setSESSION($key, $value) {
+			$_SESSION[$key] = $value;
+		}
 	}
 
 ?>

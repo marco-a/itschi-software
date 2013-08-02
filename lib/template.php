@@ -309,6 +309,30 @@
 		}
 
 		/**
+		 *	@name 	GET
+		 *			Returns the $_GET value of $key.
+		 *
+		 *	@param 	string $key
+		 *	@return string
+		 */
+
+		public static function GET($key) {
+			return $_GET[$key];
+		}
+
+		/**
+		 *	@name 	POST
+		 *			Returns the $_POST value of $key.
+		 *	
+		 *	@param 	string $key
+		 *	@return string
+		 */
+
+		public static function POST($key) {
+			return $_POST[$key];
+		}
+
+		/**
 		 *	@name 	end
 		 *			Prohibits more templates to display.
 		 *
