@@ -23,6 +23,8 @@
 		},
 
 		"TPL": 1,
+		"DATA": 1,
+		"DATA_WRITABLE": 1,
 
 		"HTTP": [
 			"a.gidix.de"
