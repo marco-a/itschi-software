@@ -59,7 +59,7 @@
 		}
 
 		private function setSession($user_id) {
-			global $db;
+			global $db, $uniqID;
 
 			$res = $db->query('
 				DELETE FROM ' . SESSIONS_TABLE . '
@@ -67,15 +67,17 @@
 			);
 
 			do {
-				$length = 20;
+				$length_count = $length = 20;
 				$chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 				$chars_num = strlen($chars) - 1;
 				$session_id = '';
-				while ($length--) {
+				while ($length_count--) {
 					srand((double)microtime() * 1000000);
-
 					$session_id .= $chars{rand(0, $chars_num)};
 				}
+
+				$session_id = substr(md5(sha1($uniqID) . $session_id), 0, $length);
+
 			} while ($this->getSession($session_id, false) !== false);
 
 			$res = $db->query('
