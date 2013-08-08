@@ -186,7 +186,12 @@
 
 			# $token->regenerate();
 
-			if ($redirect) {
+			if (!empty($redirect)) {
+				/* Prevent CRLF header injection */
+				if (strpos($redirect, "\n") !== FALSE || strpos($redirect, "\r") !== FALSE) {
+					return true;
+				}
+				
 				header('Location: ' . $redirect);
 				exit;
 			}
